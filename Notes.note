@@ -1,0 +1,65 @@
+
+
+https://PluginPlate.com 
+https://developer.wordpress.org/plugins/plugin-basics/
+
+Redesign virtualbible.org as a plugin site.
+
+What the plugin should do... 
+	Installation... 
+		create needed database tables...
+			kjvs,books,
+			USed for PIM: av,av_coding_json,books,commentary_*,easton_dic,intro_gty,kjv_books,kjv_ref,lex_greek,lex_hebrew,outline,text_greek,text_hebrew,text_kjv,xref_holman
+		import data for database tables.
+			kjvs, books, strong's, Easton, 
+			kjvs (add paragraph markings) [in the future: add italicized, words in red, poetry]
+			[outline, thompson, akjv, websters, geneva, margin notes, ylt]
+		Create page for accessing data.
+	When active... 
+		Display splash page.
+		provide reference search.
+		provide keyword search.
+		Display search results.
+		passage... 
+			In column with xref.
+		word search... 
+			As verses with word in bold.
+			Linked to verse in context (full chapter with the verse highlighted)
+		Two column display... 
+			Verses (with xref) on the left.
+			Study elements on the right.
+		Links words to Strong's definitions.
+		Links words to Easton definitions.
+	Settings Page... 
+		Xxx
+
+
+register_activation_hook( __FILE__, 'virtual_bible_load_db_books');
+
+# import kjv books from CSV file.
+function virtual_bible_load_db_books()
+	{
+	global $wpdb;
+	$charset_collate = $wpdb->get_charset_collate();
+	$table_name = $wpdb->prefix . 'virtual_bible_books';
+
+/*
+    $file = fopen('virtual_bible_books.csv', "r");
+
+    while (($column = fgetcsv($file, 10000, ",")) !== FALSE) 
+		{
+        $wpdb->insert
+			( 
+            $table_name,
+            array
+				( 
+				'id'		=> '" . $column[0] . "',
+				'book'		=> '" . $column[1] . "',
+				'chapters'	=> '" . $column[2] . "',
+				'abbr'		=> '" . $column[3] . "',
+				'longname'	=> '" . $column[4] . "'
+				)
+			);
+		}
+*/
+	}

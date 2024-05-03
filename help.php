@@ -65,13 +65,13 @@ wp_enqueue_style('logofont');
 			<span>Settings</span>
 		</a>
 	</li>
-	<li class="vb-nav-tab">
+	<li class="active vb-nav-tab">
 		<a href="?page=the-virtual-study-bible/help.php">
 			<span class="dashicons dashicons-editor-help"></span>
 			<span>Help</span>
 		</a>
 	</li>
-	<li class="active vb-nav-tab">
+	<li class="vb-nav-tab">
 		<a href="?page=the-virtual-study-bible/contribute.php" style="color:#800;">
 			<span class="dashicons dashicons-heart"></span>
 			<span>Contribute</span>
@@ -79,10 +79,10 @@ wp_enqueue_style('logofont');
 	</li>
 </ul>
 <div class="tab-content" style="box-shadow:rgba(0, 0, 0, 0.15) 2px 2px 6px;margin-top:-1px;">
-	<div id="contribute" class="tab-pane fade in active" 
+	<div id="help" class="tab-pane fade in active" 
 		style="border: 1px solid #555;border-radius: 0 4px 4px 4px;padding:10px;background-color:#fff">
-		<h3>Contribute</h3>
-		<p>Contribute page content.</p>
+		<h3>Help</h3>
+		<p>Help page content.</p>
 		<p>some fonts: dash-<i class="fas fa-tachometer-alt"></i> settings-<i class="fas fa-tools"></i> settings2<i class="fas fa-cogs"></i></p>
 	</div>
 </div>

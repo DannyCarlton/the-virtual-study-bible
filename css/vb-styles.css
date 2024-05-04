@@ -755,3 +755,137 @@ h4
 		}
 
 	}
+
+
+	#wpcontent
+		{
+		background-color:#f0f0f1;
+		min-height:100%;
+		}
+	#wpbody 
+		{
+		padding-right:20px;
+		min-height:100vh;
+		}
+	#wpbody-content 
+		{
+		margin-right:20px;
+		}
+	.nav-tabs li.vb-nav-tab a
+		{
+		background-color:#ddd;
+		border:1px solid #555;
+		font-size:15px;
+		font-family: "Montserrat", sans-serif;
+		}
+	.nav-tabs li.vb-nav-tab a:hover
+		{
+		background-color:#fff;
+		border:1px solid #555;
+		}
+	.nav-tabs li.vb-nav-tab.active a
+		{
+		background-color:#fff;	
+		font-weight:bold;
+		border:1px solid #555;
+		border-bottom-color:transparent;
+		font-size:17px;
+		}
+	.nav-tabs li.vb-nav-tab.active a:hover
+		{
+		border:1px solid #555;
+		border-bottom-color:transparent;	
+		}	
+	.poppins-black {
+		font-family: "Poppins", sans-serif !important;
+		font-weight: 900;
+		font-style: normal;
+		}
+	.montserrat {
+		font-family: "Montserrat", sans-serif !important;
+		font-weight: 300;
+		font-style: normal;
+		}
+	div.wizard.top-content
+		{
+		font-family: "Montserrat", sans-serif !important;
+		color:#000;
+		}
+
+		
+
+	.vb-progress {
+		width: 85px;
+		height: 85px;
+		background: none;
+		position: relative;
+		}
+
+	.vb-progress::after {
+		content: "";
+		width: 100%;
+		height: 100%;
+		border-radius: 50%;
+		border: 6px solid #eee;
+		position: absolute;
+		top: 0;
+		left: 0;
+		}
+
+	.vb-progress>span {
+		width: 50%;
+		height: 100%;
+		overflow: hidden;
+		position: absolute;
+		top: 0;
+		z-index: 1;
+		}
+
+	.vb-progress .progress-left {
+		left: 0;
+		}
+
+	.vb-progress .progress-bar {
+		width: 100%;
+		height: 100%;
+		background: none;
+		border-width: 6px;
+		border-style: solid;
+		position: absolute;
+		top: 0;
+		}
+
+	.vb-progress .progress-left .progress-bar {
+		left: 100%;
+		border-top-right-radius: 80px;
+		border-bottom-right-radius: 80px;
+		border-left: 0;
+		-webkit-transform-origin: center left;
+		transform-origin: center left;
+		}
+
+	.vb-progress .progress-right {
+		right: 0;
+		}
+
+	.vb-progress .progress-right .progress-bar {
+		left: -100%;
+		border-top-left-radius: 80px;
+		border-bottom-left-radius: 80px;
+		border-right: 0;
+		-webkit-transform-origin: center right;
+		transform-origin: center right;
+		}
+
+	.vb-progress .progress-value {
+		position: absolute;
+		top: 10px;
+		left: 0;
+		left:0;
+		right:0;
+		}
+
+	.wizard .container 
+		{
+		width:100%;
+		}

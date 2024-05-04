@@ -3,13 +3,14 @@ header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 
+$data='0% loading...';
+write_file($data);
+
 include('../../../../wp-load.php');
-$verify = wp_verify_nonce($_GET['_wpnonce'], 'kjvs');
+$verify = wp_verify_nonce($_GET['_wpnonce'], 'greek');
 
 if($verify)
 	{
-	$data='0% downloading...';
-	write_file($data);
 	$books = fopen('https://cdn.virtualbible.org/virtual_bible_books.csv', "r");
 	$Books=[];$r=1;
 	while (($Book = fgetcsv($books, 10000, ",")) !== FALSE) 
@@ -21,12 +22,10 @@ if($verify)
 			$r++;
 			}
 		}
-
 	
-
 	$Queries=[];
 	$charset_collate = $wpdb->get_charset_collate();
-	$table_name = $wpdb->prefix . 'virtual_bible_kjvs';
+	$table_name = $wpdb->prefix . 'virtual_bible_greek';
 	array_push($Queries, "CREATE TABLE IF NOT EXISTS $table_name (
 			id 			int(11) 	NOT NULL AUTO_INCREMENT,
 			book 		tinyint(3) 	NOT NULL,
@@ -49,18 +48,16 @@ if($verify)
 		}
 
 	$counter=0;
-#	$data='0% ';
-#	write_file($data);
-	$file = fopen('https://cdn.virtualbible.org/virtual_bible_kjvs.csv', "r");
-	$data='0% processing...';
+	$file = fopen('https://cdn.virtualbible.org/virtual_bible_text_greek.csv', "r");
+	$data='0% Processing...';
 	write_file($data);
-	$vb_counter=0;
 	$oldbook='';
 	while (($column = fgetcsv($file, 10000, ",")) !== FALSE) 
 		{
-		if($column[0]!='id')  #31104
+		if($column[0]!='id')  #7913
 			{
 			$counter++;
+			$greek=html_entity_decode($column[4]);
 			$wpdb->insert
 				( 
 				$table_name,
@@ -70,29 +67,22 @@ if($verify)
 					'book'		=>  $column[1],
 					'chapter'	=>  $column[2],
 					'verse'		=>  $column[3],
-					'text'		=>  $column[4]
+					'text'		=>  $greek
 					)
 				);
+
 			$bid=$column[1];
 			$book=$Books[$bid];
 			if($book!=$oldbook)
 				{
-				$progress=floor(($counter/31104)*100);
+				$progress=floor(($counter/7913)*100);
 				$data="$progress"."% $book";
 				write_file($data);
 				$oldbook=$book;
-#				echo "$progress"."% $book<br>\n";
-#				echo str_pad('',4096)."\n";    
-#				flush();
-#				usleep(500000);
 				}
+
 			}
 		}
-
-#	echo "Done<br>\n";
-#	echo str_pad('',4096)."\n";    
-#	flush();
-
 
 	$table_name = $wpdb->prefix . 'virtual_bible_meta';
 	$wpdb->insert
@@ -100,21 +90,20 @@ if($verify)
 		$table_name,
 		array
 			( 
-			'meta_key'		=>  'module_kjvs',
+			'meta_key'		=>  'module_greek',
 			'meta_value'	=>  'installed'
 			)
 		);
-
+		
 	$data='100% Done';
 	write_file($data);
 	}
 
 
 
-
 function write_file($data)
 	{	
-	$filename='kjvs.log';
+	$filename='greek.log';
 	$fp = fopen("./$filename", "w");
 	fwrite ($fp, $data);
 	fclose ($fp);

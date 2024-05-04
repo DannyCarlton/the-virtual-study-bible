@@ -2,12 +2,29 @@
 /**
 * Plugin Name: The Virtual Study Bible
 * Plugin URI: https://VirtualBible.org/
-* Description: A complete study Bible on your Wordpress site!! (NOTE: Installation must be completed on the Settings page.)
+* Description: A complete study Bible on your Wordpress site!! 
 * Version: 1.0
-* Author: Danny Carlton
+* Author: Danny Carlton Ministries
 * Author URI: http://DannyCarlton.org/
 **/
 
+
+
+/* 
+	Hi there,
+
+	I assume if you're seeing this, you're perusing my code. 
+	
+	Welcome.
+
+	I have to admit, I'm probably not the best coder and I have a bad habit of not documenting my code very well. 
+
+	I also am not a big fan of the newer coding style using classes and constructers and all that confusing, and in my opinion, unnecessary garbage. I'm pretty much old school. My first coding was in 1982, on a Unix mainframe, using basic, until I started annoying the engeneering students by slowing down the system. It was suggested I buy a floppy and use the Apple ]['s instead. I did, and never looked back. I eventually moved to the IBM PC's and in the early 90's was fianlly able to save up enough to buy my first computer (an IBM clone with a monichrome moniter and a hercules graphics card).
+
+	In other words, I'm 100% self-taught.
+
+	---Danny Carlton
+*/
 
 add_action( 'admin_menu', 'wpdocs_register_virtual_bible_menu_page' );
 
@@ -72,11 +89,9 @@ function virtual_bible_is_installed()
 	if($wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name)
 		{
 		$installed=false;
-#		write_log($table_name. ' table does not exist');
 		}
 	else
 		{
-#		write_log($table_name.' table exists');
 		$wpdb->get_results("SELECT id FROM $table_name"); //db call ok; no-cache ok
 		if($wpdb->num_rows<66)
 			{
@@ -89,16 +104,13 @@ function virtual_bible_is_installed()
 	if($wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name)
 		{
 		$installed=false;
-#		write_log($table_name. ' table does not exist');
 		}
 	else
 		{
-#		write_log($table_name.' table exists');
 		$wpdb->get_results("SELECT id FROM $table_name"); //db call ok; no-cache ok
 		if($wpdb->num_rows<31102)
 			{
 			$installed=false;
-#			write_log($table_name.' has only '.$wpdb->num_rows.' rows!');
 			}
 		}
 
@@ -106,16 +118,13 @@ function virtual_bible_is_installed()
 	if($wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name)
 		{
 		$installed=false;
-#		write_log($table_name. ' table does not exist');
 		}
 	else
 		{
-#		write_log($table_name.' table exists');
 		$wpdb->get_results("SELECT id FROM $table_name"); //db call ok; no-cache ok
 		if($wpdb->num_rows<8673)
 			{
 			$installed=false;
-#			write_log($table_name.' has only '.$wpdb->num_rows.' rows!');
 			}
 		}
 
@@ -124,16 +133,13 @@ function virtual_bible_is_installed()
 	if($wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name)
 		{
 		$installed=false;
-#		write_log($table_name. ' table does not exist');
 		}
 	else
 		{
-#		write_log($table_name.' table exists');
 		$wpdb->get_results("SELECT id FROM $table_name"); //db call ok; no-cache ok
 		if($wpdb->num_rows<5624)
 			{
 			$installed=false;
-#			write_log($table_name.' has only '.$wpdb->num_rows.' rows!');
 			}
 		}
 
@@ -143,7 +149,6 @@ function virtual_bible_is_installed()
 		$installed=false;
 		}
 
-	# See if they contain the correct data...
 
 	if($installed)
 		{
@@ -180,19 +185,6 @@ function virtual_bible_add_plugin_page_donate_link( $links)
 	$links[] = '<b style="color:#f44"><a href="https://ko-fi.com/dannycarltonministrysites" target="_blank">'.__('Donate').'</a></b>';
 	return $links;
 	}
-
-
-/*
-
-add_filter('plugin_action_links_'.plugin_basename(__FILE__), 'virtual_bible_debug_link');
-	
-function virtual_bible_debug_link( $links)
-	{
-	$time_marker=date('h:i:s a', time());
-	$links[] = '<span style="color:#000">'.$time_marker.'</span>';
-	return $links;
-	}
-*/
 
 
 register_activation_hook( __FILE__, 'virtual_bible_on_activation');
@@ -260,6 +252,38 @@ function virtual_bible_create_db_table()
 			longname text NOT NULL,
 			PRIMARY KEY id (id)
 			) $charset_collate ENGINE=MyISAM;");
+
+	$table_name = $wpdb->prefix . 'virtual_bible_lexicon_hebrew';
+	array_push($Queries, "CREATE TABLE IF NOT EXISTS $table_name (
+		id 				int(11) 		NOT NULL,
+		orig_word 		text 			NOT NULL,
+		orig_word_utf8 	varchar(50) 	NOT NULL,
+		orig_word_enc	text 			NOT NULL,
+		word_orig		text 			NOT NULL,
+		translit		text			NOT NULL,
+		tdnt			text			NOT NULL,
+		phonetic		text			NOT NULL,
+		part_of_speech	text			NOT NULL,
+		st_def			text			NOT NULL,
+		ipd_def			text			NOT NULL,
+		PRIMARY KEY id (id)
+		) $charset_collate ENGINE=MyISAM;");
+
+	$table_name = $wpdb->prefix . 'virtual_bible_lexicon_greek';
+	array_push($Queries, "CREATE TABLE IF NOT EXISTS $table_name (
+		id 				int(11) 		NOT NULL,
+		orig_word 		text 			NOT NULL,
+		orig_word_utf8 	varchar(75) 	NOT NULL,
+		orig_word_enc	text 			NOT NULL,
+		word_orig		text 			NOT NULL,
+		translit		text			NOT NULL,
+		tdnt			text			NOT NULL,
+		phonetic		text			NOT NULL,
+		part_of_speech	text			NOT NULL,
+		st_def			text			NOT NULL,
+		ipd_def			text			NOT NULL,
+		PRIMARY KEY id (id)
+		) $charset_collate ENGINE=MyISAM;");
 			
 	if ( ! function_exists('dbDelta') )
 		{
@@ -294,14 +318,10 @@ function virtual_bible_load_db_books()
 			$dbRow=$wpdb->get_results("SELECT * FROM $table_name WHERE `id` = $r;", ARRAY_A); //db call ok; no-cache ok
 			if(isset($dbRow[0]['id']))
 				{
-#				write_log('Row '.$r.' exists');
 				}
 			else
 				{
-#				write_log('$dbRow = ');
-#				write_log($dbRow);
 				$Column=$Columns[$r];
-				write_log( 'Writing row '.$r.' to database: '.$row );
 				$wpdb->insert
 					( 
 					$table_name,
@@ -320,44 +340,6 @@ function virtual_bible_load_db_books()
 		}
 
 	}
-
-
-
-/*
-
-register_activation_hook( __FILE__, 'virtual_bible_load_db_text');
-
-function virtual_bible_load_db_text()
-	{
-	global $wpdb;
-	$charset_collate = $wpdb->get_charset_collate();
-	$table_name = $wpdb->prefix . 'virtual_bible_kjvs';
-
-	$file = fopen(ABSPATH . '/wp-content/plugins/the-virtual-study-bible/virtual_bible_kjvs.csv', "r");
-	$vb_counter=0;
-	while (($column = fgetcsv($file, 10000, ",")) !== FALSE) 
-		{
-		if($column[0]!='id')
-			{
-			$vb_counter++;
-			$wpdb->insert
-				( 
-				$table_name,
-				array
-					( 
-					'id'		=>  $vb_counter,
-					'book'		=>  $column[1],
-					'chapter'	=>  $column[2],
-					'verse'		=>  $column[3],
-					'text'		=>  $column[4]
-					)
-				);
-			}
-		}
-	
-
-	}
-*/
 
 register_uninstall_hook(__FILE__, 'virtual_bible_on_uninstall');
 
@@ -378,6 +360,10 @@ function virtual_bible_on_uninstall()
 		dbDelta ( $sql );
 		}
 	}
+
+
+
+
 
 function write_log( $data ) 
 	{

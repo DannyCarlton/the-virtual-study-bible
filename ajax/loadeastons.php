@@ -3,40 +3,81 @@ header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 
-$counter=0;
-$data='0% Loading data from cdn...';
+$data='0% loading...';
 write_file($data);
-$file = fopen('https://cdn.virtualbible.org/virtual_bible_easton_dictionary.csv', "r");
-$data='0% Data loaded. Processing...';
-write_file($data);
-$oldbook='';
-while (($column = fgetcsv($file, 10000, ",")) !== FALSE) 
+
+include('../../../../wp-load.php');
+$verify = wp_verify_nonce($_GET['_wpnonce'], 'eastons');
+
+if($verify)
 	{
-	if($column[0]!='id')  #3963
+	$Queries=[];
+	$charset_collate = $wpdb->get_charset_collate();
+	$table_name = $wpdb->prefix . 'virtual_bible_eastons';
+	array_push($Queries, "CREATE TABLE IF NOT EXISTS $table_name (
+			id 			int(11) 	NOT NULL AUTO_INCREMENT,
+			reference 		text 		NOT NULL,
+			definition 		text 		NOT NULL,
+			PRIMARY 		KEY id 		(id),
+			KEY 			reference	(reference)
+			) $charset_collate ENGINE=MyISAM;");
+	if ( ! function_exists('dbDelta') )
 		{
-		$counter++;
-		$word=$column[1];
-		if(($counter/100) == floor($counter/100))
+		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+		}
+	foreach($Queries as $sql)
+		{
+		dbDelta ( $sql );
+		}
+	
+	$counter=0;
+	$file = fopen('https://cdn.virtualbible.org/virtual_bible_easton_dictionary.csv', "r");
+	$data='0% Processing...';
+	write_file($data);
+	$oldbook='';
+	while (($column = fgetcsv($file, 10000, ",")) !== FALSE) 
+		{
+		if($column[0]!='id')  #3963
 			{
-			$progress=floor(($counter/3963)*100);
-			$data="$progress"."% $word";
-			write_file($data);
-			echo "$progress"."% $word<br>\n";
-			echo str_pad('',4096)."\n";    
-			flush();
-			usleep(500000);
+			$counter++;
+			$wpdb->insert
+				( 
+				$table_name,
+				array
+					( 
+					'id'			=>  $column[0],
+					'reference'		=>  $column[1],
+					'definition'	=>  $column[2]
+					)
+				);
+			$word=$column[1];
+			if(($counter/100) == floor($counter/100))
+				{
+				$progress=floor(($counter/3963)*100);
+				$letter=substr($word,0,1);
+				$letter=strtoupper($letter);
+				$data="$progress"."% ... $letter&rsquo;s ...";
+				write_file($data);				
+				}
 			}
 		}
+
+
+	$table_name = $wpdb->prefix . 'virtual_bible_meta';
+	$wpdb->insert
+		( 
+		$table_name,
+		array
+			( 
+			'id'			=>  NULL,
+			'meta_key'		=>  'module_eastons',
+			'meta_value'	=>  'installed'
+			)
+		);
+
+	$data='100% Done';
+	write_file($data);
 	}
-
-
-
-echo "Done<br>\n";
-echo str_pad('',4096)."\n";    
-flush();
-$data='100% Done';
-write_file($data);
-
 
 
 

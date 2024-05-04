@@ -8,10 +8,10 @@ wp_register_style('vb-logofont-css', plugins_url().'/the-virtual-study-bible/css
 wp_enqueue_style('vb-logofont-css');
 wp_register_style('vb-stepwizard-css', plugins_url().'/the-virtual-study-bible/css/stepwizard.css');
 wp_enqueue_style('vb-stepwizard-css');
-wp_register_style('vb-styles-css', plugins_url().'/the-virtual-study-bible/css/vb-styles.css');
-wp_enqueue_style('vb-styles-css');
 wp_register_style('vb-fade-css', plugins_url().'/the-virtual-study-bible/css/fade.css');
 wp_enqueue_style('vb-fade-css');
+wp_register_style('vb-styles-css', plugins_url().'/the-virtual-study-bible/css/vb-styles.css');
+wp_enqueue_style('vb-styles-css');
 
 wp_register_script('vb-jquery-js', plugins_url().'/the-virtual-study-bible/js/jquery-1.11.1.js');
 wp_enqueue_script('vb-jquery-js');
@@ -23,138 +23,17 @@ wp_enqueue_script('vb-stepwizard-js');
 
 include_once(plugin_dir_path(__FILE__).'includes/modules.php');
 
+$kjvs_installed=virtual_bible_is_module_installed('kjvs');
+$strongs_installed=virtual_bible_is_module_installed('strongs');
+$eastons_installed=virtual_bible_is_module_installed('eastons');
+$hebrew_installed=virtual_bible_is_module_installed('hebrew');
+$greek_installed=virtual_bible_is_module_installed('greek');
+$holman_installed=virtual_bible_is_module_installed('holman');
+
 ?>
-<style>
-	#wpcontent
-		{
-		background-color:#f0f0f1;
-		min-height:100%;
-		}
-	#wpbody 
-		{
-		padding-right:20px;
-		min-height:100vh;
-		}
-	#wpbody-content 
-		{
-		margin-right:20px;
-		}
-	.nav-tabs li.vb-nav-tab a
-		{
-		background-color:#ddd;
-		border:1px solid #555;
-		font-size:15px;
-		font-family: "Montserrat", sans-serif;
-		}
-	.nav-tabs li.vb-nav-tab a:hover
-		{
-		background-color:#fff;
-		border:1px solid #555;
-		}
-	.nav-tabs li.vb-nav-tab.active a
-		{
-		background-color:#fff;	
-		font-weight:bold;
-		border:1px solid #555;
-		border-bottom-color:transparent;
-		font-size:17px;
-		}
-	.nav-tabs li.vb-nav-tab.active a:hover
-		{
-		border:1px solid #555;
-		border-bottom-color:transparent;	
-		}	
-	.poppins-black {
-		font-family: "Poppins", sans-serif !important;
-		font-weight: 900;
-		font-style: normal;
-		}
-	.montserrat {
-		font-family: "Montserrat", sans-serif !important;
-		font-weight: 300;
-		font-style: normal;
-		}
-	div.wizard.top-content
-		{
-		font-family: "Montserrat", sans-serif !important;
-		color:#000;
-		}
-
-		
-
-	.vb-progress {
-		width: 85px;
-		height: 85px;
-		background: none;
-		position: relative;
-		}
-
-	.vb-progress::after {
-		content: "";
-		width: 100%;
-		height: 100%;
-		border-radius: 50%;
-		border: 6px solid #eee;
-		position: absolute;
-		top: 0;
-		left: 0;
-		}
-
-	.vb-progress>span {
-		width: 50%;
-		height: 100%;
-		overflow: hidden;
-		position: absolute;
-		top: 0;
-		z-index: 1;
-		}
-
-	.vb-progress .progress-left {
-		left: 0;
-		}
-
-	.vb-progress .progress-bar {
-		width: 100%;
-		height: 100%;
-		background: none;
-		border-width: 6px;
-		border-style: solid;
-		position: absolute;
-		top: 0;
-		}
-
-	.vb-progress .progress-left .progress-bar {
-		left: 100%;
-		border-top-right-radius: 80px;
-		border-bottom-right-radius: 80px;
-		border-left: 0;
-		-webkit-transform-origin: center left;
-		transform-origin: center left;
-		}
-
-	.vb-progress .progress-right {
-		right: 0;
-		}
-
-	.vb-progress .progress-right .progress-bar {
-		left: -100%;
-		border-top-left-radius: 80px;
-		border-bottom-left-radius: 80px;
-		border-right: 0;
-		-webkit-transform-origin: center right;
-		transform-origin: center right;
-		}
-
-	.vb-progress .progress-value {
-		position: absolute;
-		top: 10px;
-		left: 0;
-		left:0;
-		right:0;
-		}
-</style>
+<!-- The Virtual Study Bible Plugin: Settings Start -->
 <h2 class="poppins-black" style="color:#3a72d3;text-shadow: 1px 1px 0px #fff, 2px 2px 5px #333;">
-	<img src="<?php echo plugin_dir_url(__FILE__);?>logo.png" style="width:45px;vertical-align: bottom;" /> 
+	<img src="<?php echo plugin_dir_url(__FILE__);?>logo.png" style="width:45px;" /> 
 	The Virtual Study Bible Plugin
 </h2>
 <ul class="nav nav-tabs">
@@ -212,23 +91,52 @@ include_once(plugin_dir_path(__FILE__).'includes/modules.php');
                     		</div>
                     		
                     		<fieldset>
-                    		    <h4>The Basic Modules:</h4>
+                    		    <h4>The Basic Modules: 
+									<small>Many of these modules will take more than a few seconds to load, so we left them to be installed here, rather than when the plugin itself was installed.</small></h4>
 								<div class="col-sm-12 col-md-6 col-lg-4">
 									<div class="block icon-block bg-secondary-faded w-border-2x border-secondary inner-space rounded-2x text-center module">
 										<i class="fa-solid fa-list md-icon dp36 box-icon bg-secondary-faded border-secondary pill"></i>
 										<h6 class="box-title poppins-black" style="color:#000">Books of the Bible</h6>
-										<p class="box-description montserrat">This module was loaded when you installed the plugin. It includes the names of the books of the Bible, the most common abbreviations (for searching purposes) and the long name of each book (ex: The First Book of Moses called Genesis).</p>
+										<p class="box-description montserrat">This module was loaded when you installed the plugin. It includes the names of the books of the Bible, the most common abbreviations (for searching purposes) and the long name of each book.</p>
+										<div id="module-books-installed"
+										style="	padding:4px 20px;
+												font-size:14px;
+												line-height:1.1;
+												letter-spacing:1px;
+												color:#000;
+												height:40px;
+												position:absolute;
+												bottom:30px;
+												left:0;right:0;
+												margin-left:auto;
+												margin-right:auto;">Module Installed!</div>
 									</div><!-- / icon-block -->
 								</div><!-- / column -->
 
 								<?php 
-									$text="While this is an essential module, it takes a while to load, so rather than make you wait while installing the plugin, you can install it here, and watch the progress of the installation.";
-									echo module_uninstalled_html('kjvs','danger','book-bible','The King James Bible',$text,plugin_dir_url(__FILE__)); ?>
+									$text="This will install the full King James Authorized Text (Cambridge variant), with words keyed to Strong's.<br><small>[size: 8.8M]</small>";
+									if($kjvs_installed)
+										{
+										echo virtual_bible_module_installed_html('kjvs','danger','book-bible','The King James Bible',$text,plugin_dir_url(__FILE__)); 
+										}
+									else
+										{
+										echo virtual_bible_module_uninstalled_html('kjvs','danger','book-bible','The King James Bible',$text,plugin_dir_url(__FILE__)); 
+										}
+								?>
 
 									
 								<?php 
-									$text="This will load both the Hebrew and Greek lexicons (14,298 entries!). The King James text is keyed to these entries, so your site visitors can view the definitions for the words and phrases in the text.";
-									echo module_uninstalled_html('strongs','info','language','Strong&rsquo;s Hebrew and Greek Lexicons',$text,plugin_dir_url(__FILE__)); ?>
+									$text="This will load both the Hebrew and Greek lexicons (14,298 entries!). Many of the Bible texts will be keyed to the corresponding entries, to provide quick access to the definition.<br><small>[size: 5.4M]</small>";
+									if($strongs_installed)
+										{
+										echo virtual_bible_module_installed_html('strongs','info','language','Strong&rsquo;s Hebrew and Greek Lexicons',$text,plugin_dir_url(__FILE__));
+										}
+									else
+										{
+										echo virtual_bible_module_uninstalled_html('strongs','info','language','Strong&rsquo;s Hebrew and Greek Lexicons',$text,plugin_dir_url(__FILE__));
+										}
+								 ?>
 
 
                                 <div class="f1-buttons" style="clear:both;padding-top:30px">
@@ -243,20 +151,52 @@ include_once(plugin_dir_path(__FILE__).'includes/modules.php');
 								
 									
 								<?php 
-									$text="This will load the Easton's Bible Dictionary (3,963 entries!). When selected, words in the text will be keyed to the matching Easton's definition and displayed when clicked.";
-									echo module_uninstalled_html('eastons','info','arrow-down-a-z','Easton&rsquo;s Bible Dictionary',$text,plugin_dir_url(__FILE__)); ?>
+									$text="This will load the Easton's Bible Dictionary (3,963 entries!). When selected, words in the text will be keyed to the matching Easton's definition and displayed when clicked.<br><small>[size: 2.6M]</small>";
+									if($eastons_installed)
+										{
+										echo virtual_bible_module_installed_html('eastons','info','arrow-down-a-z','Easton&rsquo;s Bible Dictionary',$text,plugin_dir_url(__FILE__));
+										}
+									else
+										{
+										echo virtual_bible_module_uninstalled_html('eastons','info','arrow-down-a-z','Easton&rsquo;s Bible Dictionary',$text,plugin_dir_url(__FILE__));
+										}
+								?>
 									
 								<?php 
-									$text="This will load the entire Masoretic Hebrew (Old Testament) text. It can be displayed alongside the English text, and the verses will be matched by highlighting the corresponding verse.";
-									echo module_uninstalled_html('hebrew','danger','&#1488;','Hebrew Text',$text,plugin_dir_url(__FILE__)); ?>
+									$text="This will load the entire Masoretic (Leningrad Codex) Hebrew (Old Testament) text. It can be displayed alongside the English text, and the verses will be matched by highlighting the corresponding verse.<br><small>[size: 5.9M]</small>";
+									if($hebrew_installed)
+										{
+										echo virtual_bible_module_installed_html('hebrew','danger','&#1488;','Hebrew Text',$text,plugin_dir_url(__FILE__));
+										}
+									else
+										{
+										echo virtual_bible_module_uninstalled_html('hebrew','danger','&#1488;','Hebrew Text',$text,plugin_dir_url(__FILE__));
+										}
+								 ?>
 
 								<?php 
-									$text="This will load the entire Textus Receptus Greek (New Testament) text. It can be displayed alongside the English text, and the verses will be matched by highlighting the corresponding verse.";
-									echo module_uninstalled_html('greek','danger','&Sigma;','Greek Text',$text,plugin_dir_url(__FILE__)); ?>
+									$text="This will load the entire Textus Receptus Greek (New Testament) text. It can be displayed alongside the English text, and the verses and words will be matched by highlighting the corresponding verse, word and phrase.<br><small>[size: 8.7M]</small>";
+									if($greek_installed)
+										{
+										echo virtual_bible_module_installed_html('greek','danger','&Sigma;','Greek Text',$text,plugin_dir_url(__FILE__));
+										}
+									else
+										{
+										echo virtual_bible_module_uninstalled_html('greek','danger','&Sigma;','Greek Text',$text,plugin_dir_url(__FILE__));
+										} 
+								?>
 
 								<?php 
-									$text="This will load the Holman Crossreference, linking 3,992 verses to 61,307 related verses.";
-									echo module_uninstalled_html('holman','info','arrows-turn-to-dots','Holman Cross-Reference',$text,plugin_dir_url(__FILE__)); ?>
+									$text="This will load the Holman Crossreference, linking 3,992 verses to 57,812 related verses.<br><small>[size: 3.5M]</small>";
+									if($holman_installed)
+										{
+										echo virtual_bible_module_installed_html('holman','info','arrows-turn-to-dots','Holman Cross-Reference',$text,plugin_dir_url(__FILE__));
+										}
+									else
+										{
+										echo virtual_bible_module_uninstalled_html('holman','info','arrows-turn-to-dots','Holman Cross-Reference',$text,plugin_dir_url(__FILE__));
+										}  
+								?>
 
 
 
@@ -437,11 +377,17 @@ include_once(plugin_dir_path(__FILE__).'includes/modules.php');
 window.addEventListener('load',function()
 	{
 
-	<?php echo module_uninstalled_js('kjvs',plugin_dir_url(__FILE__)); ?>
+	<?php echo virtual_bible_module_uninstalled_js('kjvs',plugin_dir_url(__FILE__)); ?>
 
-	<?php echo module_uninstalled_js('strongs',plugin_dir_url(__FILE__)); ?>
+	<?php echo virtual_bible_module_uninstalled_js('strongs',plugin_dir_url(__FILE__)); ?>
 
-	<?php echo module_uninstalled_js('eastons',plugin_dir_url(__FILE__)); ?>
+	<?php echo virtual_bible_module_uninstalled_js('eastons',plugin_dir_url(__FILE__)); ?>
+
+	<?php echo virtual_bible_module_uninstalled_js('hebrew',plugin_dir_url(__FILE__)); ?>
+
+	<?php echo virtual_bible_module_uninstalled_js('greek',plugin_dir_url(__FILE__)); ?>
+
+	<?php echo virtual_bible_module_uninstalled_js('holman',plugin_dir_url(__FILE__)); ?>
 		
 	});
 
@@ -449,7 +395,6 @@ window.addEventListener('load',function()
 	function housekeeping(file)
 		{
 		var nonce_url = "<?php echo wp_nonce_url(plugin_dir_url(__FILE__).'ajax/housekeeping.php','housekeeping'); ?>";
-		console.log(nonce_url);
 		$.ajax(
 			{
 			type: 'GET',
@@ -488,3 +433,4 @@ window.addEventListener('load',function()
 			}
 		}
 </script>
+<!-- The Virtual Study Bible Plugin: Settings End -->

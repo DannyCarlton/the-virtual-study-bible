@@ -9,10 +9,15 @@ The current form of the Settings page...
 		modules (installed, not installed, with new modules highlighted.)
 		Styles used and new styles available.
 Fontawesome rotating arrows on submit button 
+Use wordpress user id to save individual user choices.
+If not logged in ??
+
+Recreate hebrew text from _work/Hebrew/osmhb.xml <=Leningrad w/Strong's 
+	Use bhs.xml to get book names
 
 
-TODAY... 
-	Add nonce to all ajax calls
+TODAY...  
+		Add notice if nonce fails
 
 
 

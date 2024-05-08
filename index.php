@@ -2,7 +2,7 @@
 /**
 * Plugin Name: The Virtual Study Bible
 * Plugin URI: https://VirtualBible.org/
-* Description: A complete study Bible on your Wordpress site!! 
+* Description: A complete study Bible on your Wordpress site!! (Activation must be completed in plugin settings page.)
 * Version: 1.0
 * Author: Danny Carlton Ministries
 * Author URI: http://DannyCarlton.org/
@@ -19,15 +19,19 @@
 
 	I have to admit, I'm probably not the best coder and I have a bad habit of not documenting my code very well. 
 
-	I also am not a big fan of the newer coding style using classes and constructers and all that confusing, and in my opinion, unnecessary garbage. I'm pretty much old school. My first coding was in 1982, on a Unix mainframe, using basic, until I started annoying the engeneering students by slowing down the system. It was suggested I buy a floppy and use the Apple ]['s instead. I did, and never looked back. I eventually moved to the IBM PC's and in the early 90's was fianlly able to save up enough to buy my first computer (an IBM clone with a monichrome moniter and a hercules graphics card).
+	I also am not a big fan of the newer coding style using classes and constructers and all that confusing, and in my opinion, unnecessary garbage. I'm pretty much old school. My first coding was in 1982, on a Unix mainframe, using basic, until I started annoying the engineering students by slowing down the system. It was suggested I buy a floppy and use the Apple ]['s instead. I did, and never looked back. I eventually moved to the IBM PC's and in the early 90's was finally able to save up enough to buy my first computer (an IBM clone with a monochrome moniter and a hercules graphics card!).
 
 	In other words, I'm 100% self-taught.
+
+	And, yes, I know that there's a lot of inefficiencies in this coding. I did it all myself, and was in a little bit of a rush. My focus was on getting it functional and looking nice. Streamlining the coding was secondary to that. I plan on making it more efficient as I improved it for updates.
 
 	---Danny Carlton
 */
 
-add_action( 'admin_menu', 'wpdocs_register_virtual_bible_menu_page' );
 
+/* BEGIN: Stuff to do every time */
+
+add_action( 'admin_menu', 'wpdocs_register_virtual_bible_menu_page' );
 function wpdocs_register_virtual_bible_menu_page() 
 	{
 	add_menu_page
@@ -42,7 +46,6 @@ function wpdocs_register_virtual_bible_menu_page()
 	}
 
 add_action('admin_menu','wpdocs_register_virtual_bible_submenu_page_admin');
-
 function wpdocs_register_virtual_bible_submenu_page_admin()
 	{
 	add_submenu_page(
@@ -54,14 +57,14 @@ function wpdocs_register_virtual_bible_submenu_page_admin()
 		);
 	add_submenu_page(
 		'virtual_bible_menu_slug',
-		'Virtual Bible Settings',
+		'Virtual Bible Help',
 		'<span class="dashicons dashicons-editor-help" style="color:#709fef"></span>&nbsp;Help',
 		'administrator', 
 		'the-virtual-study-bible/help.php'
 		);
 	add_submenu_page(
 		'virtual_bible_menu_slug',										#parent slug
-		'Contribute',													#page title
+		'Virtual Bible Contribute',										#page title
 		'<span class="dashicons dashicons-heart" style="color:#ed0000"></span>&nbsp;Contribute',	#menu title
 		'administrator', 												#capability
 		'the-virtual-study-bible/contribute.php'						#callback
@@ -70,21 +73,18 @@ function wpdocs_register_virtual_bible_submenu_page_admin()
 	}
 
 add_action('admin_menu','virtual_bible_clean_menus');
-
 function virtual_bible_clean_menus()
 	{
 	remove_submenu_page('virtual_bible_menu_slug','virtual_bible_menu_slug'); #This removes the main menu title from the list of submenus
 	}
-
 	
 add_action('admin_menu','virtual_bible_is_installed');
-
 function virtual_bible_is_installed()
 	{
 	global $wpdb;
 	$installed=true;
-	# See if the required database tables exist...
 
+	# See if the required database tables exist...
 	$table_name = $wpdb->prefix . 'virtual_bible_books';
 	if($wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name)
 		{
@@ -160,8 +160,6 @@ function virtual_bible_is_installed()
 		}
 	}
 
-
-
 function virtual_bible_add_plugin_page_settings_link_installed( $links )
 	{
 	$links[] = '<a href="'.
@@ -178,14 +176,20 @@ function virtual_bible_add_plugin_page_settings_link_uninstalled( $links )
 	return $links;
 	}
 
-add_filter('plugin_action_links_'.plugin_basename(__FILE__), 'virtual_bible_add_plugin_page_donate_link');
-	
+add_filter('plugin_action_links_'.plugin_basename(__FILE__), 'virtual_bible_add_plugin_page_donate_link');	
 function virtual_bible_add_plugin_page_donate_link( $links)
 	{
 	$links[] = '<b style="color:#f44"><a href="https://ko-fi.com/dannycarltonministrysites" target="_blank">'.__('Donate').'</a></b>';
 	return $links;
 	}
 
+
+include_once(plugin_dir_path(__FILE__).'includes/study-bible.php');
+
+/* END: Stuff to do every time */
+
+
+/* BEGIN: Stuff to do only when plugin is activated */
 
 register_activation_hook( __FILE__, 'virtual_bible_on_activation');
 
@@ -295,7 +299,6 @@ function virtual_bible_create_db_table()
 		}
 	}
 
-
 function virtual_bible_load_db_books()
 	{
 	global $wpdb;
@@ -339,7 +342,56 @@ function virtual_bible_load_db_books()
 		$dbRow=[];
 		}
 
+	$table_name = $wpdb->prefix . 'virtual_bible_meta';
+	# See if the table exists (first install) ...
+	$query = $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $table_name ) );
+	if ( ! $wpdb->get_var( $query ) == $table_name ) # It doesn't so ...
+		{
+		$wpdb->insert
+			( 
+			$table_name,
+			array
+				( 
+				'meta_key'		=>  'style_traditional',
+				'meta_value'	=>  'selected'
+				)
+			);
+		$wpdb->insert
+			( 
+			$table_name,
+			array
+				( 
+				'meta_key'		=>  'style_paragraph',
+				'meta_value'	=>  'selected'
+				)
+			);
+		$wpdb->insert
+			( 
+			$table_name,
+			array
+				( 
+				'meta_key'		=>  'style_reader',
+				'meta_value'	=>  'selected'
+				)
+			);
+		$wpdb->insert
+			( 
+			$table_name,
+			array
+				( 
+				'meta_key'		=>  'page_name',
+				'meta_value'	=>  'Study Bible'
+				)
+			);
+		}
+
 	}
+
+/* END: Stuff to do only when plugin is activated */
+
+
+
+/* BEGIN: Stuff to do when plugin is deleted */
 
 register_uninstall_hook(__FILE__, 'virtual_bible_on_uninstall');
 
@@ -361,10 +413,11 @@ function virtual_bible_on_uninstall()
 		}
 	}
 
+/* END: Stuff to do when plugin is deleted */
 
 
 
-
+/* For debugging purposes. If this is till here in production version, then I screwed up. But don't worry; it's basically harmless. */
 function write_log( $data ) 
 	{
 	if ( true === WP_DEBUG ) 

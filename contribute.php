@@ -6,7 +6,7 @@ wp_register_style('myfonts', plugins_url().'/the-virtual-study-bible/css/fontawe
 wp_enqueue_style('myfonts');
 wp_register_style('logofont', plugins_url().'/the-virtual-study-bible/css/logofont.css');
 wp_enqueue_style('logofont');
-
+$plugin_url=plugin_dir_url(__FILE__);
 
 ?>
 <style>
@@ -55,7 +55,7 @@ wp_enqueue_style('logofont');
 		}
 </style>
 <h2 class="poppins-black" style="color:#3a72d3;text-shadow: 1px 1px 0px #fff, 2px 2px 5px #333;">
-	<img src="<?php echo plugin_dir_url(__FILE__);?>logo.png" style="width:45px;vertical-align: bottom;margin-bottom:-8px" /> 
+	<img src="<?php echo $plugin_url;?>logo.png" style="width:45px;vertical-align: bottom;margin-bottom:-8px" /> 
 	The Virtual Study Bible Plugin
 </h2>
 <ul class="nav nav-tabs">

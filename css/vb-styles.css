@@ -679,6 +679,7 @@
 	padding:0 20px;	
 	font-family: "Montserrat", sans-serif;
 	margin:5px 2px;
+	cursor:default;
 	}
 
 .btn.pill.dark.btn-module 
@@ -888,4 +889,42 @@ h4
 	.wizard .container 
 		{
 		width:100%;
+		}
+
+	.module-selected
+		{
+		display:none;
+		}
+
+	.module-selected.installed 
+		{
+		display:inline-block;
+		}
+
+	.nav 
+		{
+		margin-bottom:-1px;
+		}
+	.nav-tabs > li 
+		{
+		margin-top:-1px;
+		}
+	.nav-tabs > li.active 
+		{
+		margin-top:-4px;
+		}
+	h1.entry-title 
+		{
+		font-family: "Poppins", sans-serif !important;
+		font-weight: 900;
+		font-style: normal;
+		font-size: 27px;
+		}
+	input.reference::placeholder
+		{
+		font-weight:normal;
+		}
+	.tab-pane.fade
+		{
+		opacity:100;
 		}

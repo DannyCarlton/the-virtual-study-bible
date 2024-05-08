@@ -7,8 +7,6 @@ include('../../../../wp-load.php');
 
 $verify = wp_verify_nonce($_GET['_wpnonce'], 'housekeeping');
 
-$nonce=$_GET['_wpnonce'];
-
 $file=$_GET['file'];
 
 
@@ -24,8 +22,6 @@ if($verify)
 		{
 		wp_delete_file($file);
 		}
-
-	echo "file: $file has been removed.<br>nonce: $nonce<br>Verfied: $verify";
 	}
 
 

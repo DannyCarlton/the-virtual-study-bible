@@ -6,9 +6,11 @@ function virtual_bible_is_module_installed($name)
 	global $wpdb;
 	$table_name = $wpdb->prefix . 'virtual_bible_meta';
 	$Results = $wpdb->get_results("SELECT meta_value from $table_name WHERE meta_key = 'module_$name' LIMIT 1;", ARRAY_A);
-	if(isset($Results[0]['meta_value']) and $Results[0]['meta_value']=='installed')
+#	write_log("name: $name\n".getPrintR($Results));
+	if(isset($Results[0]['meta_value']) and $Results[0]['meta_value']!='')
 		{
-		return TRUE;
+#		return TRUE;
+		return $Results[0]['meta_value'];
 #		return getPrintR($Results);
 		}
 	else
@@ -51,7 +53,7 @@ function virtual_bible_module_uninstalled_html($name,$type,$fa_icon,$title,$text
 		}
 
 	$raw_html = <<<EOD
-	<div class="col-md-6 col-lg-4">
+	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
 		<div class="block icon-block bg-{$type}-faded w-border-2x border-{$type} dark inner-space rounded-2x text-center module"  style="text-shadow:1px 1px 10px rgba(0, 0, 0, 0.56)">
 
 			<!-- Progress bar for this module -->
@@ -112,12 +114,17 @@ function virtual_bible_module_uninstalled_html($name,$type,$fa_icon,$title,$text
 	
 
 
-function virtual_bible_module_installed_html($name,$type,$fa_icon,$title,$text,$plugin_url)
+function virtual_bible_module_installed_html($name,$type,$fa_icon,$title,$text,$plugin_url,$status='installed')
 	{
-	$icon_style='';$icon_text='';
+	$icon_style='';$icon_text='';$disable=TRUE;
 	if($name=='strongs')
 		{
 		$icon_style='padding-left:20px;padding-right:20px';
+		$disable=FALSE;
+		}
+	if($name=='kjvs')
+		{
+		$disable=FALSE;
 		}
 	if($fa_icon=='&#1488;')
 		{
@@ -144,8 +151,129 @@ function virtual_bible_module_installed_html($name,$type,$fa_icon,$title,$text,$
 		$fa_icon='';
 		}
 
+	if($status=='disabled')
+		{
+		$button = <<<EOD
+		<div id="module-{$name}-disabled"
+			style="	padding:4px 20px;
+				font-size:14px;
+				line-height:1.1;
+				letter-spacing:1px;
+				color:#fff;
+				height:40px;
+				position:absolute;
+				bottom:35px;
+				left:0;right:0;margin-left:auto;margin-right:auto;">Module installed but disabled!</div>
+		<button id="enable-{$name}"
+			type="button" 
+			class="btn btn-info-faded montserrat"
+			style="	padding:4px 10px;
+					font-size:14px;
+					line-height:1.1;
+					border-radius:5px;
+					box-shadow:1px 1px 3px  rgba(0, 0, 0, 0.76);
+					letter-spacing:1px;
+					color:#000;
+					height:25px;
+					width:100px;
+					margin-bottom:-6px;">Enable</button>
+		<div id="module-{$name}-installed"
+			style="	padding:4px 20px;
+				font-size:14px;
+				line-height:1.1;
+				letter-spacing:1px;
+				color:#fff;
+				height:40px;
+				position:absolute;
+				bottom:35px;
+				left:0;right:0;margin-left:auto;margin-right:auto;display:none">Module installed but disabled!</div>
+		<button id="disable-{$name}" title="This will disable the module, but leave the data in the database."
+			type="button" 
+			class="btn btn-info-faded montserrat"
+			style="	padding:4px 10px;
+					font-size:14px;
+					line-height:1.1;
+					border-radius:5px;
+					box-shadow:1px 1px 3px  rgba(0, 0, 0, 0.76);
+					letter-spacing:1px;
+					color:#000;
+					height:25px;
+					width:100px;
+					margin-bottom:-6px;display:none">Disable</button>
+		EOD;
+		}
+	else
+		{
+		if($disable)
+			{
+			$button = <<<EOD
+			<div id="module-{$name}-installed"
+				style="	padding:4px 20px;
+					font-size:14px;
+					line-height:1.1;
+					letter-spacing:1px;
+					color:#fff;
+					height:40px;
+					position:absolute;
+					bottom:35px;
+					left:0;right:0;margin-left:auto;margin-right:auto;">Module installed and enabled!</div>
+			<button id="disable-{$name}" title="This will disable the module, but leave the data in the database."
+				type="button" 
+				class="btn btn-info-faded montserrat"
+				style="	padding:4px 10px;
+						font-size:14px;
+						line-height:1.1;
+						border-radius:5px;
+						box-shadow:1px 1px 3px  rgba(0, 0, 0, 0.76);
+						letter-spacing:1px;
+						color:#000;
+						height:25px;
+						width:100px;
+						margin-bottom:-6px;">Disable</button>
+			<div id="module-{$name}-disabled"
+				style="	padding:4px 20px;
+					font-size:14px;
+					line-height:1.1;
+					letter-spacing:1px;
+					color:#fff;
+					height:40px;
+					position:absolute;
+					bottom:35px;
+					left:0;right:0;margin-left:auto;margin-right:auto;display:none">Module installed but disabled.</div>
+			<button id="enable-{$name}"
+				type="button" 
+				class="btn btn-info-faded montserrat"
+				style="	padding:4px 10px;
+						font-size:14px;
+						line-height:1.1;
+						border-radius:5px;
+						box-shadow:1px 1px 3px  rgba(0, 0, 0, 0.76);
+						letter-spacing:1px;
+						color:#000;
+						height:25px;
+						width:100px;
+						margin-bottom:-6px;display:none">Enable</button>
+			EOD;
+			}
+		else
+			{
+			$button = <<<EOD
+			<div id="module-{$name}-installed"
+				style="	padding:4px 20px;
+					font-size:14px;
+					line-height:1.1;
+					letter-spacing:1px;
+					color:#fff;
+					height:40px;
+					position:absolute;
+					bottom:35px;
+					left:0;right:0;margin-left:auto;margin-right:auto;">Module installed!</div>
+			EOD;
+			}
+		}
+
 	$raw_html = <<<EOD
-	<div class="col-md-6 col-lg-4">
+	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
 		<div class="block icon-block bg-{$type}-faded w-border-2x border-{$type} dark inner-space rounded-2x text-center module"  style="text-shadow:1px 1px 10px rgba(0, 0, 0, 0.56)">
 
 			<!-- Progress bar for this module -->
@@ -165,16 +293,7 @@ function virtual_bible_module_installed_html($name,$type,$fa_icon,$title,$text,$
 			<i id="module-{$name}-icon" class="fa-solid fa-{$fa_icon} md-icon dp36 box-icon bg-{$type}-faded border-{$type} text-white pill" style="{$icon_style}">{$icon_text}</i>
 			<h6 id="module-{$name}-title" class="box-title poppins-black">{$title}</h6>
 			<p id="module-{$name}-text" class="box-description montserrat">{$text}</p>
-			<div id="module-{$name}-installed"
-				style="	padding:4px 20px;
-					font-size:14px;
-					line-height:1.1;
-					letter-spacing:1px;
-					color:#fff;
-					height:40px;
-					position:absolute;
-					bottom:30px;
-					left:0;right:0;margin-left:auto;margin-right:auto;">Module Installed!</div>
+			$button
 		</div><!-- / icon-block -->
 	</div><!-- / column -->
 	EOD;
@@ -185,8 +304,7 @@ function virtual_bible_module_installed_html($name,$type,$fa_icon,$title,$text,$
 
 	
 function virtual_bible_module_uninstalled_js($name,$plugin_url)
-	{
-		
+	{		
 	$nonce_url = wp_nonce_url($plugin_url.'ajax/load'.$name.'.php',$name);
 	$raw_js = <<<EOD
 	$("#load-{$name}").click(function(e) 
@@ -207,7 +325,7 @@ function virtual_bible_module_uninstalled_js($name,$plugin_url)
 					var progress = data.slice(0, index);
 					$("#progress-{$name}-circle").attr('data-value',progress);
 					$("#progress-{$name}-circle-text").html(progress+'%');
-					rotate_progress('{$name}');
+					virtual_bible_rotate_progress('{$name}');
 					var book = data.slice(index+1);
 					$("#loading-{$name}").html('<small>loading...<br></small>'+book);
 					});
@@ -221,35 +339,71 @@ function virtual_bible_module_uninstalled_js($name,$plugin_url)
 			success: function(data){
 					clearInterval(ajax_timer);
 					$("#progress-{$name}-circle").attr('data-value','100');
-					rotate_progress('{$name}');
+					virtual_bible_rotate_progress('{$name}');
 					$("#module-{$name}-icon").css('display','');
 					$("#progress-{$name}-circle").css('display','none');
 					$("#module-{$name}-installed").css('display','block');
 					$("#load-{$name}").css('display','none');
 					$("#loading-{$name}").css('display','none');
-					housekeeping("{$name}.log");
+					$("#{$name}-selected").css('display','inline-block');
+					virtual_bible_housekeeping("{$name}.log");
+				}
+			});
+		});
+	EOD;
+	return $raw_js;
+	}
+
+
+function virtual_bible_module_installed_js($name,$plugin_url)
+	{		
+	$nonce_url = wp_nonce_url($plugin_url.'ajax/load'.$name.'.php',$name);
+	$raw_js = <<<EOD
+	$("#disable-{$name}").click(function(e) 
+		{
+		e.preventDefault();
+
+		$.ajax(
+			{
+			type: 'POST',
+			url: "{$nonce_url}",
+			data: {disable:1},
+			success: function(data)
+				{
+				$("#disable-{$name}").css('display','none');
+				$("#module-{$name}-installed").css('display','none');
+				$("#enable-{$name}").css('display','');
+				$("#module-{$name}-disabled").css('display','');
+				$("#{$name}-selected").css('display','none');
+				}
+			});
+		});
+
+	$("#enable-{$name}").click(function(e) 
+		{
+		e.preventDefault();
+
+		$.ajax(
+			{
+			type: 'POST',
+			url: "{$nonce_url}",
+			data: {enable:1},
+			success: function(data)
+				{
+				$("#disable-{$name}").css('display','');
+				$("#module-{$name}-installed").css('display','');
+				$("#enable-{$name}").css('display','none');
+				$("#module-{$name}-disabled").css('display','none');
+				$("#{$name}-selected").css('display','inline-block');
 				}
 			});
 		});
 	EOD;
 	return $raw_js;
 
-
 	}
 
 
 
 
-function getPrintR($array)
-    {
-    //hold on to the output
-    ob_start();
-    print_r($array);
-    //store the output in a string
-    $out =ob_get_contents();
-    //delete the output, because we only wanted it in the string
-    ob_clean();
-
-    return "<pre style=\"margin-top:0px\">$out</pre>";
-    }
 ?>

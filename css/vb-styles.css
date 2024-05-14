@@ -571,7 +571,35 @@
 
 .icon-block p
 	{
-	font-size:15px;
+	font-size:13px;
+	line-height:1.2;
+	margin-top:-10px;
+	}
+
+.icon-block p small 
+	{
+	display:block;
+	margin-top:5px;
+	}
+
+.module-installed 
+	{
+	padding:4px 20px;
+	font-size:12px;
+	line-height:1.1;
+	letter-spacing:1px;
+	color:#fff;
+	height:40px;
+	position:absolute;
+	bottom:35px;
+	left:0;
+	right:0;
+	margin-left:auto;
+	margin-right:auto;
+	}
+.module-installed.light
+	{
+	color:#000;
 	}
 
 .dark.icon-block p
@@ -920,6 +948,14 @@ h4
 		font-style: normal;
 		font-size: 27px;
 		}
+	.fontcolor-medium 
+		{
+		color:#555;
+		}
+	input.reference
+		{
+		color:#000;
+		}
 	input.reference::placeholder
 		{
 		font-weight:normal;
@@ -927,4 +963,17 @@ h4
 	.tab-pane.fade
 		{
 		opacity:100;
+		}
+	p a:where(:not(.wp-element-button))
+		{
+		text-decoration:none;
+		}
+	legend 
+		{
+		font-size:17px;
+		}
+	pre
+		{
+		font-size:13px;
+		line-height:1.3;
 		}

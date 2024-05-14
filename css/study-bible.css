@@ -43,6 +43,9 @@
 		background-color: #fff;
 		border: 1px solid #ddd;
 		border-bottom-color: transparent;
+		position:relative;
+		z-index:101;
+		margin-top:2px;
 		}
 
 	.nav>li {
@@ -196,9 +199,7 @@
 		display: none;
 		}  
 
-	.row {
-		display:flex;
-		flex-wrap:wrap;
+	.bible .row {
 		margin-right:-15px;
 		margin-left:-15px;
 		}  
@@ -242,40 +243,23 @@
 		{
 		display:block;
 		}
-/*
-	.first-verse:first-child:first-letter
-		{
-		font-size:92px;
-		float:left;
-		padding-right:0px;
-		height:64px;
-		margin-right:0px;
-		line-height:70px;
-		}
 
-	.first-word:first-letter
-		{
-		font-size:92px;
-		float:left;
-		padding-right:0px;
-		height:64px;
-		margin-right:0px;
-		line-height:70px;
-		}
-*/
+
 	.first-letter
 		{
 		font-size:92px;
 		float:left;
 		padding-right:0px;
-		height:64px;
+		height:70px;
 		margin-right:0px;
-		line-height:70px;
+		line-height:75px;
+		margin-left:-6px;
 		}
 
-	.first-word
+	.first-verse .first-word
 		{
 		text-transform:uppercase;
+		margin-left:-6px;
 		}
 	.para
 		{
@@ -298,12 +282,11 @@
 		text-decoration:none;
 		}
 	a.xref_verse {
-		color:#444;
+		color:#000;
 		text-decoration:none;
-		white-space:nowrap;
 		}
 	a.xref_verse:hover {
-		color:#222;
+		color:#000;
 		text-decoration:underline;
 		}
 	.xref-inner {
@@ -374,6 +357,229 @@
 	.context {
 		background-color:#ffffaa;
 		}
+
+	
+	verses
+		{
+		display:block;
+		font-family: 'Ovo',serif;
+		font-size:21px;
+		line-height:1.3;
+		border-left:1px solid #eee;
+		margin-left:14%;
+		padding-right:0 !important;
+		padding-left:10px !important;
+		color:#000;
+		}
+	verse 
+		{
+		display:block;
+		text-align:justify;
+		text-indent:5px;
+		}
+	xref 
+		{
+		display:block;
+		font-size:13px;
+		width:15%;
+		text-align:left;
+		line-height:1;
+		text-indent:0;
+		margin-top:6px;
+		position:absolute;
+		left:-17%;
+		}
+	.verse xref b 
+		{
+		margin-right:0px;
+		display:inline;
+		font-size:12px;
+		}
+	xref a 
+		{
+		color:#555;
+		}
+	.first-verse b 
+		{
+		display:none;
+		}
+	.verse b 
+		{
+		margin-right:10px;
+		}
+	b.paragraph 
+		{
+		margin-right:0px;
+		}
+	verse.first-verse 
+		{
+		margin-left:0;
+		}
+	.tools p 
+		{
+		line-height:1.4;
+		text-indent:20px;
+		margin:0;
+		}
+	.tools blockquote 
+		{
+		line-height:1.4;
+		margin-left:10px;
+		padding:0;
+		}
+	.tools blockquote:before 
+		{
+		content: "";
+		}
+	.tools blockquote p 
+		{
+		margin:0;
+		}
+	.bible 
+		{		
+		position:relative;
+		z-index:101;
+		background-color:#fff;
+		box-shadow:0px 0px 7px rgba(0,0,0,0.1),inset -15px 0 15px -15px rgba(0,0,0,0.2);
+		border:1px solid #ddd;
+		border-radius:10px 0 0 10px;
+		padding:10px 25px 25px 25px;
+		}
+	div.study-bible
+		{
+		margin:0;
+		}
+	div.bible.row
+		{
+		margin:0;
+		display:block;
+		}
+	.tools
+		{
+		margin-left:-15px;
+		padding-right:10px;
+		position:relative;
+		z-index:100;
+		padding-left:30px;
+		font-size:12px;
+		background-color:#fafafa;
+		margin-top:50px;
+		border-radius:20px;
+		margin-bottom: 10px;
+		padding-top:20px;
+		}
+	.tool-nav 
+		{
+		margin-top:-67px;
+		margin-bottom:-10px;
+		border-bottom:1px solid #fafafa;
+		}
+	.tool-nav>li>a 
+		{
+		padding:10px 15px;
+		}
+	.tool-nav>li.active>a, .tool-nav>li.active>a:focus, .tool-nav>li.active>a:hover
+		{
+		background-color:#fafafa;
+		border:1px solid #fafafa;
+		}
+	.tool-content 
+		{
+		margin-top:45px;
+		}
+	.study-bible-form-row 
+		{
+		width:100%;
+		}
+	.study-bible-form 
+		{
+		width:100%;
+		}
+	#introduction-results strong 
+		{
+		display:block;
+		text-indent:0;
+		border-bottom:1px solid #ccc;
+		font-family:Poppins,san-serif;
+		font-size:15px;
+		font-weight:900;
+		letter-spacing:1px;
+		margin-top:10px;
+		}
+	#introduction-results h4 
+		{
+		text-align:center;
+		font-family:Poppins,san-serif;
+		margin-bottom:0;
+		line-height:1;
+		color:#777;
+		}
+	#introduction-results h5
+		{
+		display:block;
+		text-indent:0;
+		border-bottom:1px solid #ccc;
+		font-family:Poppins,san-serif;
+		font-size:15px;
+		font-weight:900;
+		letter-spacing:1px;
+		margin-top:10px;
+		margin-bottom:2px;
+		color:#777;
+		}
+	#introduction-results p 
+		{
+		text-align:justify;
+		}
+	#introduction-results hr 
+		{
+		border:none;
+		height:1px;
+		background-color:#ddd;
+		}
+
+	#outline-results strong 
+		{
+		display:block;
+		text-indent:0;
+		border-bottom:1px solid #ccc;
+		font-family:Poppins,san-serif;
+		font-size:15px;
+		font-weight:900;
+		letter-spacing:1px;
+		margin-top:10px;
+		}
+	#outline-results h4 
+		{
+		text-align:center;
+		font-family:Poppins,san-serif;
+		margin-bottom:0;
+		line-height:1;
+		}
+	#outline-results h5
+		{
+		display:block;
+		text-indent:0;
+		border-bottom:1px solid #ccc;
+		font-family:Poppins,san-serif;
+		font-size:15px;
+		font-weight:900;
+		letter-spacing:1px;
+		margin-top:10px;
+		margin-bottom:2px;
+		color:#777;
+		}
+	#outline-results p 
+		{
+		text-align:justify;
+		}
+	#outline-results hr 
+		{
+		border:none;
+		height:1px;
+		background-color:#ddd;
+		}
+
 	
 
 
@@ -395,3 +601,5 @@
 			}
 
 		}
+
+		

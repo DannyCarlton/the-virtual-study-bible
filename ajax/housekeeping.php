@@ -5,6 +5,11 @@ header("Pragma: no-cache");
 
 include('../../../../wp-load.php');
 
+if(!defined('ABSPATH')) 
+	{
+    exit; // Die, hacker scum, die!!
+	}
+
 $verify = wp_verify_nonce($_GET['_wpnonce'], 'housekeeping');
 
 $file=$_GET['file'];

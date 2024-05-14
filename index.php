@@ -6,7 +6,14 @@
 * Version: 1.0
 * Author: Danny Carlton Ministries
 * Author URI: http://DannyCarlton.org/
+* Developer: Danny Carlton
+* Text Domain: the-virtual-study-bible
 **/
+
+if(!defined('ABSPATH')) 
+	{
+	exit; // Die, hacker scum, die!!
+	}
 
 
 
@@ -19,11 +26,15 @@
 
 	I have to admit, I'm probably not the best coder and I have a bad habit of not documenting my code very well. 
 
-	I also am not a big fan of the newer coding style using classes and constructers and all that confusing, and in my opinion, unnecessary garbage. I'm pretty much old school. My first coding was in 1982, on a Unix mainframe, using basic, until I started annoying the engineering students by slowing down the system. It was suggested I buy a floppy and use the Apple ]['s instead. I did, and never looked back. I eventually moved to the IBM PC's and in the early 90's was finally able to save up enough to buy my first computer (an IBM clone with a monochrome moniter and a hercules graphics card!).
+	I'm pretty much old school. My first coding was in 1982, on a Unix mainframe, using basic, until I started annoying the engineering students by slowing down the system. It was suggested I buy a floppy and use the Apple ]['s instead. I did, and never looked back. I eventually moved to the IBM PC's and in the early 90's was finally able to save up enough to buy my first computer (an IBM clone with a monochrome moniter and a hercules graphics card!).
 
 	In other words, I'm 100% self-taught.
 
 	And, yes, I know that there's a lot of inefficiencies in this coding. I did it all myself, and was in a little bit of a rush. My focus was on getting it functional and looking nice. Streamlining the coding was secondary to that. I plan on making it more efficient as I improved it for updates.
+
+	So, a bit about my coding style... 
+
+	I like being able to tell arrays apart from simple variables, so I always used camelCase for arrays and snake_case for regular variables. If it's just one word then the regular variable is in all lowercase and at least one letter in the array name is Capitalized. However, some of my coding I reuse, and sometimes I will copy older code, before I began that practice, which won't use that naming convention. However, I've tried to make all the coding consistent.
 
 	---Danny Carlton
 */
@@ -184,6 +195,8 @@ function virtual_bible_add_plugin_page_donate_link( $links)
 	}
 
 
+include_once(plugin_dir_path(__FILE__).'includes/modules.php');
+include_once(plugin_dir_path(__FILE__).'includes/functions.php');
 include_once(plugin_dir_path(__FILE__).'includes/study-bible.php');
 
 /* END: Stuff to do every time */
@@ -192,7 +205,6 @@ include_once(plugin_dir_path(__FILE__).'includes/study-bible.php');
 /* BEGIN: Stuff to do only when plugin is activated */
 
 register_activation_hook( __FILE__, 'virtual_bible_on_activation');
-
 function virtual_bible_on_activation()
 	{
 	wpdocs_register_virtual_bible_menu_page();
@@ -200,16 +212,13 @@ function virtual_bible_on_activation()
 	}
 
 register_activation_hook( __FILE__, 'virtual_bible_load_db_books');
-
 register_activation_hook(__FILE__, 'virtual_bible_redirect_after_activation');
-
 function virtual_bible_redirect_after_activation() 
 	{
     add_option('virtual_bible_redirect_after_activation_option', true);
 	}
 
 add_action('admin_init', 'virtual_bible_activation_redirect');
-
 function virtual_bible_activation_redirect() 
 	{
     if (get_option('virtual_bible_redirect_after_activation_option', false)) 
@@ -287,7 +296,26 @@ function virtual_bible_create_db_table()
 		st_def			text			NOT NULL,
 		ipd_def			text			NOT NULL,
 		PRIMARY KEY id (id)
-		) $charset_collate ENGINE=MyISAM;");
+		) $charset_collate ENGINE=MyISAM;");	
+
+	$table_name = $wpdb->prefix . 'virtual_bible_gty_intro_outline';
+	array_push($Queries, "CREATE TABLE IF NOT EXISTS $table_name (
+			id int(11) NOT NULL,
+			book int(11) NOT NULL,
+			text text NOT NULL,
+			PRIMARY KEY id (id),
+			KEY ixb (book)
+			) $charset_collate ENGINE=MyISAM;");	
+
+	$table_name = $wpdb->prefix . 'virtual_bible_outline';
+	array_push($Queries, "CREATE TABLE IF NOT EXISTS $table_name (
+			id int(11) NOT NULL,
+			chapter varchar(25) NOT NULL,
+			verse int(11) NOT NULL,
+			text text NOT NULL,
+			PRIMARY KEY id (id),
+			KEY ixcv (chapter,verse)
+			) $charset_collate ENGINE=MyISAM;");
 			
 	if ( ! function_exists('dbDelta') )
 		{
@@ -308,7 +336,6 @@ function virtual_bible_load_db_books()
 	$file = wp_remote_fopen('https://cdn.virtualbible.org/virtual_bible_books.csv');
 
 	$Rows=str_getcsv($file, "\n");
-
 
 	$Columns=[];$dbRow=[];
 	foreach($Rows as $r=>$row)
@@ -385,6 +412,43 @@ function virtual_bible_load_db_books()
 			);
 		}
 
+
+		
+	$table_name = $wpdb->prefix . 'virtual_bible_gty_intro_outline';
+
+	$Rows=[];$r=1;
+	$file = fopen('https://cdn.virtualbible.org/virtual_bible_intro_gty.csv', 'r');
+	while (($Rows = fgetcsv($file, 10000, ",")) !== FALSE) 
+		{
+		if($Rows[0]!='id')
+			{
+			$book=$Rows[1];
+			$text=$Rows[2];
+			$dbRow=$wpdb->get_results("SELECT * FROM $table_name WHERE `id` = $r;", ARRAY_A); //db call ok; no-cache ok
+			if(isset($dbRow[0]['id']))
+				{
+				}
+			else
+				{
+				$wpdb->insert
+					( 
+					$table_name,
+					array
+						( 
+						'id'		=>  $r,
+						'book'		=>  $book,
+						'text'		=>  $text
+						)
+					); //db call ok
+				}
+			$r++;
+			}
+		}
+
+
+		
+
+
 	}
 
 /* END: Stuff to do only when plugin is activated */
@@ -394,7 +458,6 @@ function virtual_bible_load_db_books()
 /* BEGIN: Stuff to do when plugin is deleted */
 
 register_uninstall_hook(__FILE__, 'virtual_bible_on_uninstall');
-
 function virtual_bible_on_uninstall()
 	{
 	global $wpdb;

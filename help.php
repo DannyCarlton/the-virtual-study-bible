@@ -1,5 +1,10 @@
 <?php
 
+if(!defined('ABSPATH')) 
+	{
+    exit; // Die, hacker scum, die!!
+	}
+
 wp_register_style('mystyle', plugins_url().'/the-virtual-study-bible/css/bootstrap.css');
 wp_enqueue_style('mystyle');
 wp_register_style('myfonts', plugins_url().'/the-virtual-study-bible/css/fontawesome.css');

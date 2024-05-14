@@ -1,5 +1,10 @@
 <?php
 
+if(!defined('ABSPATH')) 
+	{
+    exit; // Die, hacker scum, die!!
+	}
+
 wp_register_style('vb-bootstrap-css', plugins_url().'/the-virtual-study-bible/css/bootstrap.css');
 wp_enqueue_style('vb-bootstrap-css');
 wp_register_style('vb-fonts-css', plugins_url().'/the-virtual-study-bible/css/fontawesome.css');
@@ -175,23 +180,12 @@ else
                     		<fieldset>
                     		    <h4>The Basic Modules: 
 									<small>Many of these modules will take more than a few seconds to load, so we left them to be installed here, rather than when the plugin itself was installed.</small></h4>
-								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
 									<div class="block icon-block bg-secondary-faded w-border-2x border-secondary inner-space rounded-2x text-center module">
-										<i class="fa-solid fa-list md-icon dp36 box-icon bg-secondary-faded border-secondary pill"></i>
-										<h6 class="box-title poppins-black" style="color:#000">Books of the Bible</h6>
-										<p class="box-description montserrat">This module was loaded when you installed the plugin. It includes the names of the books of the Bible, the most common abbreviations (for searching purposes) and the long name of each book.</p>
-										<div id="module-books-installed"
-										style="	padding:4px 20px;
-												font-size:14px;
-												line-height:1.1;
-												letter-spacing:1px;
-												color:#000;
-												height:40px;
-												position:absolute;
-												bottom:30px;
-												left:0;right:0;
-												margin-left:auto;
-												margin-right:auto;">Module Installed!</div>
+										<i class="fa-solid fa-list md-icon dp24 box-icon bg-secondary-faded border-secondary pill"></i>
+										<h6 class="box-title poppins-black" style="color:#000">Books of the Bible<br />Book Introductions and Outlines</h6>
+										<p class="box-description montserrat">These modules were loaded when you installed the plugin. It includes the names of the books of the Bible, the most common abbreviations (for searching purposes), the long name of each book as well as book introductions and outlines by John MacArther (copyright but used by permission).</p>
+										<div id="module-books-installed" class="module-installed light">Module Installed!</div>
 									</div><!-- / icon-block -->
 								</div><!-- / column -->
 
@@ -228,13 +222,14 @@ else
                             </fieldset>
 
                             <fieldset>
-                                <h4>Additional Modules*:</h4>
+                                <h4>Additional Modules*:
+									<small>These modules are optional, in that you don't need them to run the basic Study Bible page. </small></h4>
                                 <div class="f1-buttons" style="clear:both;margin-top:-40px">
                                     <button type="button" class="btn btn-previous" style="height:30px;line-height:1"><i class="fa-solid fa-left-long"></i>&nbsp; Previous</button>
                                     <button type="button" class="btn btn-next" style="height:30px;line-height:1">Next &nbsp;<i class="fa-solid fa-right-long"></i></button>
                                 </div>
 								<?php 
-									$text="This will load the Easton's Bible Dictionary (3,963 entries!). When selected, words in the text will be keyed to the matching Easton's definition and displayed when clicked.<small style=\"display:block;margin-top:-4px\">[size: 2.6M]</small>";
+									$virtual_bible_text="This will load the Easton's Bible Dictionary (3,963 entries!). When selected, words in the text will be keyed to the matching Easton's definition and displayed when clicked.<small style=\"display:block;margin-top:-4px\">[size: 2.6M]</small>";
 									if($virtual_bible_eastons_installed)
 										{
 										echo virtual_bible_module_installed_html('eastons','info','arrow-down-a-z','Easton&rsquo;s Bible Dictionary',$virtual_bible_text,plugin_dir_url(__FILE__),$virtual_bible_eastons_installed);
@@ -318,7 +313,7 @@ else
 									<div class="block icon-block-style bg-secondary-faded w-border-2x border-secondary inner-space rounded-2x text-center module">
 										<h6 class="box-title poppins-black" style="color:#000">Traditional</h6>
 										<div style="width:100%;height:230px">
-											<img class="card-img-top img-thumbnail" 
+											<img class="card-img-top img-thumbnail" style="max-height:230px"
 												src="<?php echo plugin_dir_url(__FILE__);?>images/style-traditional.jpg">
 										</div>
 										<p class="box-description montserrat">This is the traditional layout, where verses are separate and paragraphs are marked with the ¶ character. The first letter of the first verse is larger and the remaining text flows around it.</p>
@@ -358,7 +353,7 @@ else
 									<div class="block icon-block-style bg-secondary-faded w-border-2x border-secondary inner-space rounded-2x text-center module">
 										<h6 class="box-title poppins-black" style="color:#000">Paragraph</h6>
 										<div style="width:100%;height:230px">
-											<img class="card-img-top img-thumbnail" 
+											<img class="card-img-top img-thumbnail"  style="max-height:230px"
 												src="<?php echo plugin_dir_url(__FILE__);?>images/style-paragraph.jpg">
 										</div>
 										<p class="box-description montserrat">
@@ -399,7 +394,7 @@ else
 									<div class="block icon-block-style bg-secondary-faded w-border-2x border-secondary inner-space rounded-2x text-center module">
 										<h6 class="box-title poppins-black" style="color:#000">The Reader's Bible</h6>
 										<div style="width:100%;height:230px">
-											<img class="card-img-top img-thumbnail" 
+											<img class="card-img-top img-thumbnail"  style="max-height:230px"
 												src="<?php echo plugin_dir_url(__FILE__);?>images/style-reading.jpg">
 										</div>
 										<p class="box-description montserrat">For the Reader's Bible the text is laid out like a book, but with no verse markings. Book and Chapter headings alone are marked.</p>
@@ -675,19 +670,6 @@ window.addEventListener('load',function()
 <?php
 
 
-
-function getPrintR($array)
-    {
-    //hold on to the output
-    ob_start();
-    print_r($array);
-    //store the output in a string
-    $out =ob_get_contents();
-    //delete the output, because we only wanted it in the string
-    ob_clean();
-
-    return "<pre style=\"margin-top:0px\">$out</pre>";
-    }
 
 
 

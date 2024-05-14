@@ -1,5 +1,10 @@
 <?php
 
+if(!defined('ABSPATH')) 
+	{
+    exit; // Die, hacker scum, die!!
+	}
+
 
 function virtual_bible_is_module_installed($name)
 	{
@@ -31,11 +36,11 @@ function virtual_bible_module_uninstalled_html($name,$type,$fa_icon,$title,$text
 		{
 		$icon_style="padding-top:7px;
 		padding-bottom:13px;
-		padding-left:30px;
-		padding-right:30px;
-		font-size:66px;
+		padding-left:27px;
+		padding-right:27px;
+		font-size:56px;
 		font-family:'Times New Roman';
-		line-height:1.9";
+		line-height:1.4";
 		$icon_text=$fa_icon;
 		$fa_icon='';
 		}
@@ -130,11 +135,11 @@ function virtual_bible_module_installed_html($name,$type,$fa_icon,$title,$text,$
 		{
 		$icon_style="padding-top:7px;
 		padding-bottom:13px;
-		padding-left:30px;
-		padding-right:30px;
-		font-size:66px;
+		padding-left:27px;
+		padding-right:27px;
+		font-size:56px;
 		font-family:'Times New Roman';
-		line-height:1.9";
+		line-height:1.4";
 		$icon_text=$fa_icon;
 		$fa_icon='';
 		}
@@ -142,11 +147,11 @@ function virtual_bible_module_installed_html($name,$type,$fa_icon,$title,$text,$
 		{
 		$icon_style="padding-top:7px;
 		padding-bottom:13px;
-		padding-left:30px;
-		padding-right:30px;
-		font-size:66px;
+		padding-left:23px;
+		padding-right:23px;
+		font-size:48px;
 		font-family:'Times New Roman';
-		line-height:1.9";
+		line-height:1.6";
 		$icon_text=$fa_icon;
 		$fa_icon='';
 		}
@@ -207,16 +212,7 @@ function virtual_bible_module_installed_html($name,$type,$fa_icon,$title,$text,$
 		if($disable)
 			{
 			$button = <<<EOD
-			<div id="module-{$name}-installed"
-				style="	padding:4px 20px;
-					font-size:14px;
-					line-height:1.1;
-					letter-spacing:1px;
-					color:#fff;
-					height:40px;
-					position:absolute;
-					bottom:35px;
-					left:0;right:0;margin-left:auto;margin-right:auto;">Module installed and enabled!</div>
+			<div id="module-{$name}-installed" class="module-installed">Module installed and enabled!</div>
 			<button id="disable-{$name}" title="This will disable the module, but leave the data in the database."
 				type="button" 
 				class="btn btn-info-faded montserrat"
@@ -258,24 +254,14 @@ function virtual_bible_module_installed_html($name,$type,$fa_icon,$title,$text,$
 		else
 			{
 			$button = <<<EOD
-			<div id="module-{$name}-installed"
-				style="	padding:4px 20px;
-					font-size:14px;
-					line-height:1.1;
-					letter-spacing:1px;
-					color:#fff;
-					height:40px;
-					position:absolute;
-					bottom:35px;
-					left:0;right:0;margin-left:auto;margin-right:auto;">Module installed!</div>
+			<div id="module-{$name}-installed" class="module-installed">Module installed!</div>
 			EOD;
 			}
 		}
 
 	$raw_html = <<<EOD
-	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
 		<div class="block icon-block bg-{$type}-faded w-border-2x border-{$type} dark inner-space rounded-2x text-center module"  style="text-shadow:1px 1px 10px rgba(0, 0, 0, 0.56)">
-
 			<!-- Progress bar for this module -->
 			<div id="progress-{$name}-circle" class="vb-progress mx-auto" data-value='50' 
 				style="margin:25px auto;color:#000;display:none;line-height:3.5;background-color:#fff; border-radius:50px;">
@@ -290,7 +276,7 @@ function virtual_bible_module_installed_html($name,$type,$fa_icon,$title,$text,$
 				</div>
 			</div>
 				<!-- END -->
-			<i id="module-{$name}-icon" class="fa-solid fa-{$fa_icon} md-icon dp36 box-icon bg-{$type}-faded border-{$type} text-white pill" style="{$icon_style}">{$icon_text}</i>
+			<i id="module-{$name}-icon" class="fa-solid fa-{$fa_icon} md-icon dp24 box-icon bg-{$type}-faded border-{$type} text-white pill" style="{$icon_style}">{$icon_text}</i>
 			<h6 id="module-{$name}-title" class="box-title poppins-black">{$title}</h6>
 			<p id="module-{$name}-text" class="box-description montserrat">{$text}</p>
 			$button
@@ -314,9 +300,7 @@ function virtual_bible_module_uninstalled_js($name,$plugin_url)
 		$("#loading-{$name}").css('display','');
 		$("#module-{$name}-icon").css('display','none');
 		$("#progress-{$name}-circle").css('display','');
-
 		$("#loading-{$name}").html('<small>loading...<br></small>');
-
 		var ajax_timer = setInterval(
 			function(){
 				$.get("{$plugin_url}ajax/{$name}.log", function(data) 
@@ -330,7 +314,6 @@ function virtual_bible_module_uninstalled_js($name,$plugin_url)
 					$("#loading-{$name}").html('<small>loading...<br></small>'+book);
 					});
 			}, 250); 
-
 		$.ajax(
 			{
 			type: 'POST',
@@ -362,7 +345,6 @@ function virtual_bible_module_installed_js($name,$plugin_url)
 	$("#disable-{$name}").click(function(e) 
 		{
 		e.preventDefault();
-
 		$.ajax(
 			{
 			type: 'POST',
@@ -378,11 +360,9 @@ function virtual_bible_module_installed_js($name,$plugin_url)
 				}
 			});
 		});
-
 	$("#enable-{$name}").click(function(e) 
 		{
 		e.preventDefault();
-
 		$.ajax(
 			{
 			type: 'POST',

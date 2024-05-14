@@ -1,11 +1,28 @@
+0149-[•], 0164-[¤], 0167-[§], 0182-[¶], 0183-[·],  ✓  —  “”‘’  ™  ♥ ≡ 
+←↑→↓➝(&#10141;)➡(&#10145;)➧(&#10151;)
 
 
+https://developer.wordpress.com/wordpress-com-marketplace/plugin-developer-guidelines/ 	← Important!!
+https://codex.wordpress.org/I18n_for_WordPress_Developers								← For allowing translations
+https://make.wordpress.org/core/handbook/testing/automated-testing/phpunit/				← Creating a testing environment
 
 TODAY...  
-	Filter content based on installed/enabled modules and styles 
-		Tools... 
-			Dictionary, Lexicons, Hebrew/Greek, (remove filter)
-	Change urls to use page_slug
+	Create Outline module 
+	show/hide outline
+	Make result-tools (overview) content 
+	Hebrew/Greek ajax fill 
+	capFilter
+
+TO DO... 
+	Tools pane... 
+		main (for help)
+		Lexicon.
+		Dictionary.
+		Hebrew/Greek.
+	trigger strong's 
+	tag dictionary words 
+	move long variables to a class
+	If just 1 or 2 verse...
 
 NOTES...
 	Stepwizard positions page at the top of the form... 

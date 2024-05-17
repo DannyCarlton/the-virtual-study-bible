@@ -35,6 +35,7 @@ $virtual_bible_page_name_slug=sanitize_title($virtual_bible_page_name);
 
 $virtual_bible_kjvs_installed=virtual_bible_is_module_installed('kjvs');
 $virtual_bible_strongs_installed=virtual_bible_is_module_installed('strongs');
+$virtual_bible_outline_installed=virtual_bible_is_module_installed('outline');
 $virtual_bible_eastons_installed=virtual_bible_is_module_installed('eastons');
 $virtual_bible_hebrew_installed=virtual_bible_is_module_installed('hebrew');
 $virtual_bible_greek_installed=virtual_bible_is_module_installed('greek');
@@ -182,7 +183,7 @@ else
 									<small>Many of these modules will take more than a few seconds to load, so we left them to be installed here, rather than when the plugin itself was installed.</small></h4>
 								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
 									<div class="block icon-block bg-secondary-faded w-border-2x border-secondary inner-space rounded-2x text-center module">
-										<i class="fa-solid fa-list md-icon dp24 box-icon bg-secondary-faded border-secondary pill"></i>
+										<i class="fa-solid fa-university md-icon dp24 box-icon bg-secondary-faded border-secondary pill"></i>
 										<h6 class="box-title poppins-black" style="color:#000">Books of the Bible<br />Book Introductions and Outlines</h6>
 										<p class="box-description montserrat">These modules were loaded when you installed the plugin. It includes the names of the books of the Bible, the most common abbreviations (for searching purposes), the long name of each book as well as book introductions and outlines by John MacArther (copyright but used by permission).</p>
 										<div id="module-books-installed" class="module-installed light">Module Installed!</div>
@@ -190,7 +191,7 @@ else
 								</div><!-- / column -->
 
 								<?php 
-									$virtual_bible_text="This will install the full King James Authorized Text (Cambridge variant), with words keyed to Strong's.<small style=\"display:block;margin-top:-4px\">[size: 8.8M]</small>";
+									$virtual_bible_text="This will install the full King James Authorized Text (Cambridge variant), with words keyed to Strong's.<small style=\"display:block;\">[size: 8.8M]</small>";
 									if($virtual_bible_kjvs_installed)
 										{
 										echo virtual_bible_module_installed_html('kjvs','danger','book-bible','The King James Bible',$virtual_bible_text,plugin_dir_url(__FILE__),$virtual_bible_kjvs_installed); 
@@ -203,7 +204,7 @@ else
 
 									
 								<?php 
-									$virtual_bible_text="This will load both the Hebrew and Greek lexicons (14,298 entries!). Many of the Bible texts will be keyed to the corresponding entries, to provide quick access to the definition.<small style=\"display:block;margin-top:-4px\">[size: 5.4M]</small>";
+									$virtual_bible_text="This will load both the Hebrew and Greek lexicons (14,298 entries!). Many of the Bible texts will be keyed to the corresponding entries, to provide quick access to the definition.<small style=\"display:block;\">[size: 5.4M]</small>";
 									if($virtual_bible_strongs_installed)
 										{
 										echo virtual_bible_module_installed_html('strongs','info','language','Strong&rsquo;s Hebrew and Greek Lexicons',$virtual_bible_text,plugin_dir_url(__FILE__),$virtual_bible_strongs_installed);
@@ -213,6 +214,19 @@ else
 										echo virtual_bible_module_uninstalled_html('strongs','info','language','Strong&rsquo;s Hebrew and Greek Lexicons',$virtual_bible_text,plugin_dir_url(__FILE__));
 										}
 								 ?>
+
+									
+								 <?php 
+									 $virtual_bible_text="The section heading and descriptions display between passages. This is present in most Study Bible.<small style=\"display:block;\">[size: 513K]</small>";
+									 if($virtual_bible_outline_installed)
+										 {
+										 echo virtual_bible_module_installed_html('outline','info','list','Passage Outline',$virtual_bible_text,plugin_dir_url(__FILE__),$virtual_bible_outline_installed);
+										 }
+									 else
+										 {
+										 echo virtual_bible_module_uninstalled_html('outline','info','list','Passage Outline',$virtual_bible_text,plugin_dir_url(__FILE__));
+										 }
+								  ?>
 
 
                                 <div class="f1-buttons" style="clear:both;padding-top:30px">
@@ -229,7 +243,7 @@ else
                                     <button type="button" class="btn btn-next" style="height:30px;line-height:1">Next &nbsp;<i class="fa-solid fa-right-long"></i></button>
                                 </div>
 								<?php 
-									$virtual_bible_text="This will load the Easton's Bible Dictionary (3,963 entries!). When selected, words in the text will be keyed to the matching Easton's definition and displayed when clicked.<small style=\"display:block;margin-top:-4px\">[size: 2.6M]</small>";
+									$virtual_bible_text="This will load the Easton's Bible Dictionary (3,963 entries!). When selected, words in the text will be keyed to the matching Easton's definition and displayed when clicked.<small style=\"display:block;\">[size: 2.6M This will double the page load time.]</small>";
 									if($virtual_bible_eastons_installed)
 										{
 										echo virtual_bible_module_installed_html('eastons','info','arrow-down-a-z','Easton&rsquo;s Bible Dictionary',$virtual_bible_text,plugin_dir_url(__FILE__),$virtual_bible_eastons_installed);
@@ -241,7 +255,7 @@ else
 								?>
 									
 								<?php 
-									$virtual_bible_text="This will load the entire Masoretic (Leningrad Codex) Hebrew (Old Testament) text. It can be displayed alongside the English text, and the verses will be matched by highlighting the corresponding verse.<small style=\"display:block;margin-top:-4px\">[size: 5.9M]</small>";
+									$virtual_bible_text="This will load the entire Masoretic (Leningrad Codex) Hebrew (Old Testament) text. It can be displayed alongside the English text, and the verses will be matched by highlighting the corresponding verse.<small style=\"display:block;\">[size: 5.9M]</small>";
 									if($virtual_bible_hebrew_installed)
 										{
 										echo virtual_bible_module_installed_html('hebrew','danger','&#1488;','Hebrew Text',$virtual_bible_text,plugin_dir_url(__FILE__),$virtual_bible_hebrew_installed);
@@ -253,7 +267,7 @@ else
 								 ?>
 
 								<?php 
-									$virtual_bible_text="This will load the entire Textus Receptus Greek (New Testament) text. It can be displayed alongside the English text, and the verses, words and phrases will be matched by highlighting the corresponding text.<small style=\"display:block;margin-top:-4px\">[size: 8.7M]</small>";
+									$virtual_bible_text="This will load the entire Textus Receptus Greek (New Testament) text. It can be displayed alongside the English text, and the verses, words and phrases will be matched by highlighting the corresponding text.<small style=\"display:block;\">[size: 8.7M]</small>";
 									if($virtual_bible_greek_installed)
 										{
 										echo virtual_bible_module_installed_html('greek','danger','&Sigma;','Greek Text',$virtual_bible_text,plugin_dir_url(__FILE__),$virtual_bible_greek_installed);
@@ -265,7 +279,7 @@ else
 								?>
 
 								<?php 
-									$virtual_bible_text="This will load the Holman Crossreference, linking 3,992 verses to 57,812 related verses.<small style=\"display:block;margin-top:-4px\">[size: 3.5M]</small>";
+									$virtual_bible_text="This will load the Holman Crossreference, linking 3,992 verses to 57,812 related verses.<small style=\"display:block;\">[size: 3.5M]</small>";
 									if($virtual_bible_holman_installed)
 										{
 										echo virtual_bible_module_installed_html('holman','info','arrows-turn-to-dots','Holman Cross-Reference',$virtual_bible_text,plugin_dir_url(__FILE__),$virtual_bible_holman_installed);
@@ -282,7 +296,7 @@ else
                                     <button type="button" class="btn btn-previous"><i class="fa-solid fa-left-long"></i>&nbsp; Previous</button>
                                     <button type="button" class="btn btn-next">Next &nbsp;<i class="fa-solid fa-right-long"></i></button>
                                 </div>
-								<div class=" montserrat" style="float:left;width:49%;font-size:13px;line-height:1.3;color:#000;padding-top:20px">*More modules will be added with future updates. <br><br>Planned modules include: Public Domain Brown/Thayer Lexicon, Outline/Paragraph Notes, 1611 Margin Notes, Book Introductions, American King James Version, Webster's Version, Young's Literal Translation, Commentaries, Thompson Chain References, Custom Styles, Illustrations and many more!</div>
+								<div class=" montserrat" style="float:left;width:49%;font-size:13px;line-height:1.3;color:#000;padding-top:20px">*More modules will be added with future updates. <br><br>Planned modules include: Public Domain Brown/Thayer Lexicon, 1611 Margin Notes, More Book Introductions, American King James Version, Webster's Version, Young's Literal Translation, Commentaries, Thompson Chain References, Custom Styles, Illustrations and many more!</div>
                             </fieldset>
 
                             <fieldset>
@@ -559,6 +573,10 @@ window.addEventListener('load',function()
 	<?php echo virtual_bible_module_uninstalled_js('kjvs',plugin_dir_url(__FILE__)); ?>
 
 	<?php echo virtual_bible_module_uninstalled_js('strongs',plugin_dir_url(__FILE__)); ?>
+
+	<?php echo virtual_bible_module_uninstalled_js('outline',plugin_dir_url(__FILE__)); ?>
+
+	<?php echo virtual_bible_module_installed_js('outline',plugin_dir_url(__FILE__)); ?>
 
 	<?php echo virtual_bible_module_uninstalled_js('eastons',plugin_dir_url(__FILE__)); ?>
 

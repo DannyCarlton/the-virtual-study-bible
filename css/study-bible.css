@@ -34,7 +34,7 @@
 		}
 
 	.nav-tabs>li.active>a>h4 {
-		color:#000;
+		color:#833;
 		}
 
 	.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
@@ -420,6 +420,7 @@
 		line-height:1.4;
 		text-indent:20px;
 		margin:0;
+		font-family: "Montserrat", sans-serif;
 		}
 	.tools blockquote 
 		{
@@ -434,6 +435,14 @@
 	.tools blockquote p 
 		{
 		margin:0;
+		}
+	.tools small 
+		{
+		font-family: "Montserrat", sans-serif;
+		}
+	.tool-title 
+		{
+		color:#833;
 		}
 	.bible 
 		{		
@@ -494,6 +503,8 @@
 	.study-bible-form 
 		{
 		width:100%;
+		display:block;
+		margin-bottom:10px;
 		}
 	#introduction-results strong 
 		{
@@ -512,7 +523,7 @@
 		font-family:Poppins,san-serif;
 		margin-bottom:0;
 		line-height:1;
-		color:#777;
+		color:#833;
 		}
 	#introduction-results h5
 		{
@@ -525,11 +536,12 @@
 		letter-spacing:1px;
 		margin-top:10px;
 		margin-bottom:2px;
-		color:#777;
+		color:#833;
 		}
 	#introduction-results p 
 		{
 		text-align:justify;
+		font-family: "Montserrat", sans-serif;
 		}
 	#introduction-results hr 
 		{
@@ -555,6 +567,7 @@
 		font-family:Poppins,san-serif;
 		margin-bottom:0;
 		line-height:1;
+		color:#833;
 		}
 	#outline-results h5
 		{
@@ -562,22 +575,110 @@
 		text-indent:0;
 		border-bottom:1px solid #ccc;
 		font-family:Poppins,san-serif;
-		font-size:15px;
+		font-size:13px;
 		font-weight:900;
-		letter-spacing:1px;
 		margin-top:10px;
 		margin-bottom:2px;
-		color:#777;
+		color:#833;
 		}
 	#outline-results p 
 		{
 		text-align:justify;
+		font-family: "Montserrat", sans-serif;
 		}
 	#outline-results hr 
 		{
 		border:none;
 		height:1px;
 		background-color:#ddd;
+		}
+	#outline-results blockquote 
+		{
+		line-height:1.4;
+		margin-left:20px;
+		padding:0;
+		}
+	#outline-results blockquote p
+		{
+		margin:5px 0;
+		}
+	verses outline 
+		{
+		display:block;
+		width:100%;
+		font-size:17px;
+		font-family: "Montserrat", sans-serif;
+		font-style:italic;
+		background:#fff;
+		padding:20px 0 10px 0;
+		line-height:1.3;
+		text-align:center;
+		color:#833;
+		}
+	verses outline.pos-0
+		{
+		display:none;
+		}
+	word.strongs 
+		{
+		}
+	word.easton 
+		{
+		}
+	.hebrew
+		{
+		display:block;
+		font-family:'Times New Roman',serif;
+		text-align:right !important;
+		font-size:27px;
+		}
+	.hebrew-verse 
+		{
+		margin-right:20px;
+		margin-bottom:5px;
+		line-height:1.3;
+		}
+	.hebrew-verse-number 
+		{
+		float:right;
+		font-size:21px;
+		margin-top:5px;
+		margin-right:-20px;
+		}
+	.hebrew h4 
+		{
+		text-align:center;
+		color:#800;
+		font-family: Poppins, san-serif;
+		font-size:24px;
+		margin-bottom:10px;
+		}
+	.greek
+		{
+		display:block;
+		font-family:'Times New Roman',serif;
+		font-size:19px;
+		}
+	.greek-verse 
+		{
+		margin-right:20px;
+		margin-bottom:10px;
+		line-height:1.3;
+		text-align:justify;
+		}
+	.greek-verse-number 
+		{
+		font-size:17px;
+		margin-top:5px;
+		margin-right:10px;
+		}
+	.greek h4 
+		{
+		text-align:center;
+		color:#800;
+		font-family: Poppins, san-serif;
+		font-size:24px;
+		margin-bottom:10px;
 		}
 
 	

@@ -7,22 +7,26 @@ https://codex.wordpress.org/I18n_for_WordPress_Developers								← For allowin
 https://make.wordpress.org/core/handbook/testing/automated-testing/phpunit/				← Creating a testing environment
 
 TODAY...  
-	Create Outline module 
-	show/hide outline
-	Make result-tools (overview) content 
-	Hebrew/Greek ajax fill 
+	Passage Style changes style sheet
+	Link Keyed  activates/deactivates click
 	capFilter
+	recognize and link references within introduction and outline
+	dictionary has two entries for some words.
 
 TO DO... 
 	Tools pane... 
 		main (for help)
-		Lexicon.
-		Dictionary.
+		*Introduction 
+		Outline (adjust css)
 		Hebrew/Greek.
-	trigger strong's 
-	tag dictionary words 
+	tag/trigger strong's 
+	tag/trigger dictionary words 
 	move long variables to a class
 	If just 1 or 2 verse...
+	Paragraph Style 
+	Reader Style 
+	Maybe show xref verse as tooltip 
+	tablet and mobile layouts
 
 NOTES...
 	Stepwizard positions page at the top of the form... 

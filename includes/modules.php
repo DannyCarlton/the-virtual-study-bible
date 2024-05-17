@@ -58,7 +58,7 @@ function virtual_bible_module_uninstalled_html($name,$type,$fa_icon,$title,$text
 		}
 
 	$raw_html = <<<EOD
-	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
 		<div class="block icon-block bg-{$type}-faded w-border-2x border-{$type} dark inner-space rounded-2x text-center module"  style="text-shadow:1px 1px 10px rgba(0, 0, 0, 0.56)">
 
 			<!-- Progress bar for this module -->
@@ -75,7 +75,7 @@ function virtual_bible_module_uninstalled_html($name,$type,$fa_icon,$title,$text
 				</div>
 			</div>
 				<!-- END -->
-			<i id="module-{$name}-icon" class="fa-solid fa-{$fa_icon} md-icon dp36 box-icon bg-{$type}-faded border-{$type} text-white pill" style="{$icon_style}">{$icon_text}</i>
+			<i id="module-{$name}-icon" class="fa-solid fa-{$fa_icon} md-icon dp24 box-icon bg-{$type}-faded border-{$type} text-white pill" style="{$icon_style}">{$icon_text}</i>
 			<h6 id="module-{$name}-title" class="box-title poppins-black">{$title}</h6>
 			<p id="module-{$name}-text" class="box-description montserrat">{$text}</p>
 			<button id="load-{$name}"
@@ -87,7 +87,7 @@ function virtual_bible_module_uninstalled_html($name,$type,$fa_icon,$title,$text
 						border-radius:5px;
 						box-shadow:1px 1px 3px  rgba(0, 0, 0, 0.76);
 						letter-spacing:1px;
-						color:#000;">Load Module...</button>
+						color:#000;"><i class="fa fa-cloud-download"></i>&nbsp;Load Module...</button>
 			<button id="loading-{$name}"
 				type="button" 
 				class="btn btn-info-faded montserrat"
@@ -161,7 +161,7 @@ function virtual_bible_module_installed_html($name,$type,$fa_icon,$title,$text,$
 		$button = <<<EOD
 		<div id="module-{$name}-disabled"
 			style="	padding:4px 20px;
-				font-size:14px;
+				font-size:12px;
 				line-height:1.1;
 				letter-spacing:1px;
 				color:#fff;
@@ -184,7 +184,7 @@ function virtual_bible_module_installed_html($name,$type,$fa_icon,$title,$text,$
 					margin-bottom:-6px;">Enable</button>
 		<div id="module-{$name}-installed"
 			style="	padding:4px 20px;
-				font-size:14px;
+				font-size:12px;
 				line-height:1.1;
 				letter-spacing:1px;
 				color:#fff;
@@ -228,7 +228,7 @@ function virtual_bible_module_installed_html($name,$type,$fa_icon,$title,$text,$
 						margin-bottom:-6px;">Disable</button>
 			<div id="module-{$name}-disabled"
 				style="	padding:4px 20px;
-					font-size:14px;
+					font-size:12px;
 					line-height:1.1;
 					letter-spacing:1px;
 					color:#fff;

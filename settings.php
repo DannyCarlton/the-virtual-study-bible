@@ -18,7 +18,7 @@ wp_enqueue_style('vb-fade-css');
 wp_register_style('vb-styles-css', plugins_url().'/the-virtual-study-bible/css/vb-styles.css');
 wp_enqueue_style('vb-styles-css');
 
-wp_register_script('vb-jquery-js', plugins_url().'/the-virtual-study-bible/js/jquery-1.11.1.js');
+wp_register_script('vb-jquery-js', plugins_url().'/the-virtual-study-bible/js/jquery-2.2.4.js');
 wp_enqueue_script('vb-jquery-js');
 wp_register_script('vb-bootstrap-js', plugins_url().'/the-virtual-study-bible/js/bootstrap.js');
 wp_enqueue_script('vb-bootstrap-js');
@@ -36,7 +36,6 @@ $virtual_bible_page_name_slug=sanitize_title($virtual_bible_page_name);
 $virtual_bible_kjvs_installed=virtual_bible_is_module_installed('kjvs');
 $virtual_bible_strongs_installed=virtual_bible_is_module_installed('strongs');
 $virtual_bible_outline_installed=virtual_bible_is_module_installed('outline');
-$virtual_bible_eastons_installed=virtual_bible_is_module_installed('eastons');
 $virtual_bible_hebrew_installed=virtual_bible_is_module_installed('hebrew');
 $virtual_bible_greek_installed=virtual_bible_is_module_installed('greek');
 $virtual_bible_holman_installed=virtual_bible_is_module_installed('holman');
@@ -51,17 +50,6 @@ if(isset($_POST['virtual-bible-post-submitted']))
 	{
 	$vb_post=getPrintR($_POST);
 	$virtual_bible_verify = wp_verify_nonce($_POST['_wpnonce'], 'virtual bible settings');
-/****************************************************************
- * 	Settings Submitted... 
- * 		if page name != old page name... 
- * 			delete old page 
- * 		if page name !exist... 
- * 			create page.
- * 			content = '[The-Virtual-Study-Bible]' 
- * 		Go to page... 
- * 			If admin, show link to settings and help.
- * 
- ****************************************************************/
 	if($virtual_bible_verify)
 		{
 		$virtual_bible_pagename=sanitize_text_field($_POST['virtual-bible-pagename']);
@@ -215,8 +203,24 @@ else
 										}
 								 ?>
 
+
+
+                                <div class="f1-buttons" style="clear:both;padding-top:30px">
+                                    <button type="button" class="btn btn-next" >Next &nbsp;<i class="fa-solid fa-right-long"></i></button>
+                                </div>
+								<div class="vertical-spacer" style="clear:both;width:100%;height:50px"></div>
+                            </fieldset>
+
+                            <fieldset>
+                                <h4 style="width:70%">Additional Modules*:
+									<small>These modules are optional, in that you don't need them to run the basic Study Bible page. </small></h4>
+                                <div class="f1-buttons" style="clear:both;margin-top:-40px">
+                                    <button type="button" class="btn btn-previous" style="height:30px;line-height:1"><i class="fa-solid fa-left-long"></i>&nbsp; Previous</button>
+                                    <button type="button" class="btn btn-next" style="height:30px;line-height:1">Next &nbsp;<i class="fa-solid fa-right-long"></i></button>
+                                </div>
+
 									
-								 <?php 
+								<?php 
 									 $virtual_bible_text="The section heading and descriptions display between passages. This is present in most Study Bible.<small style=\"display:block;\">[size: 513K]</small>";
 									 if($virtual_bible_outline_installed)
 										 {
@@ -227,32 +231,6 @@ else
 										 echo virtual_bible_module_uninstalled_html('outline','info','list','Passage Outline',$virtual_bible_text,plugin_dir_url(__FILE__));
 										 }
 								  ?>
-
-
-                                <div class="f1-buttons" style="clear:both;padding-top:30px">
-                                    <button type="button" class="btn btn-next" >Next &nbsp;<i class="fa-solid fa-right-long"></i></button>
-                                </div>
-								<div class="vertical-spacer" style="clear:both;width:100%;height:50px"></div>
-                            </fieldset>
-
-                            <fieldset>
-                                <h4>Additional Modules*:
-									<small>These modules are optional, in that you don't need them to run the basic Study Bible page. </small></h4>
-                                <div class="f1-buttons" style="clear:both;margin-top:-40px">
-                                    <button type="button" class="btn btn-previous" style="height:30px;line-height:1"><i class="fa-solid fa-left-long"></i>&nbsp; Previous</button>
-                                    <button type="button" class="btn btn-next" style="height:30px;line-height:1">Next &nbsp;<i class="fa-solid fa-right-long"></i></button>
-                                </div>
-								<?php 
-									$virtual_bible_text="This will load the Easton's Bible Dictionary (3,963 entries!). When selected, words in the text will be keyed to the matching Easton's definition and displayed when clicked.<small style=\"display:block;\">[size: 2.6M This will double the page load time.]</small>";
-									if($virtual_bible_eastons_installed)
-										{
-										echo virtual_bible_module_installed_html('eastons','info','arrow-down-a-z','Easton&rsquo;s Bible Dictionary',$virtual_bible_text,plugin_dir_url(__FILE__),$virtual_bible_eastons_installed);
-										}
-									else
-										{
-										echo virtual_bible_module_uninstalled_html('eastons','info','arrow-down-a-z','Easton&rsquo;s Bible Dictionary',$virtual_bible_text,plugin_dir_url(__FILE__));
-										}
-								?>
 									
 								<?php 
 									$virtual_bible_text="This will load the entire Masoretic (Leningrad Codex) Hebrew (Old Testament) text. It can be displayed alongside the English text, and the verses will be matched by highlighting the corresponding verse.<small style=\"display:block;\">[size: 5.9M]</small>";
@@ -469,10 +447,6 @@ else
 									<i class="fa-solid fa-language"></i> &nbsp;
 									Strong's Lexicons
 								</button>
-								<button type="button" id="eastons-selected" class="btn btn-info-faded border-info pill btn-module dark module-selected <?php echo $virtual_bible_eastons_installed;?>" style="text-shadow:1px 1px 5px rgba(0, 0, 0, 0.56)">
-									<i class="fa-solid fa-arrow-down-a-z"></i> &nbsp;
-									Easton Dictionary
-								</button>
 								<button type="button" id="hebrew-selected" class="btn btn-danger-faded pill border-danger btn-module dark module-selected <?php echo $virtual_bible_hebrew_installed;?>" style="text-shadow:1px 1px 5px rgba(0, 0, 0, 0.56)">
 									<span style="font-size:23px;font-family:'Times New Roman';vertical-align:bottom">&#1488;</span> &nbsp;
 									Hebrew Text
@@ -577,10 +551,6 @@ window.addEventListener('load',function()
 	<?php echo virtual_bible_module_uninstalled_js('outline',plugin_dir_url(__FILE__)); ?>
 
 	<?php echo virtual_bible_module_installed_js('outline',plugin_dir_url(__FILE__)); ?>
-
-	<?php echo virtual_bible_module_uninstalled_js('eastons',plugin_dir_url(__FILE__)); ?>
-
-	<?php echo virtual_bible_module_installed_js('eastons',plugin_dir_url(__FILE__)); ?>
 
 	<?php echo virtual_bible_module_uninstalled_js('hebrew',plugin_dir_url(__FILE__)); ?>
 

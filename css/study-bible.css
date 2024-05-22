@@ -363,7 +363,7 @@
 		{
 		display:block;
 		font-family: 'Ovo',serif;
-		font-size:21px;
+		font-size:18px;
 		line-height:1.3;
 		border-left:1px solid #eee;
 		margin-left:14%;
@@ -470,7 +470,7 @@
 		position:relative;
 		z-index:100;
 		padding-left:30px;
-		font-size:12px;
+		font-size:11.5px;
 		background-color:#fafafa;
 		margin-top:50px;
 		border-radius:20px;
@@ -530,13 +530,18 @@
 		display:block;
 		text-indent:0;
 		border-bottom:1px solid #ccc;
-		font-family:Poppins,san-serif;
-		font-size:15px;
-		font-weight:900;
-		letter-spacing:1px;
+		font-family: "Montserrat", sans-serif;
+		font-size:12.5px;
+		font-weight:700;
+		letter-spacing:.5px;
 		margin-top:10px;
 		margin-bottom:2px;
 		color:#833;
+		background-color:#fafafa;
+		position:relative;
+		z-index:100;
+		overflow:hidden;
+		text-transform:uppercase;
 		}
 	#introduction-results p 
 		{
@@ -573,13 +578,15 @@
 		{
 		display:block;
 		text-indent:0;
-		border-bottom:1px solid #ccc;
-		font-family:Poppins,san-serif;
+		border-bottomx:1px solid #ccc;
+		font-familyx:Poppins,san-serif;
+		font-family: "Montserrat", sans-serif;
 		font-size:13px;
-		font-weight:900;
+		font-weight:600;
 		margin-top:10px;
 		margin-bottom:2px;
 		color:#833;
+		font-style:italic;
 		}
 	#outline-results p 
 		{
@@ -679,6 +686,312 @@
 		font-family: Poppins, san-serif;
 		font-size:24px;
 		margin-bottom:10px;
+		}
+	.smallcaps 
+		{
+		font-variant:small-caps;
+		}
+	.popover-content 
+		{
+		width:400px;
+		line-height:1.3;
+		}
+	verse .popover 
+		{
+		max-width:400px;
+		box-shadow:1px 1px 10px rgba(0,0,0,0.2);
+		border-radius:10px;
+		}
+	.popover-title-strongs 
+		{
+		background-color:#800;
+		color:#fff;
+		font-size:16px;
+		font-family: "Montserrat", sans-serif;
+		padding-left:10px;
+		border-top-left-radius:10px;
+		border-top-right-radius:10px;
+		}
+	.popover-orig-word 
+		{
+		font-family:'Times New Roman',serif;
+		}
+	.popover-title-strongs b 
+		{
+		display:inline;
+		font-size:22px
+		}
+	.popover-strongs-close 
+		{
+		float:right;
+		margin-right:8px;
+		font-size:12px;
+		margin-top:2px;
+		cursor:pointer;
+		color:#fff;
+		font-family: "Montserrat", sans-serif;
+		padding-left:10px;
+		}
+	.popover-content-strongs 
+		{
+		padding:5px 15px 10px;
+		font-family: "Montserrat", sans-serif;
+		font-size:15px;
+		text-indent:0;
+		}
+	.popover-title-eastons 
+		{
+		background-color:#008;
+		color:#fff;
+		font-size:16px;
+		font-family: "Montserrat", sans-serif;
+		padding-left:10px;
+		border-top-left-radius:10px;
+		border-top-right-radius:10px;
+		}
+	.popover-content-eastons 
+		{
+		padding:5px 15px 10px;
+		font-family: "Montserrat", sans-serif;
+		font-size:12px;
+		text-indent:0;
+		}
+	.popover-content-eastons p 
+		{
+		margin:0;
+		text-indent:10px;
+		text-align:justify;
+		}
+	.popover-eastons-close 
+		{
+		float:right;
+		margin-right:8px;
+		font-size:12px;
+		margin-top:2px;
+		cursor:pointer;
+		color:#fff;
+		font-family: "Montserrat", sans-serif;
+		padding-left:10px;
+		}
+	intro.intro
+		{
+		display:block;
+		width:90%;
+		text-align:center;
+		font-style:italic;
+		margin-bottom:15px;
+		font-size:16px;
+		margin-left:auto;
+		margin-right:auto;
+		}
+	
+	.words 
+		{		
+		position:relative;
+		display:block;
+		z-index:101;
+		background-color:#fff;
+		box-shadow:0px 0px 7px rgba(0,0,0,0.1);
+		border:1px solid #ddd;
+		border-radius:10px;
+		padding:10px 25px 25px 25px;
+		}
+	.word-results
+		{
+		display:block;
+		font-family: 'Ovo',serif;
+		font-size:18px;
+		line-height:1.3;
+		padding-right:0 !important;
+		padding-left:10px !important;
+		color:#000;	
+		margin-bottom:10px;	
+		}
+	.word-results-reference 
+		{
+		font-weight:bold;
+		font-family: "Montserrat", sans-serif;
+		font-weight:600;
+		font-size:15px;
+		color:#800;
+		}
+	.word-results-reference .in-context 
+		{
+		float:right;
+		font-weight:normal;
+		font-size:12px;
+		}
+	.word-results-reference .in-context a
+		{
+		color:#800;
+		}
+	.word-results-text 
+		{
+		text-align:justify;
+		}
+	.word-results-title 
+		{
+		display:block;
+		width:100%;	
+		font-family: "Montserrat", sans-serif;
+		text-align:center;
+		border-bottom:solid 1px #ddd;
+		}
+	.words .pagination 
+		{
+		margin-left:auto;
+		margin-right:auto;
+		margin-top:10px;
+		margin-bottom:10px;
+		justify-content:center;
+		}
+	.words .pagination .page-item .page-link
+		{
+		background-color:#fff;
+		color:#800;
+		border-color:#ddd;
+		font-family: "Montserrat", sans-serif;
+		font-weight:450;
+		width:40px;
+		text-align:center;
+		white-space:nowrap;
+		}
+	.words .pagination .page-item.active .page-link
+		{
+		background-color:#800;
+		color:#fff;
+		}
+	.words .pagination .page-item.first .page-link
+		{
+		border-top-left-radius:15px;
+		border-bottom-left-radius:15px;
+		padding-left:15px;
+		}
+	.words .pagination .page-item.last .page-link
+		{
+		border-top-right-radius:15px;
+		border-bottom-right-radius:15px;
+		padding-right:28px;
+		}
+	#filter-results 
+		{
+		font-family: "Montserrat", sans-serif;
+		padding-left:15px;
+		font-size:13px;
+		line-height:1.5;
+		}
+	#filter-results a
+		{
+		font-weight:600;
+		padding:5px 10px;
+		}
+	#filter-results a:hover
+		{
+		background-color:#eee;
+		}
+	#filter-results h4
+		{
+		font-weight:500;
+		padding:5px 10px;
+		margin:0;
+		margin-top:-30px;
+		}
+	.filter-results-item span 
+		{
+		margin-left:-10px;
+		}
+	.filter-results-item
+		{
+		}
+	#eastons-results h4
+		{
+		font-weight:500;
+		padding:5px 10px;
+		margin:0;
+		margin-top:-30px;
+		}
+	#eastons-results 
+		{
+		font-family: "Montserrat", sans-serif;
+		padding-left:15px;
+		font-size:13px;
+		line-height:1.5;
+		}
+	#word-tools-eastons-content b 
+		{
+		margin-left:-20px;
+		}
+	#lexicon-results 
+		{
+		font-family: "Montserrat", sans-serif;
+		padding-left:15px;
+		font-size:13px;
+		line-height:1.5;
+		}
+	#lexicon-results h4
+		{
+		font-weight:500;
+		padding:5px 10px;
+		margin:0;
+		margin-top:-30px;
+		}
+	.lexicon-results-count
+		{
+		font-size:15px;
+
+		}
+	.lexicon-results-item
+		{
+		display:block;
+		margin-top:10px;
+		font-size:14px;
+		}
+	.lexicon-results-item b
+		{
+		display:inline;
+		font-weight:550;
+		color:#800;
+		margin-left:15px;
+		font-size:15px;
+		}
+	.lexicon-results-item .orig-word
+		{
+		display:inline;
+		font-family:'Times New Roman', serif;
+		font-size:21px;
+		margin-left:5px;
+		}
+	.lexicon-results-item .translit
+		{
+		display:inline;
+		}
+	.lexicon-results-item .phonetic
+		{
+		display:inline;
+		}
+	.lexicon-results-item .pos
+		{
+		display:inline;
+		}
+	.lexicon-results-item .def
+		{
+		display:block;
+		text-indent:15px;
+		}
+	.lexicon-results-item .pos ol 
+		{
+		margin:0;
+		display:inline;
+		padding:0;
+		}
+	.lexicon-results-item .pos li 
+		{
+		display:inline;
+		margin-right:5px;
+		}
+	.lexicon-results-item .pos li:after
+		{
+		content:";";
 		}
 
 	

@@ -591,7 +591,7 @@
 	color:#fff;
 	height:40px;
 	position:absolute;
-	bottom:35px;
+	bottom:45px;
 	left:0;
 	right:0;
 	margin-left:auto;
@@ -963,6 +963,15 @@ h4
 	.tab-pane.fade
 		{
 		opacity:100;
+		}
+	.tooltip.fade 
+		{
+		opacity:100; /* otherwise tabs or tooltips won't show. */
+		}
+	.popover.fade 
+		{
+		max-width:100%;
+		opacity:100; /* otherwise tabs or tooltips won't show. */
 		}
 	p a:where(:not(.wp-element-button))
 		{

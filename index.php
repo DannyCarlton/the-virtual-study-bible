@@ -26,7 +26,7 @@ if(!defined('ABSPATH'))
 
 	I have to admit, I'm probably not the best coder and I have a bad habit of not documenting my code very well. 
 
-	I'm pretty much old school. My first coding was in 1982, on a Unix mainframe, using basic, until I started annoying the engineering students by slowing down the system. It was suggested I buy a floppy and use the Apple ]['s instead. I did, and never looked back. I eventually moved to the IBM PC's and in the early 90's was finally able to save up enough to buy my first computer (an IBM clone with a monochrome moniter and a hercules graphics card!).
+	I'm pretty much old school. My first taste of coding was in 1982, on a Unix mainframe, using basic, until I started annoying the engineering students by slowing down the system. It was suggested I buy a floppy and use the Apple ]['s instead. I did, and never looked back. I eventually moved to the IBM PC's and in the early 90's was finally able to save up enough to buy my first computer (an IBM clone with a monochrome moniter and a hercules graphics card!).
 
 	In other words, I'm 100% self-taught.
 
@@ -237,7 +237,7 @@ function virtual_bible_create_db_table()
 	$table_name = $wpdb->prefix . 'virtual_bible_meta';
 	array_push($Queries, "CREATE TABLE IF NOT EXISTS $table_name (
 			id int(11) NOT NULL,
-			meta_key varchar(20) NOT NULL,
+			meta_key varchar(50) NOT NULL,
 			meta_value text NOT NULL,
 			PRIMARY KEY id (id)
 			) $charset_collate ENGINE=MyISAM;");
@@ -246,8 +246,8 @@ function virtual_bible_create_db_table()
 	array_push($Queries, "CREATE TABLE IF NOT EXISTS $table_name (
 			id int(11) NOT NULL AUTO_INCREMENT,
 			book tinyint(3) NOT NULL,
-			chapter tinyint(3) NOT NULL,
-			verse tinyint(3) NOT NULL,
+			chapter int(11) NOT NULL,
+			verse int(11) NOT NULL,
 			text text NOT NULL,
 			PRIMARY KEY id (id),
 			KEY ixb (book),
@@ -260,7 +260,7 @@ function virtual_bible_create_db_table()
 	array_push($Queries, "CREATE TABLE IF NOT EXISTS $table_name (
 			id int(11) NOT NULL,
 			book varchar(20) NOT NULL,
-			chapters tinyint(3) NOT NULL,
+			chapters int(11) NOT NULL,
 			abbr text NOT NULL,
 			longname text NOT NULL,
 			PRIMARY KEY id (id)

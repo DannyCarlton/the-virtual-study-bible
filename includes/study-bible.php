@@ -28,8 +28,10 @@ function buildStudyBiblePage()
 	wp_register_style('vb-study-bible-css', plugins_url().'/the-virtual-study-bible/css/study-bible.css');
 	wp_enqueue_style('vb-study-bible-css');
 	
-	wp_register_script('vb-jquery-js', plugins_url().'/the-virtual-study-bible/js/jquery-1.11.1.js');
+	wp_register_script('vb-jquery-js', plugins_url().'/the-virtual-study-bible/js/jquery-2.2.4.js');
 	wp_enqueue_script('vb-jquery-js');
+	wp_register_script('vb-popper-js', plugins_url().'/the-virtual-study-bible/js/popper-2.11.8.js');
+	wp_enqueue_script('vb-popper-js');
 	wp_register_script('vb-bootstrap-js', plugins_url().'/the-virtual-study-bible/js/bootstrap.js');
 	wp_enqueue_script('vb-bootstrap-js');
 

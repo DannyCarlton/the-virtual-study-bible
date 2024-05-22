@@ -7,11 +7,32 @@ https://codex.wordpress.org/I18n_for_WordPress_Developers								← For allowin
 https://make.wordpress.org/core/handbook/testing/automated-testing/phpunit/				← Creating a testing environment
 
 TODAY...  
+	Word Search 
+		✓Filter
+		Easton's... 
+			✓onclick... 
+			✓load...
+			✓hide when disabled 
+			put module back
+		Lexicon Tools... 
+			Add lexwords to lexicon module load
+		Scope does not work
+		...in context 
+			popover with full paragraph and verse highlighted
+		list book with number of occurrences (also for sections)
+		Link for definition in Easton's (?) (Naves)
+		List of hebrew greek words translated to this.
+		List (linked) of variations [loved,loves,lovest, etc.]
+		chapter, context (within the paragraph), 
+	Make help popovers for the various parts 
+	xref popover
 	Passage Style changes style sheet
-	Link Keyed  activates/deactivates click
-	capFilter
 	recognize and link references within introduction and outline
 	dictionary has two entries for some words.
+	manually go through Psalms and tag intros.
+
+ERRORS... 
+
 
 TO DO... 
 	Tools pane... 

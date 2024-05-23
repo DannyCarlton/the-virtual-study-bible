@@ -632,6 +632,9 @@
 	word.easton 
 		{
 		}
+	word strong 
+		{
+		}
 	.hebrew
 		{
 		display:block;
@@ -948,30 +951,30 @@
 		}
 	.lexicon-results-item b
 		{
-		display:inline;
 		font-weight:550;
 		color:#800;
+		margin:0;
 		margin-left:15px;
 		font-size:15px;
+
 		}
 	.lexicon-results-item .orig-word
 		{
-		display:inline;
 		font-family:'Times New Roman', serif;
 		font-size:21px;
 		margin-left:5px;
+		margin-right:5px;
 		}
 	.lexicon-results-item .translit
 		{
-		display:inline;
+		font-weight:600;
+		margin-right:5px;
 		}
 	.lexicon-results-item .phonetic
 		{
-		display:inline;
 		}
 	.lexicon-results-item .pos
 		{
-		display:inline;
 		}
 	.lexicon-results-item .def
 		{

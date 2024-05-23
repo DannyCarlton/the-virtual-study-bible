@@ -46,15 +46,15 @@ if($verify)
 			$translit=$lexData['translit'];
 			$phonetic=$lexData['phonetic'];
 			$pos=str_replace('\"','"',$lexData['part_of_speech']);
-			$st_def=$lexData['st_def'];
+			$st_def=str_replace('\"','"',$lexData['st_def']);
 			echo "
 				<div class=\"lexicon-results-item\">
-					<b>$strongs</b> 
+					<b>$strongs.</b> 
 					<span class=\"orig-word\">$orig_word</span> 
-					<span class=\"translit\">$translit </span>
-					<em class=\"phonetic\">$phonetic</em> 
+					<span class=\"translit\">$translit,</span>
+					<em class=\"phonetic\">$phonetic;</em> 
 					<span class=\"pos\">[$pos] </span>
-					<span class=\"def\">$st_def</span>
+					<span class=\"def\">&mdash;$st_def</span>
 				</div>";
 			}
 		}
@@ -74,7 +74,7 @@ function getLexEntriesByKeyword($keyword)
 	$kw=str_replace('*','%',$kw);
 	$search_key="`word` LIKE '".$kw."'";
 	$table_name = $wpdb->prefix . 'virtual_bible_lexwords';
-	$querytext = "SELECT * FROM `$table_name` WHERE $search_key";
+	$querytext = "SELECT * FROM `$table_name` WHERE $search_key ORDER BY `strongs`";
 	
 	$Results = $wpdb->get_results($querytext, ARRAY_A);
 	return $Results;

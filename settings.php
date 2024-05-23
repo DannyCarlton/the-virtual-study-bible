@@ -39,6 +39,7 @@ $virtual_bible_outline_installed=virtual_bible_is_module_installed('outline');
 $virtual_bible_hebrew_installed=virtual_bible_is_module_installed('hebrew');
 $virtual_bible_greek_installed=virtual_bible_is_module_installed('greek');
 $virtual_bible_holman_installed=virtual_bible_is_module_installed('holman');
+$virtual_bible_eastons_installed=virtual_bible_is_module_installed('eastons');
 $virtual_bible_traditional_select=virtual_bible_getMeta('style_traditional');
 $virtual_bible_paragraph_select=virtual_bible_getMeta('style_paragraph');
 $virtual_bible_reader_select=virtual_bible_getMeta('style_reader');
@@ -221,7 +222,7 @@ else
 
 									
 								<?php 
-									 $virtual_bible_text="The section heading and descriptions display between passages. This is present in most Study Bible.<small style=\"display:block;\">[size: 513K]</small>";
+									 $virtual_bible_text="The section heading and descriptions display between passages. This is present in most Study Bibles.<small style=\"display:block;\">[size: 513K]</small>";
 									 if($virtual_bible_outline_installed)
 										 {
 										 echo virtual_bible_module_installed_html('outline','info','list','Passage Outline',$virtual_bible_text,plugin_dir_url(__FILE__),$virtual_bible_outline_installed);
@@ -265,6 +266,18 @@ else
 									else
 										{
 										echo virtual_bible_module_uninstalled_html('holman','info','arrows-turn-to-dots','Holman Cross-Reference',$virtual_bible_text,plugin_dir_url(__FILE__));
+										}  
+								?>
+
+								<?php 
+									$virtual_bible_text="This will load Easton's Bible Dictionary<small style=\"display:block;\">[size: 3.9M]</small>";
+									if($virtual_bible_eastons_installed)
+										{
+										echo virtual_bible_module_installed_html('eastons','info','book','Easton&rsquo;s Bible Dictionary',$virtual_bible_text,plugin_dir_url(__FILE__),$virtual_bible_eastons_installed);
+										}
+									else
+										{
+										echo virtual_bible_module_uninstalled_html('eastons','info','book','Easton&rsquo;s Bible Dictionary',$virtual_bible_text,plugin_dir_url(__FILE__));
 										}  
 								?>
 
@@ -563,6 +576,10 @@ window.addEventListener('load',function()
 	<?php echo virtual_bible_module_uninstalled_js('holman',plugin_dir_url(__FILE__)); ?>
 
 	<?php echo virtual_bible_module_installed_js('holman',plugin_dir_url(__FILE__)); ?>
+
+<?php echo virtual_bible_module_uninstalled_js('eastons',plugin_dir_url(__FILE__)); ?>
+
+<?php echo virtual_bible_module_installed_js('eastons',plugin_dir_url(__FILE__)); ?>
 
 	$(".toggle-style").click(function(e) 
 		{

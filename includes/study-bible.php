@@ -50,6 +50,7 @@ function buildStudyBiblePage()
 	if(isset($_GET['keyword']))
 		{
 		$keyword=$_GET['keyword'];
+		$keyword=str_replace('"','',$keyword);
 		$reference=$keyword;
 		if(isset($_GET['scope']))
 			{
@@ -67,8 +68,16 @@ function buildStudyBiblePage()
 			{
 			$layout='trad';
 			}
+		if(isset($_GET['version']))
+			{
+			$version=$_GET['version'];
+			}
+		else
+			{
+			$version='kjvs';
+			}
 		// build page based on keyword, scope and style
-		$virtual_bible_page = virtual_bible_buildResultsPage($keyword,$scope);
+		$virtual_bible_page = virtual_bible_buildResultsPage($keyword,$scope,$version,$layout);
 		}
 	else
 		{

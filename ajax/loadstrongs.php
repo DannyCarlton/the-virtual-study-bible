@@ -83,6 +83,18 @@ if($verify)
 			ipd_def			text			NOT NULL,
 			PRIMARY KEY id (id)
 			) $charset_collate ENGINE=MyISAM;");
+
+
+		$table_name = $wpdb->prefix . 'virtual_bible_lexwords';
+		array_push($Queries, "CREATE TABLE IF NOT EXISTS $table_name (
+			id 				int(11) 		NOT NULL,
+			word 			text 			NOT NULL,
+			strongs 		varchar(6) 		NOT NULL,
+			usage_count		int(11)			NOT NULL,
+			PRIMARY KEY 	id 	(id),
+			KEY 			ixw (word)
+			) $charset_collate ENGINE=MyISAM;");
+
 		if ( ! function_exists('dbDelta') )
 			{
 			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
@@ -126,7 +138,7 @@ if($verify)
 				$word=$column[2];
 				if(($counter/500) == floor($counter/500))
 					{
-					$progress=floor(($counter/14298)*100);
+					$progress=floor(($counter/60791)*100);
 					$data="$progress"."% $osid...$sid";
 					write_file($data);
 					$lastword=$word;
@@ -166,7 +178,7 @@ if($verify)
 				$word=$column[2];
 				if(($counter/500) == floor($counter/500))
 					{
-					$progress=floor(($counter/14298)*100);
+					$progress=floor(($counter/60791)*100);
 					$data="$progress"."% $osid...$sid";
 					write_file($data);
 					$lastword=$word;
@@ -174,6 +186,42 @@ if($verify)
 					}
 				}
 			}
+
+			
+		$file = fopen('https://cdn.virtualbible.org/virtual_bible_lexwords.csv', "r");
+		$table_name = $wpdb->prefix . 'virtual_bible_lexwords';
+		while (($column = fgetcsv($file, 10000, ",")) !== FALSE)  #46493   14298
+			{
+			if($column[0]!='id')  
+				{
+				$counter++;
+				$column[2]=str_replace("\n",'',$column[2]);
+				$sid='L'.$column[0];
+				$wpdb->insert
+					( 
+					$table_name,
+					array
+						( 
+						'id'				=>  $column[0],
+						'word'				=>  $column[1],
+						'strongs'			=>  $column[2],
+						'usage_count'		=>  $column[3]
+						)
+					);
+				$word=$column[2];
+				if(($counter/1000) == floor($counter/1000))
+					{
+					$progress=floor(($counter/60791)*100);
+					$data="$progress"."% $osid...$sid";
+					write_file($data);
+					$lastword=$word;
+					$osid=$sid;
+					}
+				}
+			}
+	
+
+			
 
 
 		$table_name = $wpdb->prefix . 'virtual_bible_meta';

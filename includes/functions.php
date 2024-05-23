@@ -203,7 +203,7 @@ function virtual_bible_getOutline($bid,$chapter)
 
 function virtual_bible_buildForm($reference)
 	{
-	global $page_url;
+	global $page_url,$scope;
 	$styles=virtual_bible_getStyles();
 	$form = <<<EOD
 	<div class="row study-bible-form-row">
@@ -459,9 +459,6 @@ function virtual_bible_buildStartHelp()
 				Find verses containing two or more words you want by typing them in, separated by a space.<br>
 				<em>Example: <a href="{$page_url}?keyword=christ+mercy">Christ mercy</a></em></p>
 			<p class="fontcolor-medium" style="margin-top:0;margin-left:20px">
-				Find verses containing an exact phrase by enclosing it in quotation marks.<br>
-				<em>Example: <a href="{$page_url}?keyword=&#34;For+God+so+loved+the+world&#34;">&quot;for God so loved the world&quot;</a></em></p>
-			<p class="fontcolor-medium" style="margin-top:0;margin-left:20px">
 				Find verses containing partial words by using the wildcard * (an asterisk).<br>
 				<em>Example: <a href="{$page_url}?keyword=love*">love*</a> <small>(returns love, loves, loved, lovely, etc.)</small></em></p>
 			<h5 style="margin-bottom:5px;margin-top:15px;color:#000">Using the Scope Option</h4>
@@ -469,8 +466,6 @@ function virtual_bible_buildStartHelp()
 				Use the scope drop-down menu (default is set to the Whole Bible) to limit your word search to a specific section of the Bible<br>
 				<em>Example: <a href="{$page_url}?keyword=love&scope=2">love</a> <small>(returns only instances of the word &ldquo;love&rdquo; in the New Testament)</small></em><br>
 			<small><em>Scope will be ignored for reference searches (i.e. John 3:16)</em></small></p>
-			<p class="fontcolor-medium">
-				<em>Warning: do not combine quotes and wild card.</em></p>
 		</div>		
 		<div id="tools" class="tab-pane fade" style="padding: 0 10px">
 			{$tools}
@@ -526,7 +521,7 @@ function virtual_bible_buildStartPage()
 
 	
 
-function virtual_bible_buildResultsPage($keyword,$scope)
+function virtual_bible_buildResultsPage($keyword,$scope,$version,$layout)
 	{
 	global $reference,$page_url,$_vb,$plugin_url;
 	$virtual_bible_eastons_installed=virtual_bible_is_module_installed('eastons');
@@ -548,64 +543,68 @@ function virtual_bible_buildResultsPage($keyword,$scope)
 		$results='<div class="row study-bible"><div class="row col-lg-6 words">';$chapter_list_modal='';
 		$book_list=virtual_bible_getBookList();
 		$book_list_modal=virtual_bible_buildBookListModal();
+		$keyword=str_replace('\\','',$keyword);
 		$form=virtual_bible_buildForm($keyword);
-		#$chapter_list_modal=virtual_bible_buildChapterListModal($bookname);
 		$_debug='';
 		$_debug.='<b>$isRef</b>'.getPrintR($isRef);
-		$verse_count=$_vb->getVerseCountByKeyword($keyword,$scope=0);
+		$verse_count=$_vb->getVerseCountByKeyword($keyword,$scope);
 		$_debug.="<b>Verse Count:</b> ".getPrintR($verse_count);
 		if($verse_count)
 			{
 			$page_count=ceil($verse_count/20);
 			if(!isset($_GET['vbpage'])){$current_page=1;}
 			else{$current_page=$_GET['vbpage'];}
-			$pagination='<ul class="pagination pagination-sm">';$p_count=0;$p_start=1;
-			if($current_page>4){$p_start=$current_page-3;}
-			if($current_page>($page_count-3)){$p_start=$page_count-6;}
-			if($p_start<1){$p_start=1;}
-			$pp=$p_start-1;
-			if($p_start>1)
+			$pagination='';
+			if($page_count>1)
 				{
-				$pagination.="<li class=\"page-item first\">
-					<a class=\"page-link\" href=\"$page_url?keyword=$keyword&scope=$scope&vbpage=$pp\" style=\"padding-left:11px;width:37px\">
-						<i class=\"fas fa-chevron-circle-left\" style=\"font-size:17px;vertical-align:text-bottom;\"></i>
-					</a>
-				</li>";
-				}
-			for($p=1;$p<=$page_count;$p++)
-				{
-				$p_count++;
-				$position='';
-				if($p==1){$position='first';}
-				if($p==$page_count){$position='last';}
-				if($p_count<$p_start+7 and $p_count>=$p_start)
+				$pagination='<ul class="pagination pagination-sm">';$p_count=0;$p_start=1;
+				if($current_page>4){$p_start=$current_page-3;}
+				if($current_page>($page_count-3)){$p_start=$page_count-6;}
+				if($p_start<1){$p_start=1;}
+				$pp=$p_start-1;
+				if($p_start>1)
 					{
-					if($p==$current_page)
-						{
-						$pagination.="<li class=\"page-item active $position\"><a class=\"page-link\" href=\"/$page_url?keyword=$keyword&scope=$scope&vbpage=$current_page\">$p</a></li>";
-						}
-					else
-						{
-						$pagination.="<li class=\"page-item $position\"><a class=\"page-link\" href=\"$page_url?keyword=$keyword&scope=$scope&vbpage=$p\">$p</a></li>";
-						}
-					$np=$p;
+					$pagination.="<li class=\"page-item first\">
+						<a class=\"page-link\" href=\"$page_url?keyword=$keyword&scope=$scope&vbpage=$pp\" style=\"padding-left:11px;width:37px\">
+							<i class=\"fas fa-chevron-circle-left\" style=\"font-size:17px;vertical-align:text-bottom;\"></i>
+						</a>
+					</li>";
 					}
+				for($p=1;$p<=$page_count;$p++)
+					{
+					$p_count++;
+					$position='';
+					if($p==1){$position='first';}
+					if($p==$page_count){$position='last';}
+					if($p_count<$p_start+7 and $p_count>=$p_start)
+						{
+						if($p==$current_page)
+							{
+							$pagination.="<li class=\"page-item active $position\"><a class=\"page-link\" href=\"/$page_url?keyword=$keyword&scope=$scope&vbpage=$current_page\">$p</a></li>";
+							}
+						else
+							{
+							$pagination.="<li class=\"page-item $position\"><a class=\"page-link\" href=\"$page_url?keyword=$keyword&scope=$scope&vbpage=$p\">$p</a></li>";
+							}
+						$np=$p;
+						}
+					}
+				$np++;
+				if($p_start<$page_count-6 and $page_count>7)
+					{
+					$pagination.="<li class=\"page-item last\">
+						<a class=\"page-link\" href=\"$page_url?keyword=$keyword&scope=$scope&vbpage=$np\">
+							<i class=\"fas fa-chevron-circle-right\" style=\"font-size:17px;vertical-align:text-bottom\"></i>
+						</a>
+					</li>";
+					}
+				$pagination.="</ul>";
 				}
-			$np++;
-			if($p_start<$page_count-6 and $page_count>7)
-				{
-				$pagination.="<li class=\"page-item last\">
-					<a class=\"page-link\" href=\"$page_url?keyword=$keyword&scope=$scope&vbpage=$np\">
-						<i class=\"fas fa-chevron-circle-right\" style=\"font-size:17px;vertical-align:text-bottom\"></i>
-					</a>
-				</li>";
-				}
-			$pagination.="</ul>";
 			$start=($current_page-1)*20;
 			$_start=$start+1;$_end=$_start+19;
 			$results.="<div class=\"word-results-title\">$_start-$_end of $verse_count verses containing &ldquo;$keyword&rdquo;</div>$pagination";
 
-			$Verses=$_vb->getVersesByKeyword($keyword,$start);
+			$Verses=$_vb->getVersesByKeyword($keyword,$start,$scope);
 			$Keyword=[];
 			$_debug.="<b>Verses</b> ".getPrintR($Verses);
 
@@ -868,6 +867,8 @@ function virtual_bible_buildResultsPage($keyword,$scope)
 			'load',
 			function()
 				{
+				$('#scope').prop('selectedIndex',{$scope});
+				$('#version').prop('selectedIndex','{$version}');
 				{$js}
 				}
 			);
@@ -1007,7 +1008,10 @@ class virtual_bible
 			$refElements=explode(':',$ref_key);
 			$Return['debug']['refElements']=$refElements;
 			$cid=$refElements[0];
-			$Return['chapter']=$cid;
+			if(is_int($cid))
+				{
+				$Return['chapter']=$cid;
+				}
 			}
 		else
 			{
@@ -1915,6 +1919,7 @@ class virtual_bible
     	global $wpdb,$_debug,$ScopeKey;
 		if(!$scope){$scope=0;}
 		$keyword=strtolower($keyword);
+		$keyword=str_replace('&quot;','"',$keyword);
 		if(strstr($keyword,'"'))
 			{
 			$Keywords=explode('"',$keyword);
@@ -1960,6 +1965,7 @@ class virtual_bible
 
 		$querytext = sprintf("SELECT `id` FROM $table_name WHERE $search_key");
 		$_debug['getVerseCountByKeyword querytext']=$querytext;
+		write_log($querytext);
 
 		$wpdb->get_results($querytext);
 		return $wpdb->num_rows;

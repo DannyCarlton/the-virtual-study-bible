@@ -1,5 +1,5 @@
 0149-[•], 0164-[¤], 0167-[§], 0182-[¶], 0183-[·],  ✓  —  “”‘’  ™  ♥ ≡ 
-←↑→↓➝(&#10141;)➡(&#10145;)➧(&#10151;)
+←↑→↓➝(&#10141;)➡(&#10145;)➧(&#10151;) « »
 
 
 https://developer.wordpress.com/wordpress-com-marketplace/plugin-developer-guidelines/ 	← Important!!
@@ -8,31 +8,18 @@ https://make.wordpress.org/core/handbook/testing/automated-testing/phpunit/				�
 
 TODAY...  
 	Word Search 
-		✓Filter
-		Easton's... 
-			✓onclick... 
-			✓load...
-			✓hide when disabled 
-			✓put module back
 		Lexicon Tools... 
-			✓Add lexwords to lexicon module load
-			Makes lex links work as popups
-		Scope does not work
-		...in context 
-			popover with full paragraph and verse highlighted
-		list book with number of occurrences (also for sections)
-		Link for definition in Easton's (?) (Naves)
-		List of hebrew greek words translated to this.
-		List (linked) of variations [loved,loves,lovest, etc.]
-		chapter, context (within the paragraph), 
+			but also make Strong's Link Key highlight words in left pane
+			Highlight verses/words matching lexicon entry.
+	use gears for page load
 	Make help popovers for the various parts 
-	xref popover
 	Passage Style changes style sheet
-	recognize and link references within introduction and outline
 	dictionary has two entries for some words.
-	manually go through Psalms and tag intros.
 
 ERRORS... 
+	Genesis 2: v23 xref overlaps v 24's 
+	lexicom 07474 (word search love) ra`yah links 07453 which shows 0reya2 as a strong's word 
+	word tools lexicon, greek links don't work
 
 
 TO DO... 
@@ -51,7 +38,6 @@ TO DO...
 	tablet and mobile layouts
 
 LATER...
-	Scrape new EASTON's data to clean up definitions
 
 NOTES...
 	Stepwizard positions page at the top of the form... 

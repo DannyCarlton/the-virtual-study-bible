@@ -20,43 +20,87 @@ if($verify)
 	if(isset($_GET['keyword']))
 		{
 		$keyword=$_GET['keyword'];
-		$Entries=getLexEntriesByKeyword($keyword);
-		$word_count=count($Entries);
-		echo "<div class=\"lexicon-results-count\">$word_count lexicon entires for &ldquo;$keyword&rdquo;</div>";
-		foreach($Entries as $Entry)
+		$keyword=preg_replace("/[^A-Za-z ]/",'',$keyword);
+		$Keywords=explode(' ',$keyword);
+		foreach($Keywords as $keyword)
 			{
-			$strongs=$Entry['strongs'];
-			$word=$Entry['word'];
-			$lex=substr($strongs,0,1);
-			if($lex=='0')
+
+			$Entries=getLexEntriesByKeyword($keyword);
+			$word_count=count($Entries);
+			$plugin_url=str_replace('includes/','',plugin_dir_url(__FILE__));
+			$nonce_url_strongs = wp_nonce_url($plugin_url.'fillstrongs.php','strongs_popover');
+			$nonce_url_strongs=$plugin_url.'fillstrongs.php?_vbnonce=1234567';
+			echo "<div class=\"lexicon-results-count\" >$word_count lexicon entires for &ldquo;$keyword&rdquo;</div>";
+			foreach($Entries as $Entry)
 				{
-				$lan='Hebrew';
-				$table_name='virtual_bible_lexicon_hebrew';
-				$strongs=substr($strongs,1);
+				$strongs=$Entry['strongs'];
+				$word=$Entry['word'];
+				$lex=substr($strongs,0,1);
+				if($lex=='0')
+					{
+					$lan='Hebrew';$_l='H';
+					$table_name='virtual_bible_lexicon_hebrew';
+					$strongs=substr($strongs,1);
+					}
+				else
+					{
+					$lan='Greek';$_l='G';
+					$table_name='virtual_bible_lexicon_greek';
+					}
+				$lexData=dbFetch1($table_name,array('id'=>$strongs));
+				$orig_word=$lexData['orig_word_utf8'];
+				$translit=$lexData['translit'];
+				$phonetic=$lexData['phonetic'];
+				$pos=str_replace('\"','"',$lexData['part_of_speech']);
+				$st_def=str_replace('\"','"',$lexData['st_def']);
+				preg_match_all('/«(.*?)»/',$st_def,$Links);
+				foreach($Links[0] as $link)
+					{
+					$k=$link;
+					$v=str_replace('«','',$k);
+					$v=str_replace('»','',$v);
+					$st_def=str_replace($k,"<lex class=\"strongs\" strongs=\"$v\" data-toggle=\"popover\" data-placement=\"right\" onclick=\"
+					$(this).popover
+						(
+							{
+							placement : 'right', 
+							html: true,
+							'content' : function()
+								{
+								return $.ajax(
+										{
+										type: 'GET',
+										url: '{$nonce_url_strongs}',
+										data: {strongs:strongs_num,rnd:Math.random()},
+										dataType: 'html',
+										async: false
+										}).responseText;
+								}
+							}
+						)
+					\">$k</lex>",$st_def);
+					}
+				echo "
+					<div class=\"lexicon-results-item\" >
+						<div class=\"lexicon-results-item-header\"
+						onclick=\"
+							$('#lexicon-results h4 small').css('display','inline');
+							$('.lexicon-results-item').css('background-color','');
+							$(this).parent().css('background-color','#ffffee');
+							$('.word-results').css('display','none');
+							$('*[strongs=$_l$strongs]').parent().parent().css('display','block')\">
+							<b>$strongs.</b> 
+							<span class=\"orig-word\">$orig_word</span> 
+							<span class=\"translit\">$translit,</span>
+							<em class=\"phonetic\">$phonetic;</em> 
+							<span class=\"pos\">[$pos] </span>
+						</div>
+						<span class=\"def\">&mdash;$st_def</span>
+					</div>";
 				}
-			else
-				{
-				$lan='Greek';
-				$table_name='virtual_bible_lexicon_greek';
-				}
-			$lexData=dbFetch1($table_name,array('id'=>$strongs));
-#			write_log("$word - $strongs - $lan\n");
-#			write_log($lexData);
-			$orig_word=$lexData['orig_word_utf8'];
-			$translit=$lexData['translit'];
-			$phonetic=$lexData['phonetic'];
-			$pos=str_replace('\"','"',$lexData['part_of_speech']);
-			$st_def=str_replace('\"','"',$lexData['st_def']);
-			echo "
-				<div class=\"lexicon-results-item\">
-					<b>$strongs.</b> 
-					<span class=\"orig-word\">$orig_word</span> 
-					<span class=\"translit\">$translit,</span>
-					<em class=\"phonetic\">$phonetic;</em> 
-					<span class=\"pos\">[$pos] </span>
-					<span class=\"def\">&mdash;$st_def</span>
-				</div>";
+
 			}
+
 		}
 	else
 		{

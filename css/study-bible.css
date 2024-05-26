@@ -1,4 +1,21 @@
 
+	div.study-bible-results 
+		{
+		display:none;
+		}
+	div.study-bible-cover 
+		{
+		background-color:#fff;
+		height:100vh;
+		font-family: "Montserrat", sans-serif;
+		color:#fafafa;
+		font-size:70px;
+		text-align:center;
+		font-weight:700;
+		display:block;
+		width:100%;
+		padding-top:100px;
+		}
 
 	ul.nav.nav-tabs {
 		clear: both;
@@ -289,6 +306,15 @@
 		color:#000;
 		text-decoration:underline;
 		}
+	xr.xref_verse {
+		color:#000;
+		text-decoration:none;
+		cursor:pointer;
+		}
+	xr.xref_verse:hover {
+		color:#000;
+		text-decoration:underline;
+		}
 	.xref-inner {
 		position:absolute;
 		right:0;
@@ -355,8 +381,10 @@
 		font-weight:normal;
 		}
 	.context {
-		background-color:#ffffaa;
+		margin-top:-100px;
+		margin-bottom:100px;
 		}
+	
 
 	
 	verses
@@ -613,14 +641,13 @@
 		{
 		display:block;
 		width:100%;
-		font-size:17px;
+		font-size:15px;
 		font-family: "Montserrat", sans-serif;
-		font-style:italic;
 		background:#fff;
-		padding:20px 0 10px 0;
+		padding:5px 0 0 0;
 		line-height:1.3;
-		text-align:center;
-		color:#833;
+		color:#008;
+		font-weight:550;
 		}
 	verses outline.pos-0
 		{
@@ -705,6 +732,10 @@
 		box-shadow:1px 1px 10px rgba(0,0,0,0.2);
 		border-radius:10px;
 		}
+	.def .popover 
+		{
+		border-radius:10px;
+		}
 	.popover-title-strongs 
 		{
 		background-color:#800;
@@ -718,6 +749,13 @@
 	.popover-orig-word 
 		{
 		font-family:'Times New Roman',serif;
+		color:#fff;
+		}
+	.popover-title-strongs b.popover-orig-word 
+		{
+		color:#fff;
+		margin:0;
+		font-size:22px;
 		}
 	.popover-title-strongs b 
 		{
@@ -742,39 +780,52 @@
 		font-size:15px;
 		text-indent:0;
 		}
-	.popover-title-eastons 
+	xref .popover.fade
 		{
-		background-color:#008;
-		color:#fff;
-		font-size:16px;
-		font-family: "Montserrat", sans-serif;
-		padding-left:10px;
-		border-top-left-radius:10px;
-		border-top-right-radius:10px;
+		max-width:300px;
+		box-shadow:1px 1px 10px rgba(0,0,0,0.2);
+		border-radius:10px;
+		border:none;
+		margin-top:-10px;
 		}
-	.popover-content-eastons 
+	
+	xref .popover-content 
 		{
-		padding:5px 15px 10px;
-		font-family: "Montserrat", sans-serif;
-		font-size:12px;
-		text-indent:0;
+		width:300px;
+		line-height:1.3;
+		border-radius:10px;
 		}
-	.popover-content-eastons p 
-		{
-		margin:0;
-		text-indent:10px;
-		text-align:justify;
-		}
-	.popover-eastons-close 
+	.popover-xref-close 
 		{
 		float:right;
-		margin-right:8px;
+		margin-right:-12px;
 		font-size:12px;
-		margin-top:2px;
+		margin-top:-15px;
 		cursor:pointer;
-		color:#fff;
+		color:#000;
 		font-family: "Montserrat", sans-serif;
 		padding-left:10px;
+		}
+	.popover-content-xref 
+		{
+		padding:15px 20px;
+		font-family: 'Ovo',serif;
+		font-size:15px;
+		text-indent:0;
+		text-align:justify;
+		background-color:#ffffee;
+		border-radius:10px;
+		border:1px solid #ccc;
+		}
+	.popover-content-xref verse
+		{
+		display:inline;
+		text-align:none;
+		text-indent:none;
+		}
+	.popover-content-xref sup
+		{
+		font-size:9px;
 		}
 	intro.intro
 		{
@@ -809,6 +860,8 @@
 		padding-left:10px !important;
 		color:#000;	
 		margin-bottom:10px;	
+		border-bottom:1px solid #ddd;
+		padding-bottom:10px;
 		}
 	.word-results-reference 
 		{
@@ -839,6 +892,7 @@
 		font-family: "Montserrat", sans-serif;
 		text-align:center;
 		border-bottom:solid 1px #ddd;
+		margin-bottom:10px;
 		}
 	.words .pagination 
 		{
@@ -920,6 +974,15 @@
 		font-size:13px;
 		line-height:1.5;
 		}
+	.word-tools-eastons-def	
+		{
+		margin-bottom:20px;
+		}
+	#word-tools-eastons-content p	
+		{
+		text-align:justify;
+		margin-right:10px;
+		}
 	#word-tools-eastons-content b 
 		{
 		margin-left:-20px;
@@ -937,17 +1000,23 @@
 		padding:5px 10px;
 		margin:0;
 		margin-top:-30px;
+		margin-bottom:-10px;
 		}
 	.lexicon-results-count
 		{
 		font-size:15px;
-
+		margin-bottom:20px;
+		border-bottom:1px solid #ddd;
 		}
 	.lexicon-results-item
 		{
 		display:block;
 		margin-top:10px;
 		font-size:14px;
+		}
+	.lexicon-results-item-header 
+		{
+		cursor:pointer;
 		}
 	.lexicon-results-item b
 		{
@@ -996,6 +1065,7 @@
 		{
 		content:";";
 		}
+	
 
 	
 

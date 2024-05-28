@@ -11,12 +11,9 @@ function virtual_bible_is_module_installed($name)
 	global $wpdb;
 	$table_name = $wpdb->prefix . 'virtual_bible_meta';
 	$Results = $wpdb->get_results("SELECT meta_value from $table_name WHERE meta_key = 'module_$name' LIMIT 1;", ARRAY_A);
-#	write_log("name: $name\n".getPrintR($Results));
 	if(isset($Results[0]['meta_value']) and $Results[0]['meta_value']!='')
 		{
-#		return TRUE;
 		return $Results[0]['meta_value'];
-#		return getPrintR($Results);
 		}
 	else
 		{

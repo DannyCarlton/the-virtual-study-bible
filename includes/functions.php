@@ -488,6 +488,7 @@ function virtual_bible_buildToolsContent($bid,$part='intro')
 	$bookname=$_vb->getBookTitleFromId($bid);
 	$Intro=dbFetch('virtual_bible_gty_intro_outline',array('book'=>$bid));
 	$text=$Intro[0]['text'];
+	$text=str_replace('<strong></strong>','',$text);
 	$text=str_replace('<p><strong>','<h5>',$text);
 	$text=str_replace('</strong></p>','</h5>',$text);	
 	
@@ -499,7 +500,8 @@ function virtual_bible_buildToolsContent($bid,$part='intro')
 	
 	$text=preg_replace($regex,'<a href="'.$page_url.'?keyword=$1+$2">$1 $2</a>',$text);
 
-	list($intro,$outline)=explode('<h5>Outline</h5>',$text);
+	#list($intro,$outline)=explode('<h5>Outline</h5>',$text);
+	list($intro,$outline)=explode2list('<h5>Outline</h5>',$text);
 	if($part=='outline')
 		{
 		return '<h4>Outline of '.$bookname.'<small><br>by John MacArthur</small></h4>'.$outline.'<hr /><p><small class="copyright">Outline of '.$bookname.', Copyright &copy; 2007, <a href="https://www.gty.org" target="_blank">Grace To You.</a> All rights reserved. Used by permission.</small></p>';
@@ -1024,6 +1026,7 @@ class virtual_bible
 		# clean up reference string
 		$_k=urldecode($k);
 		$_k=str_ireplace('Song of Solomon','Song',$_k);	//This is the only book with spaces other than after a number
+		$_k=str_ireplace('song-of-solomon','Song',$_k);
 		$_k = preg_replace("/(\s){2,}/", ' ', $_k);		//remove extra spaces
 		$_k=str_replace('.','',$_k);					//remove periods
 		$_k=str_replace('1st ', '1 ', $_k);				//make ordinals regular numbers
@@ -1623,9 +1626,12 @@ class virtual_bible
 			$hVerse=[];$hebrew='<div class="hebrew"><h4>Hebrew Text</h4>';
 			foreach($Hebrew as $Pasuk) #Pasuk is the Hebrew word for verse, I think.
 				{
-				$verse=$Pasuk['verse'];
-				$text=$Pasuk['text'];
-				$hVerse[$verse]=$text;
+				if(isset($Pasuk['verse']))
+					{
+					$verse=$Pasuk['verse'];
+					$text=$Pasuk['text'];
+					$hVerse[$verse]=$text;
+					}
 				$hebrew.="\n<div id=\"heb_$bid"."_$chapter"."_$verse\" class=\"hebrew-verse\" 
 					onmouseover=\"$('#verse_$bid"."_$chapter"."_$verse').css({'background-color':'#ffffdd'})\" 
 					onmouseout=\"$('#verse_$bid"."_$chapter"."_$verse').css({'background-color':'#ffffff'})\">
@@ -1640,9 +1646,12 @@ class virtual_bible
 			$gVerse=[];$greek='<div class="greek"><h4>Greek Text</h4>';
 			foreach($Greek as $Stihos) 
 				{
-				$verse=$Stihos['verse'];
-				$text=$Stihos['text'];
-				$hVerse[$verse]=$text;
+				if(isset($Stihos['verse']))
+					{
+					$verse=$Stihos['verse'];
+					$text=$Stihos['text'];
+					$hVerse[$verse]=$text;
+					}
 
 				$greek.="\n<div id=\"gre_$bid"."_$chapter"."_$verse\" data-connect=\"$bid"."_$chapter"."_$verse\" class=\"greek-verse\" >
 					<b class=\"greek-verse-number\">$verse</b>$text</div>";
@@ -1768,7 +1777,7 @@ class virtual_bible
 					$_debug.="<br><hr>$intro<hr><br>";
 					}
 				$height_guess=substr_count($text,' ');		//We are gussing the height of the verse, based on the number of spaces.
-				$max_xref=(ceil($height_guess/8)+1);		//We are limiting the number of xrefs shown, based on our guessed height.
+				$max_xref=(ceil($height_guess/9)+1);		//We are limiting the number of xrefs shown, based on our guessed height.
 				if(strstr($text,'¶')){$par=' paragraph';}
 				if($virtual_bible_holman_installed=='installed')
 					{
@@ -2268,6 +2277,16 @@ class virtual_bible
  *   MISCELLENIOUS FUNCTIONS
 */
 
+
+
+
+function explode2list($delimiter,$string)
+	{
+	$Array=array_pad(explode($delimiter,$string),2,null);
+	return $Array;	
+	}
+
+
 function dbFetch1($table,$Where='',$cell='*')
 	{
 	global $wpdb;
@@ -2331,7 +2350,7 @@ function dbFetch($table,$Where='',$cell='*')
 	global $wpdb;
 	$table_name = $wpdb->prefix . $table;
 	$where='';
-	if($Where)
+	if($Where and $Where!='NULL')
 		{
 		$W=[];
 		foreach($Where as $column => $criteria)

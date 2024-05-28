@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<name>kjvs</name>
+	<type>Basic</type>
+	<description>
+		<![CDATA[This will install the full King James Authorized Text (Cambridge variant), with words keyed to Strong's.<small style="display:block;">[size: 8.8M]</small>]]>
+	</description>
+	<color>danger</color>
+	<icon>book-bible</icon>
+	<title>The King James Bible</title>
+	<load_books>TRUE</load_books>
+	<section>
+		<section_name>King James w/Strong's</section_name>
+		<data_source>https://cdn.virtualbible.org/virtual_bible_kjvs.csv</data_source>
+		<use_fopen>TRUE</use_fopen>
+		<table_name>virtual_bible_kjvs</table_name>
+		<create_table>
+			<![CDATA[CREATE TABLE IF NOT EXISTS {$table_name} (
+			id 			int(11) 	NOT NULL AUTO_INCREMENT,
+			book 		tinyint(3) 	NOT NULL,
+			chapter 	tinyint(3) 	NOT NULL,
+			verse 		tinyint(3) 	NOT NULL,
+			text 		text 		NOT NULL,
+			PRIMARY KEY id 			(id),
+			KEY 		ixb 		(book),
+			KEY 		ixc 		(chapter),
+			KEY 		ixv 		(verse),
+			KEY 		ixbcv 		(book,chapter,verse)
+			) {$charset_collate} ENGINE=MyISAM;]]>
+		</create_table>
+		<section_data_size>31104</section_data_size>
+	</section>
+	<data_size>31104</data_size>
+	<incrementby>book</incrementby>
+</module>

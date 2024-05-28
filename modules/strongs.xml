@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<name>strongs</name>
+	<type>Basic</type>
+	<description>
+		<![CDATA[This will load both the Hebrew and Greek lexicons (14,298 entries!). Many of the Bible texts will be keyed to the corresponding entries, to provide quick access to the definition.<small style=\"display:block;\">[size: 5.4M]</small>]]>
+	</description>
+	<color>info</color>
+	<icon>language</icon>
+	<title>Strong’s Hebrew and Greek Lexicons</title>
+	<load_books>FALSE</load_books>
+	<section>
+		<section_name>Hebrew</section_name>
+		<data_source>https://cdn.virtualbible.org/virtual_bible_lex_hebrew.csv</data_source>
+		<use_fopen>TRUE</use_fopen>
+		<table_name>virtual_bible_lexicon_hebrew</table_name>
+		<create_table>
+			<![CDATA[CREATE TABLE IF NOT EXISTS {$table_name} (
+				id 				int(11) 		NOT NULL,
+				orig_word 		text 			NOT NULL,
+				orig_word_utf8 	varchar(50) 	NOT NULL,
+				orig_word_enc	text 			NOT NULL,
+				word_orig		text 			NOT NULL,
+				translit		text			NOT NULL,
+				tdnt			text			NOT NULL,
+				phonetic		text			NOT NULL,
+				part_of_speech	text			NOT NULL,
+				st_def			text			NOT NULL,
+				ipd_def			text			NOT NULL,
+				PRIMARY KEY id (id)
+				) {$charset_collate} ENGINE=MyISAM;]]>
+		</create_table>
+		<section_data_size>8674</section_data_size>
+	</section>
+	<section>
+		<section_name>Greek</section_name>
+		<data_source>https://cdn.virtualbible.org/virtual_bible_lex_greek.csv</data_source>
+		<use_fopen>TRUE</use_fopen>
+		<table_name>virtual_bible_lexicon_greek</table_name>
+		<create_table>
+			<![CDATA[CREATE TABLE IF NOT EXISTS {$table_name} (
+				id 				int(11) 		NOT NULL,
+				orig_word 		text 			NOT NULL,
+				orig_word_utf8 	varchar(75) 	NOT NULL,
+				orig_word_enc	text 			NOT NULL,
+				word_orig		text 			NOT NULL,
+				translit		text			NOT NULL,
+				tdnt			text			NOT NULL,
+				phonetic		text			NOT NULL,
+				part_of_speech	text			NOT NULL,
+				st_def			text			NOT NULL,
+				ipd_def			text			NOT NULL,
+				PRIMARY KEY id (id)
+				) {$charset_collate} ENGINE=MyISAM;]]>
+		</create_table>
+		<section_data_size>5624</section_data_size>
+	</section>
+	<section>
+		<section_name>Index</section_name>
+		<data_source>{$data_path}/virtual_bible_lexwords.csv</data_source>
+		<use_fopen>TRUE</use_fopen>
+		<table_name>virtual_bible_lexwords</table_name>
+		<create_table>
+			<![CDATA[CREATE TABLE IF NOT EXISTS {$table_name} (
+				id 				int(11) 		NOT NULL,
+				word 			text 			NOT NULL,
+				strongs 		varchar(6) 		NOT NULL,
+				usage_count		int(11)			NOT NULL,
+				PRIMARY KEY 	id 	(id),
+				KEY 			ixw (word)
+				) {$charset_collate} ENGINE=MyISAM;]]>
+		</create_table>
+		<section_data_size>46493</section_data_size>
+	</section>
+	<incrementby>500</incrementby>
+	<data_size>60791</data_size>
+</module>

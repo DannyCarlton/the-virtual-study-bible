@@ -7,20 +7,33 @@ https://codex.wordpress.org/I18n_for_WordPress_Developers								← For allowin
 https://make.wordpress.org/core/handbook/testing/automated-testing/phpunit/				← Creating a testing environment
 
 TODAY...  
+	Do not show heb/gre tool tab if they are disabled
+	Move all Modules to self-contained files.
+		Both front-end and ajax.
+	Change passage style and link keyed to BS toggles
 	Word Search 
 		Lexicon Tools... 
 			but also make Strong's Link Key highlight words in left pane
 			Highlight verses/words matching lexicon entry.
+		List related words. (love: loves, loveth; get list of lexicon entries, then list of words those entries are linked to)
 	use gears for page load
 	Make help popovers for the various parts 
 	Passage Style changes style sheet
 	dictionary has two entries for some words.
+	Put books in main tools pane 
+	hide just verse and tools pane on page load.
+		Try to make filler image
+	
 
 ERRORS... 
-	Genesis 2: v23 xref overlaps v 24's 
 	lexicon 07474 (word search love) ra`yah links 07453 which shows 0reya2 as a strong's word 
 	word tools lexicon, greek links don't work
-	Song of Solomon
+	Song of Solomon: No outline
+	Colossians 1:2 missing from Geek (may not be the only verse missing)
+	James: no xref
+
+
+
 
 
 TO DO... 

@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module>
 	<name>strongs</name>
-	<type>Basic</type>
+	<optional>FALSE</optional>
+	<type>Tool</type>
 	<description>
-		<![CDATA[This will load both the Hebrew and Greek lexicons (14,298 entries!). Many of the Bible texts will be keyed to the corresponding entries, to provide quick access to the definition.<small style=\"display:block;\">[size: 5.4M]</small>]]>
+		<![CDATA[This will load both the Hebrew and Greek lexicons (14,298 entries!). Many of the Bible texts will be keyed to the corresponding entries, to provide quick access to the definition.<small style="display:block;">[size: 5.4M] Please be patient. This will take several minutes to download and install.</small>]]>
 	</description>
 	<color>info</color>
 	<icon>language</icon>
 	<title>Strong’s Hebrew and Greek Lexicons</title>
 	<load_books>FALSE</load_books>
 	<section>
-		<section_name>Hebrew</section_name>
+		<section_name>Hebrews</section_name>
 		<data_source>https://cdn.virtualbible.org/virtual_bible_lex_hebrew.csv</data_source>
 		<use_fopen>TRUE</use_fopen>
 		<table_name>virtual_bible_lexicon_hebrew</table_name>

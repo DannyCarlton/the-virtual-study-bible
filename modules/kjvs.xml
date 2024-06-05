@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module>
 	<name>kjvs</name>
-	<type>Basic</type>
+	<optional>FALSE</optional>
+	<type>Text</type>
 	<description>
 		<![CDATA[This will install the full King James Authorized Text (Cambridge variant), with words keyed to Strong's.<small style="display:block;">[size: 8.8M]</small>]]>
 	</description>
@@ -18,8 +19,8 @@
 			<![CDATA[CREATE TABLE IF NOT EXISTS {$table_name} (
 			id 			int(11) 	NOT NULL AUTO_INCREMENT,
 			book 		tinyint(3) 	NOT NULL,
-			chapter 	tinyint(3) 	NOT NULL,
-			verse 		tinyint(3) 	NOT NULL,
+			chapter 	int(11) 	NOT NULL,
+			verse 		int(11) 	NOT NULL,
 			text 		text 		NOT NULL,
 			PRIMARY KEY id 			(id),
 			KEY 		ixb 		(book),

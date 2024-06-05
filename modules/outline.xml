@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<name>outline</name>
+	<optional>TRUE</optional>
+	<type>Outline</type>
+	<description>
+		<![CDATA[The section heading and descriptions display between passages. This is present in most Study Bibles.<small style="display:block;">[size: 513K]</small>]]>
+	</description>
+	<color>info</color>
+	<icon>list</icon>
+	<title>Passage Outline</title>
+	<load_books>TRUE</load_books>
+	<section>
+		<section_name>Outline</section_name>
+		<data_source>https://cdn.virtualbible.org/virtual_bible_outline.csv</data_source>
+		<use_fopen>TRUE</use_fopen>
+		<table_name>virtual_bible_outline</table_name>
+		<create_table>
+			<![CDATA[CREATE TABLE IF NOT EXISTS {$table_name} (
+				id 			int(11) 	NOT NULL AUTO_INCREMENT,
+				chapter 	varchar(30)	NOT NULL,
+				verse 		int(11) 	NOT NULL,
+				text 		text 		NOT NULL,
+				PRIMARY KEY id 			(id),
+				KEY 		ixcv 		(chapter,verse)
+				) {$charset_collate} ENGINE=MyISAM;]]>
+		</create_table>
+		<section_data_size>6676</section_data_size>
+	</section>
+	<data_size>6676</data_size>
+	<incrementby>100</incrementby>
+</module>

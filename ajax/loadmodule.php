@@ -7,30 +7,22 @@ set_time_limit(2400);
 
 include('../../../../wp-load.php');
 
-echo "Starting...<br>\n";
-echo str_pad('',4096)."\n";    
-flush();
-
-/*
 if(!defined('ABSPATH')) 
 	{
     exit; // Die, hacker scum, die!!
 	}
-*/
+
+if(isset($_POST['name'])){$_GET['name']=$_POST['name'];}
 
 if(isset($_GET['name']))
 	{
 	$module_name=$_GET['name'];
-	$module_path=str_replace('ajax/','modules/',plugin_dir_url(__FILE__));
-	$data_path=str_replace('ajax/','data/',plugin_dir_url(__FILE__));
-	$module_data=simplexml_load_file("$module_path$module_name.xml", 'SimpleXMLElement', LIBXML_NOCDATA);
-#	echo getPrintR($module_data);
-	echo str_pad('',4096)."\n";    
-	flush();
+	$module_path=str_replace('ajax/','modules/',plugin_dir_path(__FILE__));
+	$data_path=str_replace('ajax/','data/',plugin_dir_path(__FILE__));
+	$__moduleData=simplexml_load_file("$module_path$module_name.xml", 'SimpleXMLElement', LIBXML_NOCDATA);
 
 
-//	$verify = wp_verify_nonce($_GET['_wpnonce'], $module_name);
-	$verify=1;
+	$verify = wp_verify_nonce($_GET['_wpnonce'], $module_name);
 
 	if($verify)
 		{
@@ -72,32 +64,33 @@ if(isset($_GET['name']))
 			$data='0% downloading...';
 			write_file($data,$module_name);
 
-			if($module_data->load_books=='TRUE')
+			if($__moduleData->load_books=='TRUE')
 				{
 				echo "Loading books.<br>";
 				echo str_pad('',4096)."\n";    
 				flush();
 				$table_name = 'virtual_bible_books';
-				$Books=dbFetch($table_name,'NULL','book');
-				foreach($Books as $bid=>$Book)
+				$Books=[];
+				$_Books=dbFetch($table_name);
+				foreach($_Books as $Book)
 					{
-					$book=$Book['book'];
-					unset($Books[$bid]['book']);
-					$Books[$bid]=$book;
+					$bookname=$Book['book'];
+					$bid=$Book['id'];
+					$Books[$bid]=$bookname;
 					}
 				}
 
-			$data_size=(int)$module_data->data_size;
+			$data_size=(int)$__moduleData->data_size;
 			$counter=0;
-			foreach($module_data->section as $Section)
+			foreach($__moduleData->section as $__Section)
 				{
 				$Rows=[];
-				$section_size=(int)$Section->section_data_size;
+				$section_size=(int)$__Section->section_data_size;
 				$section_counter=0;
-				$section_name=$Section->section_name;
-				$table_name = $wpdb->prefix . $Section->table_name;
+				$section_name=$__Section->section_name;
+				$table_name = $wpdb->prefix . $__Section->table_name;
 				$charset_collate = $wpdb->get_charset_collate();
-				$create_table=(string)$Section->create_table;
+				$create_table=(string)$__Section->create_table;
 				$create_table=str_replace('{$table_name}','%1s',$create_table);
 				$create_table=str_replace('{$charset_collate}','%1s',$create_table);
 				$create_table=$wpdb->prepare($create_table,array($table_name,$charset_collate));
@@ -107,90 +100,82 @@ if(isset($_GET['name']))
 				$query=$wpdb->query($create_table);
 #				echo getPrintR($wpdb->last_query);
 #				echo $wpdb->last_error;
-				$data_source=(string)$Section->data_source;
+				$data_source=(string)$__Section->data_source;
 				$data_source=str_replace('{$data_path}',$data_path,$data_source);
 
-				if($Section->use_fopen)
-					{
-					echo "Using fopen on {$data_source}<br>";
-					echo str_pad('',4096)."\n";    
-					flush();
-				
-					$file = fopen($data_source, "r");
-#					$data='0% processing...';
-#					write_file($data,$module_name);
-					$vb_counter=0;
-					$oldincrement=''; $colName=[];$Rows=[];
-					while (($Rows = fgetcsv($file, 10000, ",")) !== FALSE) 
+				if($__Section->use_fopen)
+					{				
+					if(($file = fopen($data_source, "r")) !== false)
 						{
-						if($Rows[0]=='id')
+						$vb_counter=0;
+						$oldincrement=''; $colName=[];$Rows=[];
+						while (($Rows = fgetcsv($file, 10000, ",")) !== FALSE) 
 							{
-							echo "Row #1.<br>";
-							echo str_pad('',4096)."\n";    
-							flush();
-						  
-							foreach($Rows as $column)
+							if($Rows[0]=='id')
 								{
-								$colName[]=$wpdb->prepare('%1s',$column);
-								}	
-#							echo getPrintR($colName);	
-#							echo str_pad('',4096)."\n";    
-#							flush();	
-							}
-						else
-							{
-							$counter++;
-							$section_counter++;
-							$insertArray=[];
-							foreach($colName as $c=>$colname)
-								{
-								$insertArray[$colname]=$wpdb->prepare('%1s',$Rows[$c]);
-								}
-#							echo "<b>$table_name</b>".getPrintR($insertArray);	
-#							echo str_pad('',4096)."\n";    
-#							flush();	
-							$wpdb->insert
-								( 
-								$table_name,
-								$insertArray
-								);
-							if($module_data->incrementby=='book')
-								{
-								$bid=$Rows[1];
-								$increment=$Books[$bid];
-								if($increment!=$oldincrement)
+								foreach($Rows as $column)
 									{
-									$progress=floor(($counter/$data_size)*100);
-									$data="$progress"."% $increment";
-									write_file($data,$module_name);
-#									echo "$data<br>\n";
-#									echo str_pad('',4096)."\n";    
-#									flush();
-									$oldincrement=$increment;
+									$colName[]=$wpdb->prepare('%1s',$column);
+									}	
+								}
+							elseif(isset($Rows[1]))
+								{
+								$counter++;
+								$section_counter++;
+								$insertArray=[];
+								foreach($colName as $c=>$colname)
+									{
+									$insertArray[$colname]=$wpdb->prepare('%1s',$Rows[$c]);
+									}
+								$wpdb->insert
+									( 
+									$table_name,
+									$insertArray
+									);
+								if($__moduleData->incrementby=='book')
+									{
+									$bid=$Rows[1];
+									$increment=$Books[$bid];
+									if($increment!=$oldincrement)
+										{
+										$progress=floor(($counter/$data_size)*100);
+										$data="$progress"."% $increment";
+										write_file($data,$module_name);
+										$oldincrement=$increment;
+										}
+									}
+								else
+									{
+									$_count=(int)$__moduleData->incrementby;	
+									$_size=(int)$__moduleData->data_size;					
+									if(($counter/$_count) == floor($counter/$_count))
+										{
+										$progress=floor(($counter/$_size)*100);
+										$section_progress=floor(($section_counter/$section_size)*100);
+										$data="$progress"."% ($section_progress"."% of $section_name)";
+										write_file($data,$module_name);
+										}
 									}
 								}
 							else
 								{
-								$_count=(int)$module_data->incrementby;	
-								$_size=(int)$module_data->data_size;					
-								if(($counter/$_count) == floor($counter/$_count))
-									{
-									$progress=floor(($counter/$_size)*100);
-									$section_progress=floor(($section_counter/$section_size)*100);
-									$data="$progress"."% ($section_progress"."% of $section_name)";
-									write_file($data,$module_name);
-									}
+								write_log($Rows);
 								}
 							}
+						fclose($file);
 						}
-					fclose($file);
+					else
+						{
+						write_log('Error in fgetcsv.');
+						}
 					}
 				}
 
-/*
+
 	
 
 			$module_status=virtual_bible_getMeta("module_$module_name");
+#			write_log($module_status);
 			$table_name = $wpdb->prefix . 'virtual_bible_meta';
 			if($module_status=='disabled')
 				{
@@ -222,7 +207,6 @@ if(isset($_GET['name']))
 
 			$data='100% Done';
 			write_file($data,$module_name);
-*/
 			}
 		}
 	}

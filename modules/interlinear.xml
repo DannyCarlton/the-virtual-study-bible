@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<name>interlinear</name>
+	<optional>TRUE</optional>
+	<type>Text</type>
+	<description>
+		<![CDATA[This will load the Interlinar Hebrew/Greek text. It can be displayed alongside the English text, and the keyed words will be matched by highlighting the corresponding keyed word.<small style="display:block;">[size: 44M]</small>]]>
+	</description>
+	<color>danger</color>
+	<icon>&#038;#1488;</icon>
+	<title>Interlinear Bible</title>
+	<load_books>TRUE</load_books>
+	<section>
+		<section_name>Interlinear Text</section_name>
+		<data_source>https://virtualbible.org/cdn/virtual_bible_interlinear.csv</data_source>
+		<use_fopen>TRUE</use_fopen>
+		<table_name>virtual_bible_interlinear</table_name>
+		<create_table>
+			<![CDATA[CREATE TABLE IF NOT EXISTS {$table_name} (
+				id 			int(11) 	NOT NULL AUTO_INCREMENT,
+				book 		tinyint(3) 	NOT NULL,
+				chapter 	int(11) 	NOT NULL,
+				verse 		int(11) 	NOT NULL,
+				text 		text 		NOT NULL,
+				PRIMARY KEY id 			(id),
+				KEY 		ixb 		(book),
+				KEY 		ixc 		(chapter),
+				KEY 		ixv 		(verse),
+				KEY 		ixbcv 		(book,chapter,verse)
+				) {$charset_collate} ENGINE=MyISAM;]]>
+		</create_table>
+		<section_data_size>31102</section_data_size>
+	</section>
+	<data_size>31102</data_size>
+	<incrementby>book</incrementby>
+</module>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<name>eastons</name>
+	<optional>TRUE</optional>
+	<type>Dictionary</type>
+	<description>
+		<![CDATA[This will load Easton's Bible Dictionary with 3,963 entries. These definitions are available with the Word Search.<small style="display:block;">[size: 3.9M]</small>]]>
+	</description>
+	<color>info</color>
+	<icon>book</icon>
+	<title>Easton’s Bible Dictionary</title>
+	<load_books></load_books>
+	<section>
+		<section_name>Easton’s</section_name>
+		<data_source>https://cdn.virtualbible.org/virtual_bible_easton_dictionary.csv</data_source>
+		<use_fopen>TRUE</use_fopen>
+		<table_name>virtual_bible_eastons</table_name>
+		<create_table>
+			<![CDATA[CREATE TABLE IF NOT EXISTS {$table_name} (
+				id 			int(11) 	NOT NULL AUTO_INCREMENT,
+				reference 		text 		NOT NULL,
+				definition 		text 		NOT NULL,
+				PRIMARY 		KEY id 		(id),
+				KEY 			reference	(reference)
+				) {$charset_collate} ENGINE=MyISAM;]]>
+		</create_table>
+		<section_data_size>3963</section_data_size>
+	</section>
+	<data_size>3963</data_size>
+	<incrementby>100</incrementby>
+</module>

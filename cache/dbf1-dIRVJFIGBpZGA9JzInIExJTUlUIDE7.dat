@@ -1,0 +1,1 @@
+{"query":"SELECT book FROM wp_virtual_bible_books WHERE `id`='2' LIMIT 1;","wpdb_get_results":[{"book":"Exodus"}]}

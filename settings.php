@@ -33,23 +33,38 @@ $virtual_bible_page_name=virtual_bible_getMeta('page_name');
 if(!$virtual_bible_page_name){$virtual_bible_page_name='Study Bible';}
 $virtual_bible_page_name_slug=sanitize_title($virtual_bible_page_name);
 
-$virtual_bible_kjvs_installed=virtual_bible_is_module_installed('kjvs');
-$virtual_bible_strongs_installed=virtual_bible_is_module_installed('strongs');
-$virtual_bible_outline_installed=virtual_bible_is_module_installed('outline');
-$virtual_bible_hebrew_installed=virtual_bible_is_module_installed('hebrew');
-$virtual_bible_greek_installed=virtual_bible_is_module_installed('greek');
-$virtual_bible_holman_installed=virtual_bible_is_module_installed('holman');
-$virtual_bible_eastons_installed=virtual_bible_is_module_installed('eastons');
+$module_path=plugin_dir_path(__FILE__).'modules/';
+$Modules=[];
+$_handle=opendir($module_path);
+while ($file = readdir($_handle))
+	{ 
+	if (strstr($file, '.xml'))
+		{
+		$_name=str_replace('.xml','',$file);
+		$Modules[$_name]=[];
+		$Modules[$_name]['file']=$file;
+		$Modules[$_name]['installed']=virtual_bible_is_module_installed($_name);
+		$__moduleData=simplexml_load_file($module_path.$file, 'SimpleXMLElement', LIBXML_NOCDATA);
+		$Modules[$_name]['type']=(string)$__moduleData->type;
+		$Modules[$_name]['description']=(string)$__moduleData->description;
+		$Modules[$_name]['color']=(string)$__moduleData->color;
+		$Modules[$_name]['icon']=(string)$__moduleData->icon;
+		$Modules[$_name]['title']=(string)$__moduleData->title;
+		$Modules[$_name]['optional']=(string)$__moduleData->optional;
+		}
+	}
+closedir($_handle);
+#write_log($Modules);
+
 $virtual_bible_traditional_select=virtual_bible_getMeta('style_traditional');
 $virtual_bible_paragraph_select=virtual_bible_getMeta('style_paragraph');
 $virtual_bible_reader_select=virtual_bible_getMeta('style_reader');
 
-
 $virtual_bible_settings_nonce=wp_create_nonce('virtual bible settings');
 
+/* This is run when settings are saved  */
 if(isset($_POST['virtual-bible-post-submitted']))
 	{
-	$vb_post=getPrintR($_POST);
 	$virtual_bible_verify = wp_verify_nonce($_POST['_wpnonce'], 'virtual bible settings');
 	if($virtual_bible_verify)
 		{
@@ -58,7 +73,7 @@ if(isset($_POST['virtual-bible-post-submitted']))
 		
 		if(($virtual_bible_pagename != $virtual_bible_oldpagename) and get_page_by_title($virtual_bible_oldpagename, 'OBJECT', 'page'))
 			{
-			# delete old page
+			/* delete old page */
 			$wpdb->delete
 				(
 				$wpdb->prefix.'posts',
@@ -70,9 +85,9 @@ if(isset($_POST['virtual-bible-post-submitted']))
 					)
 				);
 			}
-		# Create new page 
+		/* Create new page */
+		/* But first, check if the page already exists */
 		$check_page_exist = get_posts(array('post_type'=>'page','title'=>$virtual_bible_pagename,'post_author'=>1));
-		// Check if the page already exists
 		if(empty($check_page_exist)) 
 			{
 			$page_id = wp_insert_post
@@ -91,10 +106,6 @@ if(isset($_POST['virtual-bible-post-submitted']))
 				);
 			}
 		}
-	}
-else
-	{
-	$vb_post='';
 	}
 
 ?>
@@ -138,10 +149,11 @@ else
                     		<p style="margin-top:-10px;font-size:12px;text-shadow:1px 1px 2px rgba(255,255,255,1),1px 1px 10px rgba(0,0,0,0.5)">Color guide: 
 								<span class="text-danger" title="Bible text in versions, translation and foreign."><strong>Bible Text</strong></span>, 
 								<span class="text-info" title="Dictionaries, Lexicons, Margin Notes, etc."><strong>Reference</strong></span>
-								<!-- , 
+								<!-- 
 								<span class="text-success" title="Packaged intros, notes and commentaries"><strong>Study Template</strong></span>, 
 								<span class="text-warning" title="Matthew Henry, Scofield, etc. These can also be part of a Study Template"><strong>Commentary</strong></span>, 
-								<span class="text-primary" title="Illustrations, Maps, etc."><strong>Images</strong></span> -->
+								<span class="text-primary" title="Illustrations, Maps, etc."><strong>Images</strong></span> 
+								-->
 							</p>
                     		<div class="f1-steps">
                     			<div class="f1-progress">
@@ -168,42 +180,35 @@ else
                     		</div>
                     		
                     		<fieldset>
+								<small style="display:block;text-align:center">Many of these modules will take more than a few seconds to load, so we left them to be installed here, rather than when the plugin itself was installed.</small>
                     		    <h4>The Basic Modules: 
-									<small>Many of these modules will take more than a few seconds to load, so we left them to be installed here, rather than when the plugin itself was installed.</small></h4>
+									<small>These are the core modules needed for your installation to be an actual Study Bible.</small></h4>
 								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
 									<div class="block icon-block bg-secondary-faded w-border-2x border-secondary inner-space rounded-2x text-center module">
 										<i class="fa-solid fa-university md-icon dp24 box-icon bg-secondary-faded border-secondary pill"></i>
 										<h6 class="box-title poppins-black" style="color:#000">Books of the Bible<br />Book Introductions and Outlines</h6>
-										<p class="box-description montserrat">These modules were loaded when you installed the plugin. It includes the names of the books of the Bible, the most common abbreviations (for searching purposes), the long name of each book as well as book introductions and outlines by John MacArther (copyright but used by permission).</p>
+										<p class="box-description montserrat">These modules were loaded when you installed the plugin. It includes data about the Books of the Bible as well as book introductions and outlines by John MacArthur <small>(used by permission)</small>.</p>
 										<div id="module-books-installed" class="module-installed light">Module Installed!</div>
-									</div><!-- / icon-block -->
-								</div><!-- / column -->
+									</div>
+								</div>
 
 								<?php 
-									$virtual_bible_text="This will install the full King James Authorized Text (Cambridge variant), with words keyed to Strong's.<small style=\"display:block;\">[size: 8.8M]</small>";
-									if($virtual_bible_kjvs_installed)
+								/* Load Basic Modules... */
+									foreach($Modules as $_name=>$Module)
 										{
-										echo virtual_bible_module_installed_html('kjvs','danger','book-bible','The King James Bible',$virtual_bible_text,plugin_dir_url(__FILE__),$virtual_bible_kjvs_installed); 
-										}
-									else
-										{
-										echo virtual_bible_module_uninstalled_html('kjvs','danger','book-bible','The King James Bible',$virtual_bible_text,plugin_dir_url(__FILE__)); 
+										if($Module['optional']=='FALSE')
+											{	
+											if($Module['installed']!='')
+												{
+												echo virtual_bible_module_installed_html($_name,$Module['color'],$Module['icon'],$Module['title'],$Module['description'],plugin_dir_url(__FILE__),$Module['installed']);
+												}
+											else
+												{
+												echo virtual_bible_module_uninstalled_html($_name,$Module['color'],$Module['icon'],$Module['title'],$Module['description'],plugin_dir_url(__FILE__));
+												}								 											
+											}
 										}
 								?>
-
-									
-								<?php 
-									$virtual_bible_text="This will load both the Hebrew and Greek lexicons (14,298 entries!). Many of the Bible texts will be keyed to the corresponding entries, to provide quick access to the definition.<small style=\"display:block;\">[size: 5.4M]</small>";
-									if($virtual_bible_strongs_installed)
-										{
-										echo virtual_bible_module_installed_html('strongs','info','language','Strong&rsquo;s Hebrew and Greek Lexicons',$virtual_bible_text,plugin_dir_url(__FILE__),$virtual_bible_strongs_installed);
-										}
-									else
-										{
-										echo virtual_bible_module_uninstalled_html('strongs','info','language','Strong&rsquo;s Hebrew and Greek Lexicons',$virtual_bible_text,plugin_dir_url(__FILE__));
-										}
-								 ?>
-
 
 
                                 <div class="f1-buttons" style="clear:both;padding-top:30px">
@@ -222,63 +227,22 @@ else
 
 									
 								<?php 
-									 $virtual_bible_text="The section heading and descriptions display between passages. This is present in most Study Bibles.<small style=\"display:block;\">[size: 513K]</small>";
-									 if($virtual_bible_outline_installed)
-										 {
-										 echo virtual_bible_module_installed_html('outline','info','list','Passage Outline',$virtual_bible_text,plugin_dir_url(__FILE__),$virtual_bible_outline_installed);
-										 }
-									 else
-										 {
-										 echo virtual_bible_module_uninstalled_html('outline','info','list','Passage Outline',$virtual_bible_text,plugin_dir_url(__FILE__));
-										 }
-								  ?>
-									
-								<?php 
-									$virtual_bible_text="This will load the entire Masoretic (Leningrad Codex) Hebrew (Old Testament) text. It can be displayed alongside the English text, and the verses will be matched by highlighting the corresponding verse.<small style=\"display:block;\">[size: 5.9M]</small>";
-									if($virtual_bible_hebrew_installed)
+								/* Load Optional Modules... */
+									foreach($Modules as $_name=>$Module)
 										{
-										echo virtual_bible_module_installed_html('hebrew','danger','&#1488;','Hebrew Text',$virtual_bible_text,plugin_dir_url(__FILE__),$virtual_bible_hebrew_installed);
+										if($Module['optional']=='TRUE')
+											{
+											if($Module['installed']!='')
+												{
+												echo virtual_bible_module_installed_html($_name,$Module['color'],$Module['icon'],$Module['title'],$Module['description'],plugin_dir_url(__FILE__),$Module['installed']);
+												}
+											else
+												{
+												echo virtual_bible_module_uninstalled_html($_name,$Module['color'],$Module['icon'],$Module['title'],$Module['description'],plugin_dir_url(__FILE__));
+												}	
+											}
 										}
-									else
-										{
-										echo virtual_bible_module_uninstalled_html('hebrew','danger','&#1488;','Hebrew Text',$virtual_bible_text,plugin_dir_url(__FILE__));
-										}
-								 ?>
 
-								<?php 
-									$virtual_bible_text="This will load the entire Textus Receptus Greek (New Testament) text. It can be displayed alongside the English text, and the verses, words and phrases will be matched by highlighting the corresponding text.<small style=\"display:block;\">[size: 8.7M]</small>";
-									if($virtual_bible_greek_installed)
-										{
-										echo virtual_bible_module_installed_html('greek','danger','&Sigma;','Greek Text',$virtual_bible_text,plugin_dir_url(__FILE__),$virtual_bible_greek_installed);
-										}
-									else
-										{
-										echo virtual_bible_module_uninstalled_html('greek','danger','&Sigma;','Greek Text',$virtual_bible_text,plugin_dir_url(__FILE__));
-										} 
-								?>
-
-								<?php 
-									$virtual_bible_text="This will load the Holman Crossreference, linking 3,992 verses to 57,812 related verses.<small style=\"display:block;\">[size: 3.5M]</small>";
-									if($virtual_bible_holman_installed)
-										{
-										echo virtual_bible_module_installed_html('holman','info','arrows-turn-to-dots','Holman Cross-Reference',$virtual_bible_text,plugin_dir_url(__FILE__),$virtual_bible_holman_installed);
-										}
-									else
-										{
-										echo virtual_bible_module_uninstalled_html('holman','info','arrows-turn-to-dots','Holman Cross-Reference',$virtual_bible_text,plugin_dir_url(__FILE__));
-										}  
-								?>
-
-								<?php 
-									$virtual_bible_text="This will load Easton's Bible Dictionary<small style=\"display:block;\">[size: 3.9M]</small>";
-									if($virtual_bible_eastons_installed)
-										{
-										echo virtual_bible_module_installed_html('eastons','info','book','Easton&rsquo;s Bible Dictionary',$virtual_bible_text,plugin_dir_url(__FILE__),$virtual_bible_eastons_installed);
-										}
-									else
-										{
-										echo virtual_bible_module_uninstalled_html('eastons','info','book','Easton&rsquo;s Bible Dictionary',$virtual_bible_text,plugin_dir_url(__FILE__));
-										}  
 								?>
 
 
@@ -296,7 +260,7 @@ else
                                     <button type="button" class="btn btn-previous" style="height:30px;line-height:1"><i class="fa-solid fa-left-long"></i>&nbsp; Previous</button>
                                     <button type="button" class="btn btn-next" style="height:30px;line-height:1">Next &nbsp;<i class="fa-solid fa-right-long"></i></button>
                                 </div>
-								<p>Once fully installed, this plugin will create a new page to house your Virtual Study Bible. Here, you can choose the name (or Title) of your page that will serve the Virtual Study Bible to your site visitors or members. The default has already been entered which you can use, or select your own.</p>
+								<p>Once fully installed, this plugin will create a new page to house your Virtual Study Bible. Here, you can choose the name (or Title) of your page that will serve the Virtual Study Bible to your site's visitors or members. The default has already been entered which you can use, or select your own.</p>
                                 <div class="form-group" id="virtual-bible-pagename-group">
                                     <label for="virtual-bible-pagename">Page Title <small style="font-weight:normal;font-size:11px">(If the page has already been created, and you are changing the title, and thus the slug, a new page will be created and the old page will be deleted.)</small></label>
                                     <input type="text" name="virtual-bible-pagename" placeholder="Page Name or Title" class="form-control" id="virtual-bible-pagename" value="<?php echo $virtual_bible_page_name; ?>" 
@@ -308,7 +272,7 @@ else
                                 </div>
                                 <div class="form-group" style="clear:both">
                                     <label for="virtual-bible-pageslug">Permalink</label>
-                                    <input type="text" disabled id="virtual-bible-pageslug" name="virtual-bible-pageslug" placeholder="Page Slug" class="form-control" id="virtual-bible-pageslug" value="<?php echo site_url(); ?>/<?php echo $virtual_bible_page_name_slug; ?>" style="background-color:#fff;color:#000;cursor:auto;">
+                                    <input type="text" disabled id="virtual-bible-pageslug" name="virtual-bible-pageslug" placeholder="Page Slug" class="form-control" id="virtual-bible-pageslug" value="<?php echo site_url(); ?>/<?php echo $virtual_bible_page_name_slug; ?>" style="background-color:#fff;color:#444;cursor:auto;font-weight:400">
                                 </div>
 
 								<div class="vertical-spacer" style="width:100%;height:30px"></div>
@@ -352,8 +316,8 @@ else
 											<?php
 											}
 										?></button>
-									</div><!-- / icon-block -->
-								</div><!-- / column -->
+									</div>
+								</div>
 								<div class="col-sm-12 col-md-6 col-lg-4">
 									<div class="block icon-block-style bg-secondary-faded w-border-2x border-secondary inner-space rounded-2x text-center module">
 										<h6 class="box-title poppins-black" style="color:#000">Paragraph</h6>
@@ -393,8 +357,8 @@ else
 											<?php
 											}
 										?></button>
-									</div><!-- / icon-block -->
-								</div><!-- / column -->
+									</div>
+								</div>
 								<div class="col-sm-12 col-md-6 col-lg-4">
 									<div class="block icon-block-style bg-secondary-faded w-border-2x border-secondary inner-space rounded-2x text-center module">
 										<h6 class="box-title poppins-black" style="color:#000">The Reader's Bible</h6>
@@ -433,8 +397,8 @@ else
 											<?php
 											}
 										?></button>
-									</div><!-- / icon-block -->
-								</div><!-- / column -->
+									</div>
+								</div>
 
                                 <div class="f1-buttons" style="clear:both;padding-top:30px">
                                     <button type="button" class="btn btn-previous"><i class="fa-solid fa-left-long"></i>&nbsp; Previous</button>
@@ -452,26 +416,20 @@ else
 									<i class="fa-solid fa-list"></i> &nbsp;
 									Books of the Bible
 								</button>
-								<button type="button" class="btn btn-danger-faded pill border-danger btn-module dark" style="text-shadow:1px 1px 5px rgba(0, 0, 0, 0.56)">
-									<i class="fa-solid fa-book-bible"></i> &nbsp;
-									King James Text
-								</button>
-								<button type="button" class="btn btn-info-faded border-info pill btn-module dark" style="text-shadow:1px 1px 5px rgba(0, 0, 0, 0.56)">
-									<i class="fa-solid fa-language"></i> &nbsp;
-									Strong's Lexicons
-								</button>
-								<button type="button" id="hebrew-selected" class="btn btn-danger-faded pill border-danger btn-module dark module-selected <?php echo $virtual_bible_hebrew_installed;?>" style="text-shadow:1px 1px 5px rgba(0, 0, 0, 0.56)">
-									<span style="font-size:23px;font-family:'Times New Roman';vertical-align:bottom">&#1488;</span> &nbsp;
-									Hebrew Text
-								</button>
-								<button type="button" id="greek-selected" class="btn btn-danger-faded border-danger pill btn-module dark module-selected <?php echo $virtual_bible_greek_installed;?>" style="text-shadow:1px 1px 5px rgba(0, 0, 0, 0.56)">
-									<span style="font-size:21px;font-family:'Times New Roman';vertical-align:bottom">&Sigma;</span> &nbsp;
-									Greek Text
-								</button>
-								<button type="button" id="holman-selected" class="btn btn-info-faded border-info pill btn-module dark module-selected <?php echo $virtual_bible_holman_installed;?>" style="text-shadow:1px 1px 5px rgba(0, 0, 0, 0.56)">
-									<i class="fa-solid fa-arrows-turn-to-dots"></i> &nbsp;
-									Holman Xref
-								</button>
+								<?php
+								foreach($Modules as $_name=>$Module)
+									{
+									if($Module['installed']!='')
+										{
+										echo "
+										<button type=\"button\" class=\"btn btn-{$Module['color']}-faded pill border-{$Module['color']} btn-module dark\" style=\"text-shadow:1px 1px 5px rgba(0, 0, 0, 0.56)\">
+											<i class=\"fa-solid fa-{$Module['icon']}\"></i> &nbsp;
+											{$Module['title']}
+										</button>";
+										}
+									}
+								?>
+	
 								<h6>Page Title...</h6>
 								<button type="button" id="virtual-bible-pagename-final" class="btn btn-secondary-faded pill btn-module">
 									Study Bible
@@ -533,7 +491,7 @@ else
 								?>
                                 <div class="f1-buttons">
                                     <button type="button" class="btn btn-previous"><i class="fa-solid fa-left-long"></i>&nbsp; Previous</button>
-                                    <button type="submit" class="btn btn-submit">Submit & Publish&nbsp; <i class="fa-solid fa-square-check"></i></button>
+                                    <button id="settings-submit" type="submit" class="btn btn-submit" disabled>Submit & Publish&nbsp; <i class="fa-solid fa-square-check"></i></button>
                                 </div>
 							</fieldset>
                     	
@@ -545,41 +503,30 @@ else
         </div>
 	</div>
 </div>
-<div style="margin:10px">
-	Debug:
-<?php
-	if($vb_post){echo $vb_post;}
-?>
-</div>
+
 <script>
 	
 
 window.addEventListener('load',function()
 	{
 
-	<?php echo virtual_bible_module_uninstalled_js('kjvs',plugin_dir_url(__FILE__)); ?>
+	<?php 
+		foreach($Modules as $_name=>$Module)
+			{
+			if($Module['type']=='Basic')
+				{
+				echo virtual_bible_module_uninstalled_js($_name,plugin_dir_url(__FILE__));
+				}
+			else
+				{
+				echo virtual_bible_module_uninstalled_js($_name,plugin_dir_url(__FILE__));
+				echo virtual_bible_module_installed_js($_name,plugin_dir_url(__FILE__));
 
-	<?php echo virtual_bible_module_uninstalled_js('strongs',plugin_dir_url(__FILE__)); ?>
+				}
 
-	<?php echo virtual_bible_module_uninstalled_js('outline',plugin_dir_url(__FILE__)); ?>
-
-	<?php echo virtual_bible_module_installed_js('outline',plugin_dir_url(__FILE__)); ?>
-
-	<?php echo virtual_bible_module_uninstalled_js('hebrew',plugin_dir_url(__FILE__)); ?>
-
-	<?php echo virtual_bible_module_installed_js('hebrew',plugin_dir_url(__FILE__)); ?>
-
-	<?php echo virtual_bible_module_uninstalled_js('greek',plugin_dir_url(__FILE__)); ?>
-
-	<?php echo virtual_bible_module_installed_js('greek',plugin_dir_url(__FILE__)); ?>
-
-	<?php echo virtual_bible_module_uninstalled_js('holman',plugin_dir_url(__FILE__)); ?>
-
-	<?php echo virtual_bible_module_installed_js('holman',plugin_dir_url(__FILE__)); ?>
-
-<?php echo virtual_bible_module_uninstalled_js('eastons',plugin_dir_url(__FILE__)); ?>
-
-<?php echo virtual_bible_module_installed_js('eastons',plugin_dir_url(__FILE__)); ?>
+			}
+		
+	 ?>
 
 	$(".toggle-style").click(function(e) 
 		{
@@ -617,8 +564,31 @@ window.addEventListener('load',function()
 				}
 			});
 		});
+
+
+	var vb_watcher = setInterval
+		(
+		function()
+			{
+			var watcher_nonce_url = "<?php echo wp_nonce_url(plugin_dir_url(__FILE__).'ajax/worker.php','vb_watcher'); ?>";
+			$.get
+				(
+				watcher_nonce_url, 
+				{function:'settings_watch'},
+				function(data) 
+					{
+					if(data=='installed')
+						{
+						$("#settings-submit").prop('disabled',false);
+						}
+					}
+				);
+			}, 1000
+		); 
+
+
 		
-	});
+	});	//End window.addEventListener('load',function()
 
 	
 	function virtual_bible_housekeeping(file)
@@ -669,6 +639,8 @@ window.addEventListener('load',function()
 			.replace(/ /g, "-")
 			.replace(/[^\w-]+/g, "");
 		}
+
+
 </script>
 <!-- The Virtual Study Bible Plugin: Settings End -->
 

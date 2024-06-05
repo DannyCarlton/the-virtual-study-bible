@@ -1,0 +1,1 @@
+{"query":"SELECT * FROM wp_virtual_bible_kjvs WHERE `book`='19' AND `chapter`='3' AND `verse`='3' LIMIT 1;","wpdb_get_results":[{"id":"13961","book":"19","chapter":"3","verse":"3","text":"But thou, O LORD{H3068}, art a shield{H4043} for me; my glory{H3519}, and the lifter up{H7311}{(H8688)} of mine head{H7218}."}]}

@@ -9,6 +9,9 @@ add_shortcode('The-Virtual-Study-Bible','buildStudyBiblePage');
 
 $_vb = new virtual_bible();
 
+
+
+
 function buildStudyBiblePage()
 	{
 	global $wpdb,$_GET,$_vb;
@@ -16,9 +19,26 @@ function buildStudyBiblePage()
 	$page_name=virtual_bible_getMeta('page_name');
 	$page_slug=sanitize_title($page_name);
 	$page_url=site_url().'/'.$page_slug.'/';
+	$style=virtual_bible_getUserMeta('style');
+	if(!$style){$style='traditional';}
+	$trad_checked='';$par_checked='';$read_checked='';
+	if($style=='traditional')
+		{
+		$trad_checked='checked';
+		}
+	elseif($style=='paragraph')
+		{
+		$par_checked='checked';
+		}
+	else
+		{
+		$read_checked='checked';
+		}
 
 	wp_register_style('vb-bootstrap4-css', plugins_url().'/the-virtual-study-bible/css/bootstrap4b.css');
 	wp_enqueue_style('vb-bootstrap4-css');
+	wp_register_style('vb-bootstrap4-toggle-css', plugins_url().'/the-virtual-study-bible/css/bootstrap4-toggle.css');
+	wp_enqueue_style('vb-bootstrap4-toggle-css');
 	wp_register_style('vb-fonts-css', plugins_url().'/the-virtual-study-bible/css/fontawesome.css');
 	wp_enqueue_style('vb-fonts-css');
 	wp_register_style('vb-logofont-css', plugins_url().'/the-virtual-study-bible/css/logofont.css');
@@ -34,18 +54,20 @@ function buildStudyBiblePage()
 	wp_enqueue_script('vb-popper-js');
 	wp_register_script('vb-bootstrap-js', plugins_url().'/the-virtual-study-bible/js/bootstrap.js');
 	wp_enqueue_script('vb-bootstrap-js');
-
+	wp_register_script('vb-bootstrap4-toggle-js', plugins_url().'/the-virtual-study-bible/js/bootstrap4-toggle.js');
+	wp_enqueue_script('vb-bootstrap4-toggle-js');
+/*
 	$virtual_bible_kjvs_installed=virtual_bible_is_module_installed('kjvs');
 	$virtual_bible_strongs_installed=virtual_bible_is_module_installed('strongs');
 	$virtual_bible_eastons_installed=virtual_bible_is_module_installed('eastons');
 	$virtual_bible_hebrew_installed=virtual_bible_is_module_installed('hebrew');
 	$virtual_bible_greek_installed=virtual_bible_is_module_installed('greek');
 	$virtual_bible_holman_installed=virtual_bible_is_module_installed('holman');
+*/
 	$virtual_bible_traditional_select=virtual_bible_getMeta('style_traditional');
 	$virtual_bible_paragraph_select=virtual_bible_getMeta('style_paragraph');
 	$virtual_bible_reader_select=virtual_bible_getMeta('style_reader');
 	$reference='';
-	$trad_checked='checked';$par_checked='';$read_checked='';
 
 	if(isset($_GET['keyword']))
 		{

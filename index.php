@@ -36,6 +36,8 @@ if(!defined('ABSPATH'))
 
 	I like being able to tell arrays apart from simple variables, so I always used camelCase for arrays and snake_case for regular variables. If it's just one word then the regular variable is in all lowercase and at least one letter in the array name is Capitalized. However, some of my coding I reuse, and sometimes I will copy older code, before I began that practice, which won't use that naming convention. However, I've tried to make all the coding consistent.
 
+	Variables that function as a sort of pseudo-constant (for example $_mysql) that more or less remain unchanged throughout the script, I generally begin with a single underscore. And more recently I began formatting the variable names for objects with a capital letter and two underscores at the beginning (for example $__moduleData).
+
 	Also, it's easier for me to see the logic in a function or statement if I spread it out a bit vertically. This applies to both PHP and JavaScript. For example where typically coders would do this... 
 
 		if($some_choice){
@@ -50,7 +52,6 @@ if(!defined('ABSPATH'))
 			} 
 
 	...and even in JavaScript, I repeat the pattern even for parentheses (most of the time) so you'd see... 
-
 			
 		$("#some-element-trigger").on
 			(
@@ -144,7 +145,7 @@ function virtual_bible_is_installed()
 		if($wpdb->num_rows<66)
 			{
 			$installed=false;
-			write_log($table_name.' has only '.$wpdb->num_rows.' rows!');
+#			write_log($table_name.' has only '.$wpdb->num_rows.' rows!');
 			}
 		}
 
@@ -273,29 +274,15 @@ function virtual_bible_create_db_table()
 
 	$table_name = $wpdb->prefix . 'virtual_bible_meta';
 	array_push($Queries, "CREATE TABLE IF NOT EXISTS $table_name (
-			id int(11) NOT NULL,
+			id int(11) NOT NULL AUTO_INCREMENT,
 			meta_key varchar(50) NOT NULL,
 			meta_value text NOT NULL,
 			PRIMARY KEY id (id)
 			) $charset_collate ENGINE=MyISAM;");
 
-	$table_name = $wpdb->prefix . 'virtual_bible_kjvs';
-	array_push($Queries, "CREATE TABLE IF NOT EXISTS $table_name (
-			id int(11) NOT NULL AUTO_INCREMENT,
-			book tinyint(3) NOT NULL,
-			chapter int(11) NOT NULL,
-			verse int(11) NOT NULL,
-			text text NOT NULL,
-			PRIMARY KEY id (id),
-			KEY ixb (book),
-			KEY ixc (chapter),
-			KEY ixv (verse),
-			KEY ixbcv (book,chapter,verse)
-			) $charset_collate ENGINE=MyISAM;");
-
 	$table_name = $wpdb->prefix . 'virtual_bible_books';
 	array_push($Queries, "CREATE TABLE IF NOT EXISTS $table_name (
-			id int(11) NOT NULL,
+			id int(11) NOT NULL AUTO_INCREMENT,
 			book varchar(20) NOT NULL,
 			chapters int(11) NOT NULL,
 			abbr text NOT NULL,
@@ -303,55 +290,23 @@ function virtual_bible_create_db_table()
 			PRIMARY KEY id (id)
 			) $charset_collate ENGINE=MyISAM;");
 
-	$table_name = $wpdb->prefix . 'virtual_bible_lexicon_hebrew';
-	array_push($Queries, "CREATE TABLE IF NOT EXISTS $table_name (
-		id 				int(11) 		NOT NULL,
-		orig_word 		text 			NOT NULL,
-		orig_word_utf8 	varchar(50) 	NOT NULL,
-		orig_word_enc	text 			NOT NULL,
-		word_orig		text 			NOT NULL,
-		translit		text			NOT NULL,
-		tdnt			text			NOT NULL,
-		phonetic		text			NOT NULL,
-		part_of_speech	text			NOT NULL,
-		st_def			text			NOT NULL,
-		ipd_def			text			NOT NULL,
-		PRIMARY KEY id (id)
-		) $charset_collate ENGINE=MyISAM;");
-
-	$table_name = $wpdb->prefix . 'virtual_bible_lexicon_greek';
-	array_push($Queries, "CREATE TABLE IF NOT EXISTS $table_name (
-		id 				int(11) 		NOT NULL,
-		orig_word 		text 			NOT NULL,
-		orig_word_utf8 	varchar(75) 	NOT NULL,
-		orig_word_enc	text 			NOT NULL,
-		word_orig		text 			NOT NULL,
-		translit		text			NOT NULL,
-		tdnt			text			NOT NULL,
-		phonetic		text			NOT NULL,
-		part_of_speech	text			NOT NULL,
-		st_def			text			NOT NULL,
-		ipd_def			text			NOT NULL,
-		PRIMARY KEY id (id)
-		) $charset_collate ENGINE=MyISAM;");	
-
 	$table_name = $wpdb->prefix . 'virtual_bible_gty_intro_outline';
 	array_push($Queries, "CREATE TABLE IF NOT EXISTS $table_name (
-			id int(11) NOT NULL,
+			id int(11) NOT NULL AUTO_INCREMENT,
 			book int(11) NOT NULL,
 			text text NOT NULL,
 			PRIMARY KEY id (id),
 			KEY ixb (book)
 			) $charset_collate ENGINE=MyISAM;");	
+			
 
-	$table_name = $wpdb->prefix . 'virtual_bible_outline';
+	$table_name = $wpdb->prefix . 'virtual_bible_users';
 	array_push($Queries, "CREATE TABLE IF NOT EXISTS $table_name (
-			id int(11) NOT NULL,
-			chapter varchar(25) NOT NULL,
-			verse int(11) NOT NULL,
-			text text NOT NULL,
-			PRIMARY KEY id (id),
-			KEY ixcv (chapter,verse)
+			id int(11) NOT NULL AUTO_INCREMENT,
+			user_id int(11) NOT NULL,
+			user_key varchar(50) NOT NULL,
+			user_value text NOT NULL,
+			PRIMARY KEY id (id)
 			) $charset_collate ENGINE=MyISAM;");
 			
 	if ( ! function_exists('dbDelta') )
@@ -362,6 +317,46 @@ function virtual_bible_create_db_table()
 		{
 		dbDelta ( $sql );
 		}
+
+
+	$table_name = $wpdb->prefix . 'virtual_bible_meta';
+	$wpdb->insert
+		( 
+		$table_name,
+		array
+			( 
+			'meta_key'		=>  'style_traditional',
+			'meta_value'	=>  'selected'
+			)
+		);
+	$wpdb->insert
+		( 
+		$table_name,
+		array
+			( 
+			'meta_key'		=>  'style_paragraph',
+			'meta_value'	=>  'selected'
+			)
+		);
+	$wpdb->insert
+		( 
+		$table_name,
+		array
+			( 
+			'meta_key'		=>  'style_reader',
+			'meta_value'	=>  'selected'
+			)
+		);
+	$wpdb->insert
+		( 
+		$table_name,
+		array
+			( 
+			'meta_key'		=>  'page_name',
+			'meta_value'	=>  'Study Bible'
+			)
+		);
+
 	}
 
 function virtual_bible_load_db_books()
@@ -404,49 +399,6 @@ function virtual_bible_load_db_books()
 				}
 			}
 		$dbRow=[];
-		}
-
-	$table_name = $wpdb->prefix . 'virtual_bible_meta';
-	# See if the table exists (first install) ...
-	$query = $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $table_name ) );
-	if ( ! $wpdb->get_var( $query ) == $table_name ) # It doesn't so ...
-		{
-		$wpdb->insert
-			( 
-			$table_name,
-			array
-				( 
-				'meta_key'		=>  'style_traditional',
-				'meta_value'	=>  'selected'
-				)
-			);
-		$wpdb->insert
-			( 
-			$table_name,
-			array
-				( 
-				'meta_key'		=>  'style_paragraph',
-				'meta_value'	=>  'selected'
-				)
-			);
-		$wpdb->insert
-			( 
-			$table_name,
-			array
-				( 
-				'meta_key'		=>  'style_reader',
-				'meta_value'	=>  'selected'
-				)
-			);
-		$wpdb->insert
-			( 
-			$table_name,
-			array
-				( 
-				'meta_key'		=>  'page_name',
-				'meta_value'	=>  'Study Bible'
-				)
-			);
 		}
 
 
@@ -517,7 +469,7 @@ function virtual_bible_on_uninstall()
 
 
 
-/* For debugging purposes. If this is till here in production version, then I screwed up. But don't worry; it's basically harmless. */
+/* For debugging purposes. If this is still here in production version, then I screwed up. But don't worry; it's basically harmless. */
 function write_log( $data ) 
 	{
 	if ( true === WP_DEBUG ) 

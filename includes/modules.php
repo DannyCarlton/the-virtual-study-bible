@@ -29,7 +29,7 @@ function virtual_bible_module_uninstalled_html($name,$type,$fa_icon,$title,$text
 		{
 		$icon_style='padding-left:20px;padding-right:20px';
 		}
-	if($fa_icon=='&#1488;')
+	if($fa_icon=='&#1488;' or $fa_icon=='א')
 		{
 		$icon_style="padding-top:7px;
 		padding-bottom:13px;
@@ -45,11 +45,11 @@ function virtual_bible_module_uninstalled_html($name,$type,$fa_icon,$title,$text
 		{
 		$icon_style="padding-top:7px;
 		padding-bottom:13px;
-		padding-left:30px;
-		padding-right:30px;
-		font-size:66px;
+		padding-left:23px;
+		padding-right:23px;
+		font-size:48px;
 		font-family:'Times New Roman';
-		line-height:1.9";
+		line-height:1.6";
 		$icon_text=$fa_icon;
 		$fa_icon='';
 		}
@@ -60,7 +60,7 @@ function virtual_bible_module_uninstalled_html($name,$type,$fa_icon,$title,$text
 
 			<!-- Progress bar for this module -->
 			<div id="progress-{$name}-circle" class="vb-progress mx-auto" data-value='50' 
-				style="margin:25px auto;color:#000;display:none;line-height:3.5;background-color:#fff; border-radius:50px;">
+				style="margin:0 auto;color:#000;display:none;line-height:3.5;background-color:#fff; border-radius:50px;">
 				<span class="progress-left">
 					<span class="progress-bar border-primary"></span>
 				</span>
@@ -128,7 +128,7 @@ function virtual_bible_module_installed_html($name,$type,$fa_icon,$title,$text,$
 		{
 		$disable=FALSE;
 		}
-	if($fa_icon=='&#1488;')
+	if($fa_icon=='&#1488;' or $fa_icon=='א')
 		{
 		$icon_style="padding-top:7px;
 		padding-bottom:13px;
@@ -221,8 +221,7 @@ function virtual_bible_module_installed_html($name,$type,$fa_icon,$title,$text,$
 						letter-spacing:1px;
 						color:#000;
 						height:25px;
-						width:100px;
-						margin-bottom:-6px;">Disable</button>
+						width:100px;">Disable</button>
 			<div id="module-{$name}-disabled"
 				style="	padding:4px 20px;
 					font-size:12px;
@@ -288,7 +287,7 @@ function virtual_bible_module_installed_html($name,$type,$fa_icon,$title,$text,$
 	
 function virtual_bible_module_uninstalled_js($name,$plugin_url)
 	{		
-	$nonce_url = wp_nonce_url($plugin_url.'ajax/load'.$name.'.php',$name);
+	$nonce_url = wp_nonce_url($plugin_url.'ajax/loadmodule.php',$name);
 	$raw_js = <<<EOD
 	$("#load-{$name}").click(function(e) 
 		{
@@ -298,24 +297,31 @@ function virtual_bible_module_uninstalled_js($name,$plugin_url)
 		$("#module-{$name}-icon").css('display','none');
 		$("#progress-{$name}-circle").css('display','');
 		$("#loading-{$name}").html('<small>loading...<br></small>');
-		var ajax_timer = setInterval(
-			function(){
-				$.get("{$plugin_url}ajax/{$name}.log", function(data) 
-					{
-					var index = data.indexOf("% ");
-					var progress = data.slice(0, index);
-					$("#progress-{$name}-circle").attr('data-value',progress);
-					$("#progress-{$name}-circle-text").html(progress+'%');
-					virtual_bible_rotate_progress('{$name}');
-					var book = data.slice(index+1);
-					$("#loading-{$name}").html('<small>loading...<br></small>'+book);
-					});
-			}, 250); 
+		var ajax_timer = setInterval
+			(
+			function()
+				{
+				$.get
+					(
+					"{$plugin_url}ajax/{$name}.log", 
+					function(data) 
+						{
+						var index = data.indexOf("% ");
+						var progress = data.slice(0, index);
+						$("#progress-{$name}-circle").attr('data-value',progress);
+						$("#progress-{$name}-circle-text").html(progress+'%');
+						virtual_bible_rotate_progress('{$name}');
+						var book = data.slice(index+1);
+						$("#loading-{$name}").html('<small>loading...<br></small>'+book);
+						}
+					).error();
+				}, 250
+			); 
 		$.ajax(
 			{
-			type: 'POST',
+			type: 'GET',
 			url: "{$nonce_url}",
-			data: {},
+			data: {name:'{$name}'},
 			success: function(data){
 					clearInterval(ajax_timer);
 					$("#progress-{$name}-circle").attr('data-value','100');
@@ -337,7 +343,7 @@ function virtual_bible_module_uninstalled_js($name,$plugin_url)
 
 function virtual_bible_module_installed_js($name,$plugin_url)
 	{		
-	$nonce_url = wp_nonce_url($plugin_url.'ajax/load'.$name.'.php',$name);
+	$nonce_url = wp_nonce_url($plugin_url.'ajax/loadmodule.php',$name);
 	$raw_js = <<<EOD
 	$("#disable-{$name}").click(function(e) 
 		{
@@ -346,7 +352,7 @@ function virtual_bible_module_installed_js($name,$plugin_url)
 			{
 			type: 'POST',
 			url: "{$nonce_url}",
-			data: {disable:1},
+			data: {disable:1,name:'{$name}'},
 			success: function(data)
 				{
 				$("#disable-{$name}").css('display','none');
@@ -364,7 +370,7 @@ function virtual_bible_module_installed_js($name,$plugin_url)
 			{
 			type: 'POST',
 			url: "{$nonce_url}",
-			data: {enable:1},
+			data: {enable:1,name:'{$name}'},
 			success: function(data)
 				{
 				$("#disable-{$name}").css('display','');

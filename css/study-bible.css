@@ -17,6 +17,12 @@
 		padding-top:100px;
 		}
 
+
+/***************************************
+		TOOLS
+
+****************************************/
+
 	ul.nav.nav-tabs {
 		clear: both;
 		}
@@ -44,6 +50,7 @@
 		border: 1px solid transparent;
 		border-radius: 4px 4px 0 0;
 		background-color: #eee;
+		height:100%;
 		}
 
 	.nav-tabs>li>a>h4 {
@@ -133,71 +140,6 @@
 		font-size: 25px;
 		}
 
-	.ui-widget-content {
-		border:none!important;
-		background:#000!important;
-		color:#fff!important;
-		font-weight:normal!important;
-		font-family:'Open Sans', Arial, serif!important;
-		font-size:14px!important;
-		}
-
-	.ui-tooltip {
-		box-shadow:none!important;
-	}
-	
-	.ui-tooltip, .arrow:after {
-		background: black;
-		}
-	.ui-tooltip {
-		padding: 10px 20px;
-		color: white;
-		border-radius: 5px;
-		font: bold 14px "Helvetica Neue", Sans-Serif;
-		margin-bottom:-20px;
-		}
-	.arrow {
-		width: 50px;
-		height: 16px;
-		overflow: hidden;
-		position: absolute;
-		left: 50%;
-		margin-left: -35px;
-		bottom: -16px;
-		}
-	.arrow.top {
-		top: -16px;
-		bottom: auto;
-		}
-	.arrow.left {
-		left: 20%;
-		}
-	.arrow:after {
-		content: "";
-		position: absolute;
-		left: 20px;
-		top: -20px;
-		width: 25px;
-		height: 25px;
-		box-shadow: 6px 5px 9px -9px black;
-		-webkit-transform: rotate(45deg);
-		-ms-transform: rotate(45deg);
-		transform: rotate(45deg);
-		}
-	.arrow.top:after {
-		bottom: -20px;
-		top: auto;
-		}
-
-	#modal a {
-		color:#a10f2b;
-		text-decoration:none;
-		}
-
-	#modal a:hover {
-		text-decoration:underline;
-		}
-
 
 	blockquote {
 		border-color:transparent!important;
@@ -216,233 +158,6 @@
 		display: none;
 		}  
 
-	.bible .row {
-		margin-right:-15px;
-		margin-left:-15px;
-		}  
-
-	.col-4 {
-		flex:0 0 33.333%;
-		max-width:33.333%;
-		position:relative;
-		padding-right:15px;
-		padding-left:15px;
-		} 
-
-	.col-3 {
-		flex:0 0 25%;
-		max-width:25%;
-		position:relative;
-		padding-right:15px;
-		padding-left:15px;
-		} 
-		
-	h4.col {
-		color:#fff!important;
-		} 
-
-	.bible-search-form {
-		text-align:left!important;
-		position:relative;
-		padding-right:15px;
-		padding-left:15px;
-		margin-left:auto;
-		margin-right:auto;
-		}
-
-	.sticky {
-		position:-webkit-sticky;
-		position:sticky;
-		top:0;
-		}
-
-	.verse
-		{
-		display:block;
-		}
-
-
-	.first-letter
-		{
-		font-size:92px;
-		float:left;
-		padding-right:0px;
-		height:70px;
-		margin-right:0px;
-		line-height:75px;
-		margin-left:-6px;
-		}
-
-	.first-verse .first-word
-		{
-		text-transform:uppercase;
-		margin-left:-6px;
-		}
-	.para
-		{
-		font-weight:bold;
-		}
-	.verse-number
-		{
-		margin-right:7px;
-		}
-	.sub-header {
-		color:#fff;
-		text-decoration:none;
-		}
-	a.sub-header {
-		color:#fff;
-		text-decoration:none;
-		}
-	a.sub-header:hover {
-		color:#ddd;
-		text-decoration:none;
-		}
-	a.xref_verse {
-		color:#000;
-		text-decoration:none;
-		}
-	a.xref_verse:hover {
-		color:#000;
-		text-decoration:underline;
-		}
-	xr.xref_verse {
-		color:#000;
-		text-decoration:none;
-		cursor:pointer;
-		}
-	xr.xref_verse:hover {
-		color:#000;
-		text-decoration:underline;
-		}
-	.xref-inner {
-		position:absolute;
-		right:0;
-		background-color:#fff;
-		}
-	.xref {
-		font-size:11px;
-		line-height:1.1;
-		text-align:right;
-		font-family:'Lora', serif;
-		margin-right:0px;
-		padding:0;
-		float: right;
-	}
-
-	.pagination {
-		display:flex;
-		padding-left:0;
-		list-style:none;
-		border-radius:0.25rem;
-		}
-
-	.page-item.active .page-link {
-		background:#fff;
-		border-color:#fff;
-		color:#ae3535;
-		border-radius:3px;
-		}
-	.page-item .page-link:hover {
-		background:#cc1133;
-		color:#fff;
-	}
-	.page-link {
-		background:#ae3535;
-		color:#fff;
-		border-color:#ae3535;
-		position:relative;
-		display:block;
-		margin-left:-1px;
-		padding:0.25rem 0.5rem;
-		font-size:.875rem;
-		line-height:1.5;
-
-		}
-	a.page-link {
-		text-decoration: none;
-		}
-	.keyword-result {
-		border-bottom:1px solid #ddd;
-		margin-bottom:0;
-		padding-bottom:20px;
-		padding-top:0;
-		margin-top:0;
-		font-family: 'Ovo', serif;
-		}
-	#verses h4 {
-		font-family: 'Ovo', serif;
-		font-weight:bold;
-		margin-bottom:0;
-		margin-top:20px;
-		}
-	#verses small {
-		float:right;
-		font-weight:normal;
-		}
-	.context {
-		margin-top:-100px;
-		margin-bottom:100px;
-		}
-	
-
-	
-	verses
-		{
-		display:block;
-		font-family: 'Ovo',serif;
-		font-size:18px;
-		line-height:1.3;
-		border-left:1px solid #eee;
-		margin-left:14%;
-		padding-right:0 !important;
-		padding-left:10px !important;
-		color:#000;
-		}
-	verse 
-		{
-		display:block;
-		text-align:justify;
-		text-indent:5px;
-		}
-	xref 
-		{
-		display:block;
-		font-size:13px;
-		width:15%;
-		text-align:left;
-		line-height:1;
-		text-indent:0;
-		margin-top:6px;
-		position:absolute;
-		left:-17%;
-		}
-	.verse xref b 
-		{
-		margin-right:0px;
-		display:inline;
-		font-size:12px;
-		}
-	xref a 
-		{
-		color:#555;
-		}
-	.first-verse b 
-		{
-		display:none;
-		}
-	.verse b 
-		{
-		margin-right:10px;
-		}
-	b.paragraph 
-		{
-		margin-right:0px;
-		}
-	verse.first-verse 
-		{
-		margin-left:0;
-		}
 	.tools p 
 		{
 		line-height:1.4;
@@ -472,26 +187,8 @@
 		{
 		color:#833;
 		}
-	.bible 
-		{		
-		position:relative;
-		z-index:101;
-		background-color:#fff;
-		box-shadow:0px 0px 7px rgba(0,0,0,0.1),inset -15px 0 15px -15px rgba(0,0,0,0.2);
-		border:1px solid #ddd;
-		border-radius:10px 0 0 10px;
-		padding:10px 25px 25px 25px;
-		}
-	div.study-bible
-		{
-		margin:0;
-		}
-	div.bible.row
-		{
-		margin:0;
-		display:block;
-		}
-	.tools
+
+		.tools
 		{
 		margin-left:-15px;
 		padding-right:10px;
@@ -504,6 +201,24 @@
 		border-radius:20px;
 		margin-bottom: 10px;
 		padding-top:20px;
+		max-width:50%;
+		display:block;
+		}
+	.holman-xref .tools
+		{
+		margin-left:-15px;
+		padding-right:10px;
+		position:relative;
+		z-index:100;
+		padding-left:30px;
+		font-size:11.5px;
+		background-color:#fafafa;
+		margin-top:50px;
+		border-radius:20px;
+		margin-bottom: 10px;
+		padding-top:20px;
+		max-width:47%;
+		display:block;
 		}
 	.tool-nav 
 		{
@@ -524,17 +239,9 @@
 		{
 		margin-top:45px;
 		}
-	.study-bible-form-row 
-		{
-		width:100%;
-		}
-	.study-bible-form 
-		{
-		width:100%;
-		display:block;
-		margin-bottom:10px;
-		}
-	#introduction-results strong 
+
+
+		#introduction-results strong 
 		{
 		display:block;
 		text-indent:0;
@@ -606,8 +313,6 @@
 		{
 		display:block;
 		text-indent:0;
-		border-bottomx:1px solid #ccc;
-		font-familyx:Poppins,san-serif;
 		font-family: "Montserrat", sans-serif;
 		font-size:13px;
 		font-weight:600;
@@ -637,31 +342,6 @@
 		{
 		margin:5px 0;
 		}
-	verses outline 
-		{
-		display:block;
-		width:100%;
-		font-size:15px;
-		font-family: "Montserrat", sans-serif;
-		background:#fff;
-		padding:5px 0 0 0;
-		line-height:1.3;
-		color:#008;
-		font-weight:550;
-		}
-	verses outline.pos-0
-		{
-		display:none;
-		}
-	word.strongs 
-		{
-		}
-	word.easton 
-		{
-		}
-	word strong 
-		{
-		}
 	.hebrew
 		{
 		display:block;
@@ -669,26 +349,141 @@
 		text-align:right !important;
 		font-size:27px;
 		}
+	.interlinear
+		{
+		display:block;
+		font-family:'Times New Roman',serif;
+		}
+	.interlinear h4 
+		{
+		text-align:center;
+		color:#800;
+		font-family: Poppins, san-serif;
+		margin-bottom:0px;
+		font-size:21px;
+		margin-top:-5px;
+		}
 	.hebrew-verse 
 		{
-		margin-right:20px;
-		margin-bottom:5px;
-		line-height:1.3;
+		margin-right:15px;
+		line-height:.7;
+		clear:both;
+		direction:rtl;
+		display:flex;
+		flex-wrap:wrap;
 		}
 	.hebrew-verse-number 
 		{
 		float:right;
-		font-size:21px;
-		margin-top:5px;
-		margin-right:-20px;
+		font-size:12px;
+		margin-top:10px;
+		margin-right:-15px;
+		font-family: 'Ovo',serif;
 		}
 	.hebrew h4 
 		{
 		text-align:center;
 		color:#800;
 		font-family: Poppins, san-serif;
-		font-size:24px;
-		margin-bottom:10px;
+		margin-bottom:0px;
+		}
+	.int-heb-word 
+		{
+		text-align:center;
+		padding:1px 2px;
+		flex:none;
+		float:right;
+		border:1px solid transparent;
+		cursor:default;
+		}
+	.int-heb-word .heb
+		{
+		font-size:20px;
+		font-weight:700;
+		}
+	.int-heb-word .eng
+		{
+		display:block;
+		font-family: "Montserrat", sans-serif;
+		font-size:10px;
+		margin-top:4px;
+		}
+	#hebgreek-results 
+		{
+		margin-left:-10px;
+		margin-right:-10px;
+		}
+
+	
+	.int-gre-word 
+		{
+		text-align:center;
+		padding:0 1px;
+		flex:none;
+		float:left;
+		border:1px solid transparent;
+		cursor:default;
+		line-height:.8;
+		}
+	.int-gre-word .gre
+		{
+		font-size:14.5px;
+		font-weight:700;
+		}
+	.int-gre-word .eng
+		{
+		display:block;
+		font-family: "Montserrat", sans-serif;
+		font-size:9px;
+		margin-top:4px;
+		}
+
+	.tooltip .tooltip-inner
+		{
+		background:#fff;
+		background: linear-gradient(180deg, #fff 0%,#ffe 100%);
+		box-shadow:1px 1px 10px rgba(0,0,0,0.3);
+		font-family: "Montserrat", sans-serif;
+		color:#000;
+		border-radius:7%;
+		line-height:1.3;
+		border: 5px ridge rgba(226, 154, 21, 0.5);
+		}
+	.tooltip .tooltip-inner .hebrew
+		{
+		font-family:'Times New Roman',serif;
+		text-align:center !important;
+		font-size:35px;
+		margin-top:-8px;
+		font-weight:600;
+		white-space:nowrap;
+		}
+	.tooltip .tooltip-inner .greek
+		{
+		font-family:'Times New Roman',serif;
+		text-align:center !important;
+		font-size:35px;
+		margin-top:-8px;
+		font-weight:600;
+		white-space:nowrap;
+		}
+	.tooltip .tooltip-inner .trans
+		{
+		text-align:center;
+		font-size:13px;
+		font-style:italic;
+		margin-top:-5px;
+		}
+	.tooltip .tooltip-inner .parse
+		{
+		text-align:center;
+		font-size:11px;
+		}
+	.tooltip .tooltip-inner .english
+		{
+		text-align:center;
+		white-space:nowrap;
+		font-size:17px
 		}
 	.greek
 		{
@@ -698,16 +493,17 @@
 		}
 	.greek-verse 
 		{
-		margin-right:20px;
-		margin-bottom:10px;
 		line-height:1.3;
-		text-align:justify;
+		direction:ltr;
+		display:flex;
+		flex-wrap:wrap;
+		margin:5px;
 		}
 	.greek-verse-number 
 		{
-		font-size:17px;
-		margin-top:5px;
-		margin-right:10px;
+		font-size:12px;
+		margin-top:4px;
+		margin-right:-5px;
 		}
 	.greek h4 
 		{
@@ -717,220 +513,8 @@
 		font-size:24px;
 		margin-bottom:10px;
 		}
-	.smallcaps 
-		{
-		font-variant:small-caps;
-		}
-	.popover-content 
-		{
-		width:400px;
-		line-height:1.3;
-		}
-	verse .popover 
-		{
-		max-width:400px;
-		box-shadow:1px 1px 10px rgba(0,0,0,0.2);
-		border-radius:10px;
-		}
-	.def .popover 
-		{
-		border-radius:10px;
-		}
-	.popover-title-strongs 
-		{
-		background-color:#800;
-		color:#fff;
-		font-size:16px;
-		font-family: "Montserrat", sans-serif;
-		padding-left:10px;
-		border-top-left-radius:10px;
-		border-top-right-radius:10px;
-		}
-	.popover-orig-word 
-		{
-		font-family:'Times New Roman',serif;
-		color:#fff;
-		}
-	.popover-title-strongs b.popover-orig-word 
-		{
-		color:#fff;
-		margin:0;
-		font-size:22px;
-		}
-	.popover-title-strongs b 
-		{
-		display:inline;
-		font-size:22px
-		}
-	.popover-strongs-close 
-		{
-		float:right;
-		margin-right:8px;
-		font-size:12px;
-		margin-top:2px;
-		cursor:pointer;
-		color:#fff;
-		font-family: "Montserrat", sans-serif;
-		padding-left:10px;
-		}
-	.popover-content-strongs 
-		{
-		padding:5px 15px 10px;
-		font-family: "Montserrat", sans-serif;
-		font-size:15px;
-		text-indent:0;
-		}
-	xref .popover.fade
-		{
-		max-width:300px;
-		box-shadow:1px 1px 10px rgba(0,0,0,0.2);
-		border-radius:10px;
-		border:none;
-		margin-top:-10px;
-		}
 	
-	xref .popover-content 
-		{
-		width:300px;
-		line-height:1.3;
-		border-radius:10px;
-		}
-	.popover-xref-close 
-		{
-		float:right;
-		margin-right:-12px;
-		font-size:12px;
-		margin-top:-15px;
-		cursor:pointer;
-		color:#000;
-		font-family: "Montserrat", sans-serif;
-		padding-left:10px;
-		}
-	.popover-content-xref 
-		{
-		padding:15px 20px;
-		font-family: 'Ovo',serif;
-		font-size:15px;
-		text-indent:0;
-		text-align:justify;
-		background-color:#ffffee;
-		border-radius:10px;
-		border:1px solid #ccc;
-		}
-	.popover-content-xref verse
-		{
-		display:inline;
-		text-align:none;
-		text-indent:none;
-		}
-	.popover-content-xref sup
-		{
-		font-size:9px;
-		}
-	intro.intro
-		{
-		display:block;
-		width:90%;
-		text-align:center;
-		font-style:italic;
-		margin-bottom:15px;
-		font-size:16px;
-		margin-left:auto;
-		margin-right:auto;
-		}
-	
-	.words 
-		{		
-		position:relative;
-		display:block;
-		z-index:101;
-		background-color:#fff;
-		box-shadow:0px 0px 7px rgba(0,0,0,0.1);
-		border:1px solid #ddd;
-		border-radius:10px;
-		padding:10px 25px 25px 25px;
-		}
-	.word-results
-		{
-		display:block;
-		font-family: 'Ovo',serif;
-		font-size:18px;
-		line-height:1.3;
-		padding-right:0 !important;
-		padding-left:10px !important;
-		color:#000;	
-		margin-bottom:10px;	
-		border-bottom:1px solid #ddd;
-		padding-bottom:10px;
-		}
-	.word-results-reference 
-		{
-		font-weight:bold;
-		font-family: "Montserrat", sans-serif;
-		font-weight:600;
-		font-size:15px;
-		color:#800;
-		}
-	.word-results-reference .in-context 
-		{
-		float:right;
-		font-weight:normal;
-		font-size:12px;
-		}
-	.word-results-reference .in-context a
-		{
-		color:#800;
-		}
-	.word-results-text 
-		{
-		text-align:justify;
-		}
-	.word-results-title 
-		{
-		display:block;
-		width:100%;	
-		font-family: "Montserrat", sans-serif;
-		text-align:center;
-		border-bottom:solid 1px #ddd;
-		margin-bottom:10px;
-		}
-	.words .pagination 
-		{
-		margin-left:auto;
-		margin-right:auto;
-		margin-top:10px;
-		margin-bottom:10px;
-		justify-content:center;
-		}
-	.words .pagination .page-item .page-link
-		{
-		background-color:#fff;
-		color:#800;
-		border-color:#ddd;
-		font-family: "Montserrat", sans-serif;
-		font-weight:450;
-		width:40px;
-		text-align:center;
-		white-space:nowrap;
-		}
-	.words .pagination .page-item.active .page-link
-		{
-		background-color:#800;
-		color:#fff;
-		}
-	.words .pagination .page-item.first .page-link
-		{
-		border-top-left-radius:15px;
-		border-bottom-left-radius:15px;
-		padding-left:15px;
-		}
-	.words .pagination .page-item.last .page-link
-		{
-		border-top-right-radius:15px;
-		border-bottom-right-radius:15px;
-		padding-right:28px;
-		}
-	#filter-results 
+		#filter-results 
 		{
 		font-family: "Montserrat", sans-serif;
 		padding-left:15px;
@@ -1065,7 +649,842 @@
 		{
 		content:";";
 		}
+
 	
+	#tools-overview .book-list 
+		{
+		padding:0 6px;
+		font-size:18px;
+		}
+
+/****************************************
+		POPOVER
+
+*****************************************/
+
+	.popover-content 
+		{
+		width:400px;
+		line-height:1.3;
+		}
+	verse .popover 
+		{
+		max-width:400px;
+		box-shadow:1px 1px 10px rgba(0,0,0,0.2);
+		border-radius:10px;
+		}
+	.def .popover 
+		{
+		border-radius:10px;
+		}
+	.popover-title-strongs 
+		{
+		background-color:#800;
+		color:#fff;
+		font-size:16px;
+		font-family: "Montserrat", sans-serif;
+		padding-left:10px;
+		border-top-left-radius:10px;
+		border-top-right-radius:10px;
+		}
+	.popover-orig-word 
+		{
+		font-family:'Times New Roman',serif;
+		color:#fff;
+		}
+	.popover-title-strongs b.popover-orig-word 
+		{
+		color:#fff;
+		margin:0;
+		font-size:22px;
+		}
+	.popover-title-strongs b 
+		{
+		display:inline;
+		font-size:22px
+		}
+	.popover-strongs-close 
+		{
+		float:right;
+		margin-right:8px;
+		font-size:12px;
+		margin-top:2px;
+		cursor:pointer;
+		color:#fff;
+		font-family: "Montserrat", sans-serif;
+		padding-left:10px;
+	}
+	.popover-content-strongs 
+		{
+		padding:5px 15px 10px;
+		font-family: "Montserrat", sans-serif;
+		font-size:15px;
+		text-indent:0;
+		}
+	xref .popover.fade
+		{
+		max-width:300px;
+		box-shadow:1px 1px 10px rgba(0,0,0,0.2);
+		border-radius:10px;
+		border:none;
+		margin-top:-10px;
+		}
+
+	xref .popover-content 
+		{
+		width:300px;
+		line-height:1.3;
+		border-radius:10px;
+		}
+	.popover-xref-close 
+		{
+		float:right;
+		margin-right:-12px;
+		font-size:12px;
+		margin-top:-15px;
+		cursor:pointer;
+		color:#000;
+		font-family: "Montserrat", sans-serif;
+		padding-left:10px;
+		}
+	.popover-content-xref 
+		{
+		padding:15px 20px;
+		font-family: 'Ovo',serif;
+		font-size:15px;
+		text-indent:0;
+		text-align:justify;
+		background-color:#ffffee;
+		border-radius:10px;
+		border:1px solid #ccc;
+		}
+	.popover-content-xref verse
+		{
+		display:inline;
+		text-align:none;
+		text-indent:none;
+		}
+	.popover-content-xref sup
+		{
+		font-size:9px;
+		}
+
+/*****************************************
+		FORM
+
+****************************************/
+
+
+
+	.bible-search-form {
+		text-align:left!important;
+		position:relative;
+		padding-right:15px;
+		padding-left:0px;
+		margin-left:auto;
+		margin-right:auto;
+		max-width:56.5%;
+		}
+
+	.study-bible-form-row 
+		{
+		width:100%;
+		}
+	.study-bible-form 
+		{
+		width:100%;
+		display:block;
+		margin-bottom:10px;
+		}
+
+	#form-fieldsets 
+		{
+		max-width:45%;
+		padding-right:0;
+		padding-left:30px;
+		}
+
+	
+	.btn-strongs 
+		{
+		color:#fff;
+		background-color:#833;
+		border-color:#833;
+		}
+	.btn-none 
+		{
+		color:#000;
+		background-color:#eee;
+		border-color:#aaa;
+		}
+
+
+/****************************************
+		MODALS
+
+****************************************/
+
+	#modal a {
+		color:#a10f2b;
+		text-decoration:none;
+		}
+
+	#modal a:hover {
+		text-decoration:underline;
+		}
+
+
+/***************************************
+		PAGINATION
+
+***************************************/
+
+
+.pagination {
+	display:flex;
+	padding-left:0;
+	list-style:none;
+	border-radius:0.25rem;
+	}
+.page-item.active .page-link {
+	background:#fff;
+	border-color:#fff;
+	color:#ae3535;
+	border-radius:3px;
+	}
+.page-item .page-link:hover {
+	background:#cc1133;
+	color:#fff;
+}
+.page-link {
+	background:#ae3535;
+	color:#fff;
+	border-color:#ae3535;
+	position:relative;
+	display:block;
+	margin-left:-1px;
+	padding:0.25rem 0.5rem;
+	font-size:.875rem;
+	line-height:1.5;
+	}
+a.page-link {
+	text-decoration: none;
+	}
+
+/*****************************************
+	KEYWORD RESULTS
+
+****************************************/
+
+
+	.keyword-result {
+		border-bottom:1px solid #ddd;
+		margin-bottom:0;
+		padding-bottom:20px;
+		padding-top:0;
+		margin-top:0;
+		font-family: 'Ovo', serif;
+		}	
+
+	.context {
+		margin-top:-100px;
+		margin-bottom:100px;
+		}
+
+
+/******************************************
+			TRADITIONAL
+
+*******************************************/
+
+	.study-bible.traditional verses
+		{
+		display:block;
+		font-family: 'Ovo',serif;
+		font-size:18px;
+		line-height:1.3;
+		padding:0 20px;
+		color:#000;
+		max-width:100%;
+		}
+
+	
+
+	.study-bible.traditional #verses h4
+		{
+		font-family: 'Ovo', serif;
+		font-weight:bold;
+		margin-bottom:0;
+		margin-top:20px;
+		}
+	.study-bible.traditional #verses small 
+		{
+		float:right;
+		font-weight:normal;
+		}
+
+	.study-bible.traditional 	.verse
+		{
+		display:block;
+		}
+
+
+	.study-bible.traditional .first-letter
+		{
+		font-size:92px;
+		float:left;
+		padding-right:0px;
+		height:70px;
+		margin-right:0px;
+		line-height:75px;
+		margin-left:-6px;
+		}
+
+	.study-bible.traditional .first-verse .first-word
+		{
+		text-transform:uppercase;
+		margin-left:-6px;
+		}
+
+	.study-bible.traditional .para
+		{
+		font-weight:bold;
+		}
+
+	.study-bible.traditional .chapter-number
+		{
+		display:none;
+		}
+
+	.study-bible.traditional .verse-number
+		{
+		margin-right:7px;
+		}
+
+	.study-bible.traditional a.xref_verse 
+		{
+		color:#000;
+		text-decoration:none;
+		}
+
+	.study-bible.traditional a.xref_verse:hover 
+		{
+		color:#000;
+		text-decoration:underline;
+		}
+
+	.study-bible.traditional xr.xref_verse:hover 
+		{
+		color:#000;
+		text-decoration:underline;
+		}
+
+	.study-bible.traditional .xref-inner 
+		{
+		position:absolute;
+		right:0;
+		background-color:#fff;
+		}
+
+	.study-bible.traditional .xref 
+		{
+		font-size:11px;
+		line-height:1.1;
+		text-align:right;
+		font-family:'Lora', serif;
+		margin-right:0px;
+		padding:0;
+		float: right;
+		}
+
+	.study-bible.traditional verse 
+		{
+		display:block;
+		text-align:justify;
+		text-indent:5px;
+		}
+
+	.study-bible.traditional .first-verse b 
+		{
+		display:none;
+		}
+		
+	.study-bible.traditional .first-verse b.popover-orig-word
+		{
+		display:inline;
+		}
+
+	.study-bible.traditional b.paragraph 
+		{
+		margin-right:0px;
+		}
+
+	.study-bible.traditional verse.first-verse 
+		{
+		margin-left:0;
+		}
+
+		
+
+	.study-bible.traditional verses outline 
+		{
+		display:block;
+		width:100%;
+		font-size:15px;
+		font-family: "Montserrat", sans-serif;
+		background:#fff;
+		padding:5px 0 0 0;
+		line-height:1.3;
+		color:#008;
+		font-weight:550;
+		}
+
+	.study-bible.traditional outline.pos-0
+		{
+		display:none;
+		}
+
+
+/*******************************************************
+		PARAGRAPH
+	
+********************************************************/
+
+	.study-bible.paragraph verses
+		{
+		display:block;
+		font-family: 'Ovo',serif;
+		font-size:18px;
+		line-height:1.3;
+		padding:0 20px;
+		color:#000;
+		max-width:100%;
+		text-align:justify;
+		}
+
+	.study-bible.paragraph .verse
+		{
+		display:inline;
+		}
+
+	.study-bible.paragraph verse.paragraph
+		{
+		margin-left:20px;
+		}
+
+	.study-bible.paragraph verse.paragraph.first-verse
+		{
+		margin-left:-5px;
+		}
+
+	.study-bible.paragraph .context 
+		{
+		display:none;
+		width:1px;
+		}
+
+	.study-bible.paragraph b.verse-number 
+		{
+		font-weight:normal;
+		vertical-align:super;
+		font-size:10px;
+		}
+
+	.study-bible.paragraph b.paragraph 
+		{
+		display:none
+		}
+
+	.study-bible.paragraph .chapter-number
+		{
+		font-size:92px;
+		float:left;
+		padding-right:0px;
+		height:70px;
+		margin-right:0px;
+		line-height:75px;
+		margin-left:-6px;
+		font-weight:normal;
+		color:#800;
+		}
+
+	.study-bible.paragraph .first-verse  b.verse-number 
+		{
+		display:none;
+		}
+
+	.study-bible.paragraph .first-letter
+		{
+		display:inline;
+		}
+
+	.study-bible.paragraph .first-letter
+		{
+		display:inline;
+		margin:0!important;
+		}
+
+
+	.study-bible.paragraph verses outline 
+		{
+		display:block;
+		width:100%;
+		font-size:15px;
+		font-family: "Montserrat", sans-serif;
+		background:#fff;
+		padding:5px 0 0 0;
+		line-height:1.3;
+		color:#800;
+		font-weight:400;
+		font-style:italic;
+		text-align:center;
+		}
+
+	.study-bible.paragraph outline.pos-0
+		{
+		display:none;
+		}
+
+
+
+	xref 
+		{
+		display:block;
+		font-size:13px;
+		width:13%;
+		text-align:left;
+		line-height:1;
+		text-indent:0;
+		margin-top:6px;
+		position:absolute;
+		left:7px;
+		font-family: 'Ovo',serif;
+		background-color:#fff;
+		}
+
+	.verse xref b 
+			{
+			margin-right:0px;
+			display:inline!important;
+			font-size:12px;
+			}
+	
+	xref a 
+			{
+			color:#555;
+			}
+	
+
+
+	xr.xref_verse 
+		{
+		color:#000;
+		text-decoration:none;
+		cursor:pointer;
+		}
+
+
+
+
+/*******************************************************
+		READER
+	
+********************************************************/
+
+
+
+	.study-bible.reading .bible 
+		{
+		box-shadow:0 0 7px rgba(0,0,0,0.15);
+		border-radius:10px
+		}
+
+	.study-bible.reading .tools 
+		{
+		display:none;
+		}
+
+	.study-bible.reading xref 
+		{
+		display:none;
+		}
+
+	.study-bible.reading outline 
+		{
+		display:none;
+		}
+
+	.study-bible.reading outline.pos-0 
+		{
+		display:block;
+		width:100%;
+		text-align:center;
+		margin-top:-65px;
+		font-family: "Montserrat", sans-serif;
+		color:#800;
+		font-size:21px;
+		letter-spacing:-.5px;
+		}
+
+	.study-bible.reading b.verse-number 
+		{
+		display:none;
+		}
+
+	.study-bible.reading b.paragraph 
+		{
+		display:none
+		}
+
+	.study-bible.reading .chapter-number
+		{
+		display:none;
+		}
+
+	.study-bible.reading .first-letter
+		{
+		font-size:92px;
+		float:left;
+		padding-right:0px;
+		height:70px;
+		margin-right:3px;
+		line-height:75px;
+		margin-left:0px;
+		color:#800;
+		}
+
+	.study-bible.reading .verse:has(.A)
+		{
+		margin-left:45px!important;
+		}
+
+	.study-bible.reading .first-verse .first-word
+		{
+		text-transform:uppercase;
+		}
+
+	.study-bible.reading .bible 
+		{
+		max-width:95%;
+		}
+		
+
+	.study-bible.reading verses 
+		{
+		display:block;
+		font-family: 'Ovo',serif;
+		font-size:23px;
+		line-height:1.5;
+		padding:0 20px;
+		color:#000;
+		max-width:100%;
+		text-align:justify;
+		border:none;
+		margin:0;
+		margin-left:20px;
+		padding:0 30px;
+		}
+
+	.study-bible.reading .verse
+		{
+		display:inline;
+		}
+
+	.study-bible.reading verse.paragraph
+		{
+		margin-left:35px;
+		}
+
+	.study-bible.reading verse.paragraph.first-verse
+		{
+		margin-left:-5px;
+		}
+
+	.study-bible.reading .context 
+		{
+		display:none;
+		width:1px;
+		}
+
+	.study-bible.reading #book-name 
+		{
+		margin-left:-30px;
+		}
+
+	.study-bible.reading #chapter-number 
+		{
+		margin-right:-30px;
+		}
+	
+
+
+
+
+
+
+
+	.bible 
+		{		
+		position:relative;
+		z-index:101;
+		background-color:#fff;
+		box-shadow:0px 0px 7px rgba(0,0,0,0.1),inset -15px 0 15px -15px rgba(0,0,0,0.2);
+		border:1px solid #ddd;
+		border-radius:10px 0 0 10px;
+		padding:10px 25px 25px 25px;
+		max-width:50%;
+		}
+
+	.holman-xref .bible 
+		{
+		position:relative;
+		z-index:101;
+		background-color:#fff;
+		box-shadow:0px 0px 7px rgba(0,0,0,0.1),inset -15px 0 15px -15px rgba(0,0,0,0.2);
+		border:1px solid #ddd;
+		border-radius:10px 0 0 10px;
+		padding:10px 25px 25px 25px;
+		max-width:53%;		
+		}
+
+	div.study-bible
+		{
+		margin:0;
+		}
+	div.bible.row
+		{
+		margin:0;
+		display:block;
+		}
+
+
+
+	.smallcaps 
+		{
+		font-variant:small-caps;
+		}
+
+
+
+		
+
+	intro.intro
+		{
+		display:block;
+		width:90%;
+		text-align:center;
+		font-style:italic;
+		margin-bottom:15px;
+		font-size:16px;
+		margin-left:auto;
+		margin-right:auto;
+		}
+	
+	.words 
+		{		
+		position:relative;
+		display:block;
+		z-index:101;
+		background-color:#fff;
+		box-shadow:0px 0px 7px rgba(0,0,0,0.1);
+		border:1px solid #ddd;
+		border-radius:10px;
+		padding:10px 25px 25px 25px;
+		}
+	.word-results
+		{
+		display:block;
+		font-family: 'Ovo',serif;
+		font-size:18px;
+		line-height:1.3;
+		padding-right:0 !important;
+		padding-left:10px !important;
+		color:#000;	
+		margin-bottom:10px;	
+		border-bottom:1px solid #ddd;
+		padding-bottom:10px;
+		}
+	.word-results-reference 
+		{
+		font-weight:bold;
+		font-family: "Montserrat", sans-serif;
+		font-weight:600;
+		font-size:15px;
+		color:#800;
+		}
+	.word-results-reference .in-context 
+		{
+		float:right;
+		font-weight:normal;
+		font-size:12px;
+		}
+	.word-results-reference .in-context a
+		{
+		color:#800;
+		}
+	.word-results-text 
+		{
+		text-align:justify;
+		}
+	.word-results-title 
+		{
+		display:block;
+		width:100%;	
+		font-family: "Montserrat", sans-serif;
+		text-align:center;
+		border-bottom:solid 1px #ddd;
+		margin-bottom:10px;
+		}
+	.words .pagination 
+		{
+		margin-left:auto;
+		margin-right:auto;
+		margin-top:10px;
+		margin-bottom:10px;
+		justify-content:center;
+		}
+	.words .pagination .page-item .page-link
+		{
+		background-color:#fff;
+		color:#800;
+		border-color:#ddd;
+		font-family: "Montserrat", sans-serif;
+		font-weight:450;
+		width:40px;
+		text-align:center;
+		white-space:nowrap;
+		}
+	.words .pagination .page-item.active .page-link
+		{
+		background-color:#800;
+		color:#fff;
+		}
+	.words .pagination .page-item.first .page-link
+		{
+		border-top-left-radius:15px;
+		border-bottom-left-radius:15px;
+		padding-left:15px;
+		}
+	.words .pagination .page-item.last .page-link
+		{
+		border-top-right-radius:15px;
+		border-bottom-right-radius:15px;
+		padding-right:28px;
+		}
+		
+		
+
+/********************************/
+
+	
+	
+	.holman-xref verses
+		{
+		border-left:1px solid #eee;
+		margin-left:14%;
+		padding-left:10px !important;
+		color:#000;
+		}
 
 	
 

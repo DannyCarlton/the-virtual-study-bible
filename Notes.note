@@ -7,31 +7,29 @@ https://codex.wordpress.org/I18n_for_WordPress_Developers								← For allowin
 https://make.wordpress.org/core/handbook/testing/automated-testing/phpunit/				← Creating a testing environment
 
 TODAY...  
-	Do not show heb/gre tool tab if they are disabled
-	Move all Modules to self-contained files.
-		Both front-end and ajax.
-	Change passage style and link keyed to BS toggles
-	Word Search 
-		Lexicon Tools... 
-			but also make Strong's Link Key highlight words in left pane
-			Highlight verses/words matching lexicon entry.
-		List related words. (love: loves, loveth; get list of lexicon entries, then list of words those entries are linked to)
 	use gears for page load
-	Make help popovers for the various parts 
-	Passage Style changes style sheet
-	dictionary has two entries for some words.
-	Put books in main tools pane 
-	hide just verse and tools pane on page load.
+		hide just verse and tools pane on page load.
 		Try to make filler image
+	Make help popovers for the various parts 
+	dictionary has two entries for some words.
+	Consolidate all styles (other than passage styles) into one file.
+	Consolidate as much js as possible into one file.
+	move text to templates
+	Newer modules may require a specific update of the plugin to work.
+	Scrape BLB interlinear (wlc/kjv) to get proper keying of phrases
 	
 
 ERRORS... 
+	Step#4 not showing installed modules unless reloaded
 	lexicon 07474 (word search love) ra`yah links 07453 which shows 0reya2 as a strong's word 
 	word tools lexicon, greek links don't work
 	Song of Solomon: No outline
-	Colossians 1:2 missing from Geek (may not be the only verse missing)
+	Colossians 1:2 missing from Greek (may not be the only verse missing)
 	James: no xref
 
+TO DO IN NEXT UPDATE...
+	Word Search 
+		List related words. (love: loves, loveth; get list of lexicon entries, then list of words those entries are linked to)
 
 
 

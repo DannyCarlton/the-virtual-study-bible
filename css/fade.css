@@ -1253,14 +1253,7 @@ cite {
 .btn-info-faded:hover, .btn-info-faded:focus, .btn-info-faded.active, .btn-info-faded:active, .show > .btn-info-faded.dropdown-toggle {
   color: white;
   border-color: #199ac4;
-  xbackground: #34b4db;
-  xbackground: -moz-linear-gradient(top, #34b4db 0%, #1999c4 100%);
-  xbackground: -webkit-gradient(left top, left bottom, color-stop(0%, #34b4db), color-stop(100%, #1999c4));
-  xbackground: -webkit-linear-gradient(top, #34b4db 0%, #1999c4 100%);
-  xbackground: -o-linear-gradient(top, #34b4db 0%, #1999c4 100%);
-  xbackground: -ms-linear-gradient(top, #34b4db 0%, #1999c4 100%);
-  xbackground: linear-gradient(to bottom, #34b4db 0%, #1999c4 100%);
-  xfilter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#34b4db', endColorstr='#1999c4', GradientType=0 );
+ 
 }
 
 .btn-outline-info {
@@ -2243,7 +2236,7 @@ cite {
 .owl-theme .owl-dots .owl-dot {
   display: inline-block;
   zoom: 1;
-  *display: inline;
+ /* *display: inline; */
 }
 
 .owl-theme .owl-dots .owl-dot span {
@@ -2470,6 +2463,7 @@ cite {
 input {
   font-family: "Montserrat", sans-serif !important;
   letter-spacing: 0.03rem;
+  font-weight:600;
 }
 
 .input-group-addon:not(:last-child) {

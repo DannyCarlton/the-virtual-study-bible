@@ -2391,7 +2391,7 @@ class virtual_bible
 #		write_log($querytext);
 
 		$cache_file=base64_encode($querytext);
-		$cache_file=str_replace('==','',$cache_file);
+		$cache_file=str_replace('=','',$cache_file);
 		$cache_file='gvcbk-'.substr($cache_file,-30);
 		$plugin_path=str_replace('includes/','',plugin_dir_path(__FILE__));
 		if(file_exists("$plugin_path/cache/$cache_file.dat"))
@@ -2402,7 +2402,6 @@ class virtual_bible
 		else
 			{
 			$wpdb->get_results($querytext);
-			$cache_out=json_encode($Results);
 			write_cache($wpdb->num_rows,$cache_file);
 			return $wpdb->num_rows;
 			}
@@ -2597,7 +2596,7 @@ function dbFetch1($table,$Where='',$cell='*')
 
 	$query="SELECT $cell FROM $table_name $where LIMIT 1;";
 	$cache_file=base64_encode($query);
-	$cache_file=str_replace('==','',$cache_file);
+	$cache_file=str_replace('=','',$cache_file);
 	$cache_file='dbf1-'.substr($cache_file,-30);
 	$plugin_path=str_replace('includes/','',plugin_dir_path(__FILE__));
 	if(file_exists("$plugin_path/cache/$cache_file.dat"))
@@ -2607,7 +2606,7 @@ function dbFetch1($table,$Where='',$cell='*')
 		}
 	else
 		{
-		write_log("$query\n$cache_file");
+#		write_log("$query\n$cache_file");
 		$Results['query']=$query;
 		$Results['wpdb_get_results'] = $wpdb->get_results($query,ARRAY_A);	
 		if(isset($Results['wpdb_get_results'][0]))
@@ -2670,7 +2669,7 @@ function dbFetch($table,$Where='',$cell='*')
 
 	$query="SELECT $cell FROM $table_name $where;";
 	$cache_file=base64_encode($query);
-	$cache_file=str_replace('==','',$cache_file);
+	$cache_file=str_replace('=','',$cache_file);
 	$cache_file='dbf-'.substr($cache_file,-30);
 	$plugin_path=str_replace('includes/','',plugin_dir_path(__FILE__));
 	if(file_exists("$plugin_path/cache/$cache_file.dat"))
@@ -2683,7 +2682,7 @@ function dbFetch($table,$Where='',$cell='*')
 		$Results['wpdb_get_results'] = $wpdb->get_results($query,ARRAY_A);
 		$cache_out=json_encode($Results);
 		write_cache($cache_out,$cache_file);
-		write_log("$query\n$cache_file");
+#		write_log("$query\n$cache_file");
 		}
 
 	return $Results['wpdb_get_results'];
@@ -2709,6 +2708,18 @@ function write_cache($data,$file_name)
 	{	
 	$plugin_path=str_replace('includes/','',plugin_dir_path(__FILE__));
 	$file_name.='.dat';
+	$Files=glob("$plugin_path/cache/*.dat");
+	$threshhold=strtotime('-1 hour');
+	foreach($Files as $file)
+		{
+		if(is_file($file))
+			{
+			if($threshhold >= filemtime($file))
+				{
+				unlink($file);
+				}
+			}
+		}
 	$fp = fopen("$plugin_path/cache/$file_name", "w");
 	fwrite ($fp, $data);
 	fclose ($fp);

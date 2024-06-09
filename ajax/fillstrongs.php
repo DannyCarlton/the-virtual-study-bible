@@ -3,6 +3,10 @@ header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 
+/**************************************
+ * 	This script is used to fill the popover request from highlighted (keyed) words in the passage display.
+ */
+
 
 include('../../../../wp-load.php');
 
@@ -15,8 +19,9 @@ if(isset($_GET['_wpnonce']))
 	{
 	$verify = wp_verify_nonce($_GET['_wpnonce'], 'strongs_popover');
 	}
-if(isset($_GET['_vbnonce']) and $_GET['_vbnonce']=='1234567')
-	{
+
+if(isset($_GET['_vbnonce']) and $_GET['_vbnonce']=='1234567')	//This is used internally, so that the ajax loaded content can in turn 
+	{															// request data from links within the popover.
 	$verify=1;
 	}
 

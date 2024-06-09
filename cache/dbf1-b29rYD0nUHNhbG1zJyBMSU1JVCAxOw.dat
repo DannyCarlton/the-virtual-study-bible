@@ -1,1 +1,0 @@
-{"query":"SELECT * FROM wp_virtual_bible_books WHERE `book`='Psalms' LIMIT 1;","wpdb_get_results":[{"id":"19","book":"Psalms","chapters":"150","abbr":"Psa, Ps, Psalm","longname":"The Book of <b>Psalms<\/b>"}]}

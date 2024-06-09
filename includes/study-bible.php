@@ -72,7 +72,7 @@ function buildStudyBiblePage()
 	if(isset($_GET['keyword']))
 		{
 		$keyword=$_GET['keyword'];
-		$keyword=str_replace('"','',$keyword);
+		$keyword=str_replace('"','`',$keyword);
 		$reference=$keyword;
 		if(isset($_GET['scope']))
 			{

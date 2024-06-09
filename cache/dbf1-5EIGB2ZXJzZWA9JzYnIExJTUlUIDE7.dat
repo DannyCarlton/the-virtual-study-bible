@@ -1,1 +1,0 @@
-{"query":"SELECT * FROM wp_virtual_bible_kjvs WHERE `book`='19' AND `chapter`='3' AND `verse`='6' LIMIT 1;","wpdb_get_results":[{"id":"13964","book":"19","chapter":"3","verse":"6","text":"I will not be afraid{H3372}{(H8799)} of ten thousands{H7233} of people{H5971}, that have set{H7896}{(H8804)} themselves against me round about{H5439}."}]}

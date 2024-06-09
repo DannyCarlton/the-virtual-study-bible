@@ -2,8 +2,10 @@
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
-/*
-*/
+/***************************************************
+ * This script is used to fill the right-pane tools section labeled "Strongs' Lexicon Entries..."
+ */
+
 include('../../../../wp-load.php');
 
 if(!defined('ABSPATH')) 
@@ -30,7 +32,7 @@ if($verify)
 			$plugin_url=str_replace('includes/','',plugin_dir_url(__FILE__));
 			$nonce_url_strongs = wp_nonce_url($plugin_url.'fillstrongs.php','strongs_popover');
 			$nonce_url_strongs=$plugin_url.'fillstrongs.php?_vbnonce=1234567';
-			echo "<div class=\"lexicon-results-count\" >$word_count lexicon entires for &ldquo;$keyword&rdquo;</div>";
+			echo "<div class=\"lexicon-results-count\" >$word_count lexicon entries for &ldquo;$keyword&rdquo;</div>";
 			foreach($Entries as $Entry)
 				{
 				$strongs=$Entry['strongs'];
@@ -87,8 +89,8 @@ if($verify)
 							$('#lexicon-results h4 small').css('display','inline');
 							$('.lexicon-results-item').css('background-color','');
 							$(this).parent().css('background-color','#ffffee');
-							$('.word-results').css('display','none');
-							$('*[strongs=$_l$strongs]').parent().parent().css('display','block')\">
+							$('.word-results').css('background-color','');
+							$('*[strongs=$_l$strongs]').parent().parent().css('background-color','#ffffee')\">
 							<b>$strongs.</b> 
 							<span class=\"orig-word\">$orig_word</span> 
 							<span class=\"translit\">$translit,</span>

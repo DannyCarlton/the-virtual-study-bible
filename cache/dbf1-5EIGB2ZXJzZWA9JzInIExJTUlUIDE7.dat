@@ -1,1 +1,0 @@
-{"query":"SELECT * FROM wp_virtual_bible_kjvs WHERE `book`='19' AND `chapter`='3' AND `verse`='2' LIMIT 1;","wpdb_get_results":[{"id":"13960","book":"19","chapter":"3","verse":"2","text":"Many{H7227} there be which say{H559}{(H8802)} of my soul{H5315}, There is no help{H3444} for him in God{H430}. Selah{H5542}."}]}

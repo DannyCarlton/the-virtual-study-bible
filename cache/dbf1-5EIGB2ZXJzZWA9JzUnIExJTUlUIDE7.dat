@@ -1,1 +1,0 @@
-{"query":"SELECT * FROM wp_virtual_bible_kjvs WHERE `book`='19' AND `chapter`='3' AND `verse`='5' LIMIT 1;","wpdb_get_results":[{"id":"13963","book":"19","chapter":"3","verse":"5","text":"I laid me down{H7901}{(H8804)} and slept{H3462}{(H8799)}; I awaked{H6974}{(H8689)}; for the LORD{H3068} sustained{H5564}{(H8799)} me."}]}

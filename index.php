@@ -145,7 +145,6 @@ function virtual_bible_is_installed()
 		if($wpdb->num_rows<66)
 			{
 			$installed=false;
-#			write_log($table_name.' has only '.$wpdb->num_rows.' rows!');
 			}
 		}
 
@@ -478,6 +477,10 @@ function write_log( $data )
 			{
 			error_log( print_r( $data, true ) );
 			} 
+		elseif($data==NULL)
+			{
+			error_log('NULL');
+			}
 		else 
 			{
 			error_log( $data );

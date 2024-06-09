@@ -1,1 +1,0 @@
-{"query":"SELECT * FROM wp_virtual_bible_kjvs WHERE `book`='19' AND `chapter`='3' AND `verse`='8' LIMIT 1;","wpdb_get_results":[{"id":"13966","book":"19","chapter":"3","verse":"8","text":"Salvation{H3444} belongeth unto the LORD{H3068}: thy blessing{H1293} is upon thy people{H5971}. Selah{H5542}."}]}

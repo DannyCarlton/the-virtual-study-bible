@@ -972,6 +972,7 @@ h4
 		{
 		max-width:100%;
 		opacity:100; /* otherwise tabs or tooltips won't show. */
+		border-radius:10px;
 		}
 	p a:where(:not(.wp-element-button))
 		{

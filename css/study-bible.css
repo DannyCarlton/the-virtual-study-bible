@@ -2,6 +2,7 @@
 	div.study-bible-results 
 		{
 		display:none;
+		margin:0;
 		}
 	div.study-bible-cover 
 		{
@@ -188,7 +189,7 @@
 		color:#833;
 		}
 
-		.tools
+	.tools
 		{
 		margin-left:-15px;
 		padding-right:10px;
@@ -241,7 +242,7 @@
 		}
 
 
-		#introduction-results strong 
+	#introduction-results strong 
 		{
 		display:block;
 		text-indent:0;
@@ -361,7 +362,7 @@
 		font-family: Poppins, san-serif;
 		margin-bottom:0px;
 		font-size:21px;
-		margin-top:-5px;
+		margin-top:-35px;
 		}
 	.hebrew-verse 
 		{
@@ -532,10 +533,13 @@
 		}
 	#filter-results h4
 		{
+		font-family:Poppins,san-serif;
 		font-weight:500;
 		padding:5px 10px;
 		margin:0;
 		margin-top:-30px;
+		color:#833;
+		letter-spacing:.5px;
 		}
 	.filter-results-item span 
 		{
@@ -546,6 +550,9 @@
 		}
 	#eastons-results h4
 		{
+		font-family:Poppins,san-serif;
+		color:#833;
+		letter-spacing:.5px;
 		font-weight:500;
 		padding:5px 10px;
 		margin:0;
@@ -580,6 +587,9 @@
 		}
 	#lexicon-results h4
 		{
+		font-family:Poppins,san-serif;
+		color:#833;
+		letter-spacing:.5px;
 		font-weight:500;
 		padding:5px 10px;
 		margin:0;
@@ -588,9 +598,11 @@
 		}
 	.lexicon-results-count
 		{
-		font-size:15px;
+		font-size:16px;
 		margin-bottom:20px;
 		border-bottom:1px solid #ddd;
+		font-weight:650;
+		margin-left:15px;
 		}
 	.lexicon-results-item
 		{
@@ -655,6 +667,16 @@
 		{
 		padding:0 6px;
 		font-size:18px;
+		}
+
+	#how-to-search p 
+		{
+		line-height:1.5;
+		}
+
+	#tools p 
+		{
+		line-height:1.5;
 		}
 
 /****************************************
@@ -944,6 +966,18 @@ a.page-link {
 		{
 		text-transform:uppercase;
 		margin-left:-6px;
+		}
+
+	.study-bible.traditional .first-verse .first-phrase
+		{
+		text-transform:uppercase;
+		margin-left:-6px;
+		}
+
+	phrase.phrase 
+		{
+		display:inline;
+		padding:0 5px;
 		}
 
 	.study-bible.traditional .para
@@ -1390,6 +1424,7 @@ a.page-link {
 		border:1px solid #ddd;
 		border-radius:10px;
 		padding:10px 25px 25px 25px;
+		margin:0;
 		}
 	.word-results
 		{
@@ -1398,7 +1433,6 @@ a.page-link {
 		font-size:18px;
 		line-height:1.3;
 		padding-right:0 !important;
-		padding-left:10px !important;
 		color:#000;	
 		margin-bottom:10px;	
 		border-bottom:1px solid #ddd;

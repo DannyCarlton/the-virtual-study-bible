@@ -1,1 +1,0 @@
-{"query":"SELECT * FROM wp_virtual_bible_outline WHERE `chapter`='Psalms 3';","wpdb_get_results":[{"id":"2956","chapter":"Psalms 3","verse":"0","text":"O Lord, how my adversaries have increased!"},{"id":"2957","chapter":"Psalms 3","verse":"1","text":"The security of God\\'s protection"}]}

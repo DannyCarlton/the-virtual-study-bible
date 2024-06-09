@@ -7,6 +7,8 @@ https://codex.wordpress.org/I18n_for_WordPress_Developers								← For allowin
 https://make.wordpress.org/core/handbook/testing/automated-testing/phpunit/				← Creating a testing environment
 
 TODAY...  
+	"who art"
+	icon for interlinear
 	use gears for page load
 		hide just verse and tools pane on page load.
 		Try to make filler image
@@ -17,6 +19,7 @@ TODAY...
 	move text to templates
 	Newer modules may require a specific update of the plugin to work.
 	Scrape BLB interlinear (wlc/kjv) to get proper keying of phrases
+	provide link to study bible start page
 	
 
 ERRORS... 
@@ -27,9 +30,12 @@ ERRORS...
 	Colossians 1:2 missing from Greek (may not be the only verse missing)
 	James: no xref
 
+
 TO DO IN NEXT UPDATE...
 	Word Search 
 		List related words. (love: loves, loveth; get list of lexicon entries, then list of words those entries are linked to)
+	makes strongs apply to entire phrase
+	topics!
 
 
 

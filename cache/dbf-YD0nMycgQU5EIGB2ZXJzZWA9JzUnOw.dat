@@ -1,1 +1,0 @@
-{"query":"SELECT ref FROM wp_virtual_bible_xref_holman WHERE `book`='19' AND `chapter`='3' AND `verse`='5';","wpdb_get_results":[{"ref":"Act 12:6"},{"ref":"Pro 3:24"},{"ref":"Psa 4:8"}]}

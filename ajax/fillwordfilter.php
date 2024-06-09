@@ -20,8 +20,21 @@ if($verify)
 	if(isset($_GET['keyword']))
 		{
 		$keyword=$_GET['keyword'];
+		write_log($keyword);
 		$page_url=$_GET['pageurl'];
-		$output=$_vb->wordSearchFilters($keyword,$page_url);
+		$cache_file=base64_encode("$keyword");
+		$cache_file=str_replace('=','',$cache_file);
+		$cache_file='fwf-'.substr($cache_file,-30);
+		$plugin_path=str_replace('ajax/','',plugin_dir_path(__FILE__));
+		if(file_exists("$plugin_path/cache/$cache_file.dat"))
+			{
+			$output=file_get_contents("$plugin_path/cache/$cache_file.dat");	
+			}
+		else
+			{
+			$output=$_vb->wordSearchFilters($keyword,$page_url); // <= this should be scope!!
+			write_cache($output,$cache_file);
+			}
 		echo $output;
 		}
 	else

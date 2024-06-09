@@ -1,1 +1,0 @@
-{"query":"SELECT * FROM wp_virtual_bible_kjvs WHERE `book`='19' AND `chapter`='3' AND `verse`='4' LIMIT 1;","wpdb_get_results":[{"id":"13962","book":"19","chapter":"3","verse":"4","text":"\u00b6I cried{H7121}{(H8799)} unto the LORD{H3068} with my voice{H6963}, and he heard{H6030}{(H8799)} me out of his holy{H6944} hill{H2022}. Selah{H5542}."}]}

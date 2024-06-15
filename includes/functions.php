@@ -5,6 +5,8 @@ if(!defined('ABSPATH'))
     exit; // Die, hacker scum, die!!
 	}
 
+$_vb = new virtual_bible();
+$_vbm = new virtual_bible_modules();
 
 $ScopeKey[0]='';
 $ScopeKey[1]='&& `book` < "40" ';
@@ -19,103 +21,89 @@ $ScopeKey[9]='&& `book` > "44" && `book` < "59" ';
 $ScopeKey[10]='&& `book` > "58" && `book` < "66" ';
 
 
-$page_name=virtual_bible_getMeta('page_name');
+$page_name=$_vb->getMeta('page_name');
 $page_slug=sanitize_title($page_name);
 $page_url=site_url().'/'.$page_slug.'/';
 $reference='';
 $plugin_url=str_replace('includes/','',plugin_dir_url(__FILE__));
 
 
-function virtual_bible_getMeta($key)
-	{
-	global $wpdb;
-	$table_name = $wpdb->prefix . 'virtual_bible_meta';
-	$Results = $wpdb->get_results("SELECT meta_value from $table_name WHERE meta_key = '$key' LIMIT 1;", ARRAY_A);
-	if(isset($Results[0]['meta_value']))
-		{
-		return $Results[0]['meta_value'];
-		}
-	else
-		{
-		return FALSE;
-		}
-	}
-
-function virtual_bible_putMeta($key,$value)
-	{
-	global $wpdb;
-	$table_name = $wpdb->prefix . 'virtual_bible_meta';
-	$Results = $wpdb->get_results("SELECT meta_value from $table_name WHERE meta_key = '$key' LIMIT 1;", ARRAY_A);
-	if(isset($Results[0]['meta_value']))
-		{
-		$wpdb->update
-			( 
-			$table_name,
-			array
-				( 
-				'meta_value'	=>  $value
-				),
-			array
-				(
-				'meta_key'		=>  $key
-				)
-			);
-		}
-	else
-		{
-		$wpdb->insert
-			( 
-			$table_name,
-			array
-				( 
-				'meta_key'		=>  $key,
-				'meta_value'	=>  $value
-				)
-			);
-		}
-	}
 
 
-function virtual_bible_getUserMeta($key)
+
+
+
+
+
+		
+/********************************************************************************************
+       _                       _      _               _     _     _ _     _      
+   ___| | __ _ ___ ___  __   _(_)_ __| |_ _   _  __ _| |   | |__ (_) |__ | | ___ 
+  / __| |/ _` / __/ __| \ \ / / | '__| __| | | |/ _` | |   | '_ \| | '_ \| |/ _ \
+ | (__| | (_| \__ \__ \  \ V /| | |  | |_| |_| | (_| | |   | |_) | | |_) | |  __/
+  \___|_|\__,_|___/___/   \_/ |_|_|   \__|\__,_|\__,_|_|___|_.__/|_|_.__/|_|\___|
+                                                      |_____|                    
+               __
+              / /
+             | | 
+            < <  
+             | | 
+              \_\
+
+
+*********************************************************************************************/
+
+class virtual_bible 
 	{
-	global $wpdb,$current_user;
-	$user_id=$current_user->ID;
-	if($user_id!=0)
+
+
+	function getMeta($key)
 		{
-		$table_name = $wpdb->prefix . 'virtual_bible_users';
-		$Results = $wpdb->get_results("SELECT user_value from $table_name WHERE user_key = '$key' LIMIT 1;", ARRAY_A);
-		if(isset($Results[0]['user_value']))
+		global $wpdb;
+		$table_name = $wpdb->prefix . 'virtual_bible_meta';
+		$Results = $wpdb->get_results("SELECT meta_value from $table_name WHERE meta_key = '$key' LIMIT 1;", ARRAY_A);
+		if(isset($Results[0]['meta_value']))
 			{
-			return $Results[0]['user_value'];
+			return $Results[0]['meta_value'];
 			}
 		else
 			{
 			return FALSE;
 			}
 		}
-	}
+	
 
 
-function virtual_bible_putUserMeta($key,$value)
-	{
-	global $wpdb,$current_user;
-	$user_id=$current_user->ID;
-	if($user_id!=0)
+
+
+		
+/********************************************************************************************
+                  _   __  __      _         __
+      _ __  _   _| |_|  \/  | ___| |_ __ _ / /
+     | '_ \| | | | __| |\/| |/ _ \ __/ _` | | 
+     | |_) | |_| | |_| |  | |  __/ || (_| | | 
+     | .__/ \__,_|\__|_|  |_|\___|\__\__,_| | 
+     |_|                                   \_\
+
+*********************************************************************************************/
+
+	function putMeta($key,$value)
 		{
-		$table_name = $wpdb->prefix . 'virtual_bible_users';
-		$Results = $wpdb->get_results("SELECT user_value from $table_name WHERE user_id=$user_id AND user_key = '$key' LIMIT 1;", ARRAY_A);
-		if(isset($Results[0]['user_value']))
+		global $wpdb;
+		$table_name = $wpdb->prefix . 'virtual_bible_meta';
+		$Results = $wpdb->get_results("SELECT meta_value from $table_name WHERE meta_key = '$key' LIMIT 1;", ARRAY_A);
+		if(isset($Results[0]['meta_value']))
 			{
 			$wpdb->update
 				( 
 				$table_name,
 				array
 					( 
-					'user_value'	=>  $value
+					'meta_value'	=>  $value
 					),
 				array
 					(
-					'user_key'		=>  $key
+					'meta_key'		=>  $key
 					)
 				);
 			}
@@ -126,588 +114,775 @@ function virtual_bible_putUserMeta($key,$value)
 				$table_name,
 				array
 					( 
-					'user_id'		=>	$user_id,
-					'user_key'		=>  $key,
-					'user_value'	=>  $value
+					'meta_key'		=>  $key,
+					'meta_value'	=>  $value
 					)
 				);
 			}
 		}
-	}
 
 
-function virtual_bible_getTools()
-	{
-	$virtual_bible_interlinear_installed=virtual_bible_is_module_installed('interlinear');
-	$virtual_bible_holman_installed=virtual_bible_is_module_installed('holman');
+
+
 		
-	$tools='';
-	$tools.= <<<EOD
-		<p class="fontcolor-medium">
-			<span class="tools-p-header"><i class="fas fa-language" title="Lexicons"></i> <b>Lexicons:</b></span> When the <b>Link Keyed</b> is set to Strong's, words keyed to Strong's Concordance will be highlighted (<span style="color:#833;font-weight:600">in red</span>). Clicking the word will make the Strong's lexicon definition appear. (This is a dynamic action, which is triggered when you activate it once the page has loaded.)
-		</p>
-		EOD;
-	if($virtual_bible_interlinear_installed)
-		{
-		$tools.= <<<EOD
-		<p class="fontcolor-medium">
-			<span class="tools-p-header">
-				<span style="font-family:'Times New Roman';font-weight:bold;font-size:29px" title="Interlinearl">&#1488;</span> 
-					<b>Interlinear Bible:</b>
-				</span> 
-			the Interlinar Hebrew/Greek text. It can be displayed alongside the English text, and the keyed words will be matched by highlighting the corresponding keyed word.
-		</p>
-		EOD;
-		}
-	if($virtual_bible_holman_installed)
-		{
-		$tools.= <<<EOD
-		<p class="fontcolor-medium">
-		<span class="tools-p-header"><i class="fas fa-arrows-turn-to-dots" title="Cross Reference"></i> <b>Holman Cross-Reference:</b></span> Linking 3,992 verses to 57,812 related verses. (Will be in the margin next to the text in passage searches)
-		</p>
-		EOD;
-		}
-	return $tools;
-	}
+/********************************************************************************************
+                 _   _   _               __  __      _         __
+       __ _  ___| |_| | | |___  ___ _ __|  \/  | ___| |_ __ _ / /
+      / _` |/ _ \ __| | | / __|/ _ \ '__| |\/| |/ _ \ __/ _` | | 
+     | (_| |  __/ |_| |_| \__ \  __/ |  | |  | |  __/ || (_| | | 
+      \__, |\___|\__|\___/|___/\___|_|  |_|  |_|\___|\__\__,_| | 
+      |___/                                                   \_\
+
+*********************************************************************************************/
 
 
-function virtual_bible_getStyles()
-	{
-	$virtual_bible_traditional_select=virtual_bible_getMeta('style_traditional');
-	$virtual_bible_paragraph_select=virtual_bible_getMeta('style_paragraph');
-	$virtual_bible_reader_select=virtual_bible_getMeta('style_reader');
-	$style=virtual_bible_getUserMeta('style');
-	if(!$style){$style='traditional';}
-	$trad_checked='';$par_checked='';$read_checked='';
-	if($style=='traditional')
+	function getUserMeta($key)
 		{
-		$trad_checked='checked';
+		global $wpdb,$current_user;
+		$user_id=$current_user->ID;
+		if($user_id!=0)
+			{
+			$table_name = $wpdb->prefix . 'virtual_bible_users';
+			$Results = $wpdb->get_results("SELECT user_value from $table_name WHERE user_key = '$key' LIMIT 1;", ARRAY_A);
+			if(isset($Results[0]['user_value']))
+				{
+				return $Results[0]['user_value'];
+				}
+			else
+				{
+				return FALSE;
+				}
+			}
 		}
-	elseif($style=='paragraph')
+
+
+		
+/********************************************************************************************
+                  _   _   _               __  __      _         __
+      _ __  _   _| |_| | | |___  ___ _ __|  \/  | ___| |_ __ _ / /
+     | '_ \| | | | __| | | / __|/ _ \ '__| |\/| |/ _ \ __/ _` | | 
+     | |_) | |_| | |_| |_| \__ \  __/ |  | |  | |  __/ || (_| | | 
+     | .__/ \__,_|\__|\___/|___/\___|_|  |_|  |_|\___|\__\__,_| | 
+     |_|                                                       \_\
+
+*********************************************************************************************/
+
+	function putUserMeta($key,$value)
 		{
-		$par_checked='checked';
+		global $wpdb,$current_user;
+		$user_id=$current_user->ID;
+		if($user_id!=0)
+			{
+			$table_name = $wpdb->prefix . 'virtual_bible_users';
+			$Results = $wpdb->get_results("SELECT user_value from $table_name WHERE user_id=$user_id AND user_key = '$key' LIMIT 1;", ARRAY_A);
+			if(isset($Results[0]['user_value']))
+				{
+				$wpdb->update
+					( 
+					$table_name,
+					array
+						( 
+						'user_value'	=>  $value
+						),
+					array
+						(
+						'user_key'		=>  $key
+						)
+					);
+				}
+			else
+				{
+				$wpdb->insert
+					( 
+					$table_name,
+					array
+						( 
+						'user_id'		=>	$user_id,
+						'user_key'		=>  $key,
+						'user_value'	=>  $value
+						)
+					);
+				}
+			}
 		}
-	else
+	
+	
+
+		
+/********************************************************************************************
+                 _  _____           _      __
+       __ _  ___| ||_   _|__   ___ | |___ / /
+      / _` |/ _ \ __|| |/ _ \ / _ \| / __| | 
+     | (_| |  __/ |_ | | (_) | (_) | \__ \ | 
+      \__, |\___|\__||_|\___/ \___/|_|___/ | 
+      |___/                               \_\
+
+*********************************************************************************************/
+
+
+	function getTools()
 		{
-		$read_checked='checked';
+		global $_vbm;
+		$virtual_bible_interlinear_installed=$_vbm->is_module_installed('interlinear');
+		$virtual_bible_holman_installed=$_vbm->is_module_installed('holman');
+		$virtual_bible_eastons_installed=$_vbm->is_module_installed('eastons');
+			
+		$tools=$this->getTemplate('tools');
+		$tools.= "
+			<style>
+			";
+		if($virtual_bible_interlinear_installed!='installed')
+			{
+			$tools.= "#virtual-bible-splash-tools-interlinear {display:none;}\n";
+			}
+		if($virtual_bible_holman_installed!='installed')
+			{
+			$tools.= "#virtual-bible-splash-tools-holman {display:none;}\n";
+			}
+		if($virtual_bible_eastons_installed!='installed')
+			{
+			$tools.= "#virtual-bible-splash-tools-eastons {display:none;}\n";
+			}
+		$tools.="</style>";
+		return $tools;
 		}
-	$styles = '';
-	if($virtual_bible_traditional_select)
+
+
+		
+/********************************************************************************************
+                 _   ____  _         _            __
+       __ _  ___| |_/ ___|| |_ _   _| | ___  ___ / /
+      / _` |/ _ \ __\___ \| __| | | | |/ _ \/ __| | 
+     | (_| |  __/ |_ ___) | |_| |_| | |  __/\__ \ | 
+      \__, |\___|\__|____/ \__|\__, |_|\___||___/ | 
+      |___/                    |___/             \_\
+
+*********************************************************************************************/
+
+	function getStyles()
 		{
-		$styles.= <<<EOD
-			<div class="form-check">
-				<label class="form-check-label">
-					<input type="radio" name="layout" value="trad" class="form-check-input" {$trad_checked} 
+		$virtual_bible_traditional_select=$this->getMeta('style_traditional');
+		$virtual_bible_paragraph_select=$this->getMeta('style_paragraph');
+		$virtual_bible_reader_select=$this->getMeta('style_reader');
+		$style=$this->getUserMeta('style');
+		if(!$style){$style='traditional';}
+		$trad_checked='';$par_checked='';$read_checked='';
+		if($style=='traditional')
+			{
+			$trad_checked='checked';
+			}
+		elseif($style=='paragraph')
+			{
+			$par_checked='checked';
+			}
+		else
+			{
+			$read_checked='checked';
+			}
+		$styles = '';
+		if($virtual_bible_traditional_select)
+			{
+			$styles.= <<<EOD
+				<div class="form-check">
+					<label class="form-check-label">
+						<input type="radio" name="layout" value="trad" class="form-check-input" {$trad_checked} 
+							onclick="
+								$('#ref-results').removeClass('paragraph');
+								$('#ref-results').removeClass('reading');
+								$('#ref-results').addClass('traditional');
+								saveUserData('style','traditional');
+								"> Traditional
+					</label>
+				</div>
+			EOD;
+			}
+		if($virtual_bible_paragraph_select)
+			{
+			$styles .= <<<EOD
+				<div class="form-check">
+					<label class="form-check-label">
+						<input type="radio" name="layout" value="par" class="form-check-input" {$par_checked}
 						onclick="
-							$('#study-bible').removeClass('paragraph');
-							$('#study-bible').removeClass('reading');
-							$('#study-bible').addClass('traditional');
-							saveUserData('style','traditional');
-							"> Traditional
-				</label>
-			</div>
-		EOD;
-		}
-	if($virtual_bible_paragraph_select)
-		{
-		$styles .= <<<EOD
-			<div class="form-check">
-				<label class="form-check-label">
-					<input type="radio" name="layout" value="par" class="form-check-input" {$par_checked}
-					onclick="
-						$('#study-bible').removeClass('reading');
-						$('#study-bible').removeClass('traditional');
-						$('#study-bible').addClass('paragraph');
-						saveUserData('style','paragraph');
-						"> Paragraph
-				</label>
-			</div>
-		EOD;
-		}
-	if($virtual_bible_reader_select)
-		{
-		$styles.= <<<EOD
-			<div class="form-check">
-				<label class="form-check-label">
-					<input type="radio" name="layout" value="read" class="form-check-input" {$read_checked}
-					onclick="
-						$('#study-bible').removeClass('paragraph');
-						$('#study-bible').removeClass('traditional');
-						$('#study-bible').addClass('reading');
-						saveUserData('style','reading');
-						"> Reading 
-				</label>
-			</div>
-		EOD;
-		}
-	return $styles;
-	}
-
-
-function virtual_bible_getBookList($column_width=3)
-	{
-	global $wpdb,$page_url;
-	$table_name = $wpdb->prefix . 'virtual_bible_books';
-	$Books = $wpdb->get_results("SELECT * from $table_name;", ARRAY_A);
-	$book_list='';$r=0;
-	$cols=12/$column_width;
-	$rows_count=ceil(66/$cols);
-	$book_list.="<div class=\"col-md-$column_width\" style=\"white-space:nowrap\" title=\"$rows_count\">";
-	foreach($Books as $n=>$Book)
-		{
-		if($r==$rows_count)
-			{
-			$book_list.="</div><div class=\"col-md-$column_width\" style=\"white-space:nowrap\">";
-			$r=0;
+							$('#ref-results').removeClass('reading');
+							$('#ref-results').removeClass('traditional');
+							$('#ref-results').addClass('paragraph');
+							saveUserData('style','paragraph');
+							"> Paragraph
+					</label>
+				</div>
+			EOD;
 			}
-		if(isset($Book['book']))
+		if($virtual_bible_reader_select)
 			{
-			$book=$Book['book'];
-			$abbr=sanitize_title($book);
-			$book_list.="<a href=\"$page_url?keyword=$abbr+1\">$book</a><br>";
+			$styles.= <<<EOD
+				<div class="form-check">
+					<label class="form-check-label">
+						<input type="radio" name="layout" value="read" class="form-check-input" {$read_checked}
+						onclick="
+							$('#ref-results').removeClass('paragraph');
+							$('#ref-results').removeClass('traditional');
+							$('#ref-results').addClass('reading');
+							saveUserData('style','reading');
+							"> Reading 
+					</label>
+				</div>
+			EOD;
 			}
-		$r++;
+		return $styles;
 		}
-	$book_list.="</div>";
-	return $book_list;
-	}
 
 
+		
+/********************************************************************************************
+                 _   ____              _    _     _     _    __
+       __ _  ___| |_| __ )  ___   ___ | | _| |   (_)___| |_ / /
+      / _` |/ _ \ __|  _ \ / _ \ / _ \| |/ / |   | / __| __| | 
+     | (_| |  __/ |_| |_) | (_) | (_) |   <| |___| \__ \ |_| | 
+      \__, |\___|\__|____/ \___/ \___/|_|\_\_____|_|___/\__| | 
+      |___/                                                 \_\
 
+*********************************************************************************************/
 
-function virtual_bible_getOutline($bid,$chapter)
-	{
-	global $wpdb,$_vb;
-	$status=virtual_bible_is_module_installed('outline');
-	$Outline=[];
-	if($status=='installed')
+	function getBookList($column_width=3)
 		{
-		$bookname=$_vb->getBookTitleFromId($bid);
-		$where="$bookname $chapter";
-		$Response=dbFetch('virtual_bible_outline',array('chapter'=>$where));
-		foreach($Response as $Item)
+		global $wpdb,$page_url;
+		$table_name = $wpdb->prefix . 'virtual_bible_books';
+		$Books = $wpdb->get_results("SELECT * from $table_name;", ARRAY_A);
+		$book_list='';$r=0;
+		$cols=12/$column_width;
+		$rows_count=ceil(66/$cols);
+		$_book_list='';
+		$book_list.="<div class=\"col-sm-$column_width\" style=\"white-space:nowrap\" title=\"$rows_count\">";
+		foreach($Books as $n=>$Book)
 			{
-			$verse=$Item['verse'];
-			$text=str_replace("\'","'",$Item['text']);
-			$Outline[$verse]=$text;
+			if($r==$rows_count)
+				{
+				$book_list.="</div><div class=\"col-md-$column_width\" style=\"white-space:nowrap\">";
+				$r=0;
+				}
+			if(isset($Book['book']))
+				{
+				$book=$Book['book'];
+				$abbr=sanitize_title($book);
+				$_book_list.="<div class=\"col-xs col-md-$column_width\"><a href=\"$page_url?keyword=$abbr+1\">$book</a></div>\n";
+				$book_list.="<a href=\"$page_url?keyword=$abbr+1\">$book</a><br>";
+				}
+			$r++;
 			}
+		$book_list.="</div>";
+		return $_book_list;
 		}
-	return $Outline;
-	}
 
 
-function virtual_bible_buildForm($reference)
-	{
-	global $page_url;
-	if($reference)
+		
+/********************************************************************************************
+                 _    ___        _   _ _             __
+       __ _  ___| |_ / _ \ _   _| |_| (_)_ __   ___ / /
+      / _` |/ _ \ __| | | | | | | __| | | '_ \ / _ \ | 
+     | (_| |  __/ |_| |_| | |_| | |_| | | | | |  __/ | 
+      \__, |\___|\__|\___/ \__,_|\__|_|_|_| |_|\___| | 
+      |___/                                         \_\
+
+*********************************************************************************************/
+
+	function getOutline($bid,$chapter)
 		{
-		$reference=str_replace('`','&quot;',$reference);
-		$reference=str_replace('\\','',$reference);
+		global $wpdb,$_vbm;
+		$status=$_vbm->is_module_installed('outline');
+		$Outline=[];
+		if($status=='installed')
+			{
+			$bookname=$this->getBookTitleFromId($bid);
+			$where="$bookname $chapter";
+			$Response=$this->dbFetch('virtual_bible_outline',array('chapter'=>$where));
+			foreach($Response as $Item)
+				{
+				$verse=$Item['verse'];
+				$text=str_replace("\'","'",$Item['text']);
+				$Text=explode(';',$text);
+				$last=count($Text)-1;
+				$new_text='';
+				foreach($Text as $l=>$line)
+					{
+					$line="<span class=\"avoid-break\">$line</span>";
+					$new_text.=$line;		
+					if($l<$last){$new_text.=';';}			
+					}
+				$Outline[$verse]=$new_text;
+				}
+			}
+		return $Outline;
 		}
-	$styles=virtual_bible_getStyles();
-	$form = <<<EOD
-	<div class="row study-bible-form-row">
-		<form action="{$page_url}" method="GET" class="study-bible-form">
-			<div class="col-md-12" style="position:relative;margin-right:auto;margin-left:auto;font-family: 'Montserrat';">
-				<div class="bible-search-form" style="float:left">
-					<legend style="font-weight:bold;display:block;">
-						<span style="font-family: 'Poppins', sans-serif">Search</span>
-						<small style="font-weight:normal;color:#000;float:right;cursor:pointer;margin-right:10px" onclick="document.getElementById('modal').style.display='block'" onmouseover="this.style.color='#600'" onmouseout="this.style.color='#000'" >
-							books
-						</small>
-					</legend>
-					<div style="position:relative;display:flex;flex-wrap:wrap;align-items:stretch;width:100%">
-						<input type="text" class="reference" value="{$reference}" placeholder="Keyword or reference" style="border-bottom-left-radius:0;border-top-left-radius:10px;height:calc(1.5rem + 1rem + 2px);padding:0.5rem 1rem;font-size:17px;line-height:1.5;flex:1 1 auto;width:1%;margin-bottom:0;font-weight:bold" name="keyword" id="keyword">
-						<div class="input-group-append" style="margin-left:-1px;">
-							<button type="submit" value="Search" class="btn btn-primary" style="border-bottom-right-radius:0;border-top-right-radius:10px;padding:0.5rem 1rem;line-height:1.5;align-self:stretch!important;position:relative;cursor:pointer;height:calc(1.5rem + 1rem + 2px)">Search</button>
+
+
+		
+/********************************************************************************************
+                 _  _____                    _       _        __
+       __ _  ___| ||_   _|__ _ __ ___  _ __ | | __ _| |_ ___ / /
+      / _` |/ _ \ __|| |/ _ \ '_ ` _ \| '_ \| |/ _` | __/ _ \ | 
+     | (_| |  __/ |_ | |  __/ | | | | | |_) | | (_| | ||  __/ | 
+      \__, |\___|\__||_|\___|_| |_| |_| .__/|_|\__,_|\__\___| | 
+      |___/                           |_|                    \_\
+
+*********************************************************************************************/
+
+
+
+	function getTemplate($template_name)
+		{
+		if(substr($template_name,-4)!='.tpl')
+			{
+			$template_name.='.tpl';
+			}
+		$plugin_path=str_replace('includes/','',plugin_dir_path(__FILE__));
+		return file_get_contents($plugin_path.'templates/'.$template_name);	
+		}
+
+
+
+		
+/********************************************************************************************
+      _           _ _     _ _____                     __
+     | |__  _   _(_) | __| |  ___|__  _ __ _ __ ___  / /
+     | '_ \| | | | | |/ _` | |_ / _ \| '__| '_ ` _ \| | 
+     | |_) | |_| | | | (_| |  _| (_) | |  | | | | | | | 
+     |_.__/ \__,_|_|_|\__,_|_|  \___/|_|  |_| |_| |_| | 
+                                                     \_\
+
+*********************************************************************************************/
+
+	function buildForm($reference)
+		{
+		global $page_url;
+		if($reference)
+			{
+			$reference=str_replace('`','&quot;',$reference);
+			$reference=str_replace('\\','',$reference);
+			}
+		$styles=$this->getStyles();
+		$form=$this->getTemplate('form');
+		$form=str_replace('{$page_url}',$page_url,$form);
+		$form=str_replace('{$reference}',$reference,$form);
+		$form=str_replace('{$styles}',$styles,$form);
+		return $form;
+		}
+
+
+
+
+	function buildBookListModal()
+		{
+		$book_list=$this->getBookList();
+		$book_list_modal = <<<EOD
+		<div id="vb-book-list-modal" class="modal fade-scale" style="display:none;padding-top:50px;z-index:1000;position:fixed;left:0;top:0;width:100%;height:100%;background-color:rgba(0,0,0,0.4);font-family: 'Montserrat';">
+			<div class="modal-content" style="border-radius:10px;border:1px solid:#555;width:600px;margin:auto;background-color:#fff;position:relative;padding:20px;outline:0;;font-family: 'Montserrat';box-shadow:1px 1px 30px rgba(0,0,0,0.5)">
+				<span onclick="document.getElementById('vb-book-list-modal').style.display='none'" style="cursor:pointer;position:absolute;top:0;right:10px;font-size:19px">&times;</span>
+				<h4 style="clear:both;font-family: 'Poppins', sans-serif;margin-top:0;margin-bottom:10px;font-weight:bold">Books of the Bible</h4>
+				<div class="row" style="font-size:13px;font-family: 'Montserrat';'">
+					{$book_list}
+				</div class="row">
+			</div>
+		</div>
+		EOD;
+		return $book_list_modal;
+		}
+
+
+
+		
+/********************************************************************************************
+      _           _ _     _  ____ _                 _            _     _     _   __  __           _       _  __
+     | |__  _   _(_) | __| |/ ___| |__   __ _ _ __ | |_ ___ _ __| |   (_)___| |_|  \/  | ___   __| | __ _| |/ /
+     | '_ \| | | | | |/ _` | |   | '_ \ / _` | '_ \| __/ _ \ '__| |   | / __| __| |\/| |/ _ \ / _` |/ _` | | | 
+     | |_) | |_| | | | (_| | |___| | | | (_| | |_) | ||  __/ |  | |___| \__ \ |_| |  | | (_) | (_| | (_| | | | 
+     |_.__/ \__,_|_|_|\__,_|\____|_| |_|\__,_| .__/ \__\___|_|  |_____|_|___/\__|_|  |_|\___/ \__,_|\__,_|_| | 
+                                             |_|                                                            \_\
+                                                                                    
+*********************************************************************************************/
+
+
+	function buildChapterListModal($bookname)
+		{
+		global $page_url;
+		$chapnum=$this->getChaptersInBook($bookname);
+		$chapters='';
+		$chapname='Chapter';
+		if($bookname=='Psalms'){$chapname='Psalm';}
+		for($c=1;$c<=$chapnum;$c++)
+			{
+			$chapters.="<a href=\"{$page_url}?keyword=$bookname+$c\" style=\"float:left;margin:2px 10px;width:80px\">$chapname $c</a> ";
+			}
+		$chapter_list_modal = <<<EOD
+		<div id="chapters-modal" class="modal" style="display:none;padding-top:50px;z-index:1000;position:fixed;left:0;top:0;width:100%;height:100%;background-color:rgba(0,0,0,0.4);font-family: 'Montserrat';">
+			<div class="modal-content" style="border-radius:10px;border:1px solid:#555;width:600px;margin:auto;background-color:#fff;position:relative;padding:20px;outline:0;;font-family: 'Montserrat';box-shadow:1px 1px 30px rgba(0,0,0,0.5)">
+				<span onclick="document.getElementById('chapters-modal').style.display='none'" style="cursor:pointer;position:absolute;top:0;right:10px;font-size:19px">&times;</span>
+				<h4 style="clear:both;font-family: 'Poppins', sans-serif;margin-top:0;margin-bottom:10px;font-weight:bold">Chapters in $bookname</h4>
+				<div class="row" style="font-size:13px;font-family: 'Montserrat';'">
+					{$chapters}
+				</div class="row">
+			</div>
+		</div>
+		EOD;
+		return $chapter_list_modal;
+		}
+
+
+
+		
+/********************************************************************************************
+      _           _ _     _ ____  _             _   _   _      _        __
+     | |__  _   _(_) | __| / ___|| |_ __ _ _ __| |_| | | | ___| |_ __  / /
+     | '_ \| | | | | |/ _` \___ \| __/ _` | '__| __| |_| |/ _ \ | '_ \| | 
+     | |_) | |_| | | | (_| |___) | || (_| | |  | |_|  _  |  __/ | |_) | | 
+     |_.__/ \__,_|_|_|\__,_|____/ \__\__,_|_|   \__|_| |_|\___|_| .__/| | 
+                                                                |_|    \_\
+                                                                                                
+*********************************************************************************************/
+
+
+
+	function buildStartHelp()
+		{
+		global $page_url,$plugin_url;
+		$tools=$this->getTools();
+		$book_list=$this->getBookList();
+		$start_help = <<<EOD
+		<section class="study-bible-tab-wrap">
+			<div class="container">
+				<ul class="nav nav-tabs" style="margin-top:40px;font-family: 'Montserrat';">
+					<li class="active nav-item">
+						<a id="how-to-search-tab" class="nav-link active" data-toggle="tab" href="#how-to-search" style="text-decoration:none">
+							<h4 style="margin:0;font-family: 'Poppins', sans-serif">
+								<i class="fas fa-search fa-flip-horizontal"></i> 
+								<span class="help-title">How to Search</span>
+							</h4>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" data-toggle="tab" href="#tools" style="text-decoration:none">
+							<h4 style="margin:0;font-family: 'Poppins', sans-serif">
+								<i class="fas fa-wrench"></i>
+								<span class="help-title">Tools</span>
+							</h4>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" data-toggle="tab" href="#styles" style="text-decoration:none">
+							<h4 style="margin:0;font-family: 'Poppins', sans-serif">
+								<i class="fa-solid fa-swatchbook"></i>
+								<span class="help-title">Passage Styles</span>
+							</h4>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" data-toggle="tab" href="#books" style="text-decoration:none">
+							<h4 style="margin:0;font-family: 'Poppins', sans-serif">
+								<i class="fas fa-book"></i>
+								<span class="help-title">Books</span>
+							</h4>
+						</a>
+					</li class="nav-item">
+				</ul>
+				<div class="tab-content" role="tablist"> 
+					<div id="how-to-search" class="card tab-pane fade show active" role="tabpanel" aria-labelledby="how-to-search-tab">	
+						<div id="how-to-search-collapse" data-parent="#tab-content" role="tabpanel" 
+							aria-labelledby="how-to-search-heading">
+							<div class="card-body new-card-body">
+								<p class="fontcolor-medium" style="margin-top:0;margin-left:10px;font-size:13px">
+									(Note: The example links have all parameter set to show the correct results.)
+								</p>
+								<h5 style="margin-bottom:5px;margin-top:15px;color:#000">The Basic Passage Search</h5>
+								<p class="fontcolor-medium" style="margin-top:0;margin-left:20px">
+									Find exact chapters and/or verses by typing the book, chapter, and/or verse in the search box.<br>
+									<em>Examples: <a href="{$page_url}?keyword=John+3:16">John 3:16</a> <small>(for a single verse)</small> or <a href="{$page_url}?keyword=John+3">John 3</a> <small>(for the entire chapter)</small> or <a href="{$page_url}?keyword=John+3:14-18">John 3:14-18</a> <small>(for a select passage within a chapter)</small></em><br />
+									Many, commonly-used abbreviations can be recognized, so <a href="{$page_url}?keyword=Jn+3:16">Jn 3:16</a> will be recongized as John 3:16.<br />
+									<small>Note: The verse list will be included automatically when you select just the chapter, so <em><a href="{$page_url}?keyword=John+3">John 3</a></em> will become <em><a href-="{$page_url}?keyword=John+3:1-36">John 3:1-36</a></em></small></p>
+								<h5 style="margin-bottom:5px;margin-top:15px;color:#000">The Basic Keyword Search</h4>
+								<p class="fontcolor-medium" style="margin-top:0;margin-left:20px">
+									Find verses containing a specific word.<br>
+									<em>Example: <a href="{$page_url}?keyword=love">love</a></em></p>
+								<h5 style="margin-bottom:5px;margin-top:15px;color:#000">More Advanced Keyword Search</h4>
+								<p class="fontcolor-medium" style="margin-top:0;margin-left:20px">
+									Find verses containing two or more words you want by typing them in, separated by a space.<br>
+									<em>Example: <a href="{$page_url}?keyword=christ+mercy">Christ mercy</a></em></p>
+								<p class="fontcolor-medium" style="margin-top:0;margin-left:20px">
+									Find verses containing partial words by using the wildcard * (an asterisk).<br>
+									<em>Example: <a href="{$page_url}?keyword=love*">love*</a> <small>(returns love, loves, loved, lovely, etc.)</small></em></p>
+								<p class="fontcolor-medium" style="margin-top:0;margin-left:20px">
+									Find verses containing specific sets of words<br>
+									<em>Example: <a href="{$page_url}?keyword=&quot;Jesus answered&quot;">&quot;Jesus answered&quot;</a> <small><br>(PLEASE NOTE: Due to the complexity of the database table containing the scriptures, the plugin currently can only hand a two-word combination. I hope to improve this in later updates.)</small></em></p>
+								<h5 style="margin-bottom:5px;margin-top:15px;color:#000">Using the Scope Option</h4>
+								<p class="fontcolor-medium" style="margin-top:0;margin-left:20px">
+									Use the scope drop-down menu (default is set to the Whole Bible) to limit your word search to a specific section of the Bible<br>
+									<em>Example: <a href="{$page_url}?keyword=love&scope=2">love</a> <small>(returns only instances of the word &ldquo;love&rdquo; in the New Testament)</small></em><br>
+									<small><em>Scope will be ignored for reference searches (i.e. John 3:16)</em></small>
+								</p>
+							</div>
+						</div>
+					</div>		
+					<div id="tools" class="card tab-pane fade in show" role="tabpanel" aria-labelledby="tools-tab">	
+						<div id="tools-collapse" data-parent="#tab-content" role="tabpanel" aria-labelledby="tools-heading">
+							<div class="card-body new-card-body">
+							{$tools}
+							</div>	
 						</div>
 					</div>
-					<div class="drop-down input-group">
-						<select id="scope" name="scope" 
-							style="border-bottom-left-radius:10px;
-									width:50%;
-									height:calc(1.5rem + 0.75rem + 2px);
-									padding:0.375rem 0.75rem;
-									font-size:15px;
-									line-height:1.5;
-									border:1px solid #ced4da;">
-							<optgroup label="Default">
-								<option value="0" selected>&nbsp;Whole Bible</option>
-							</optgroup>
-							<optgroup label="Testaments">
-								<option value="1">Old Testament</option>
-								<option value="2">New Testament</option>
-							</optgroup>
-							<optgroup label="By Type">
-								<option value="3">Books of Law</option>
-								<option value="4">Books of History</option>
-								<option value="5">Books of Poetry</option>
-								<option value="6">Major Prophets</option>
-								<option value="7">Minor Prophets</option>
-								<option value="8">The Gospels</option>
-								<option value="9">Pauline Epistles</option>
-								<option value="10">General Epistles</option>
-							</optgroup>
-							<optgroup label="Books">
-								<option value="11">Genesis</option>
-								<option value="12">Exodus</option>
-								<option value="13">Leviticus</option>
-								<option value="14">Numbers</option>
-								<option value="15">Deuteronomy</option>
-								<option value="16">Joshua</option>
-								<option value="17">Judges</option>
-								<option value="18">Ruth</option>
-								<option value="19">1 Samuel</option>
-								<option value="20">2 Samuel</option>
-								<option value="21">1 Kings</option>
-								<option value="22">2 Kings</option>
-								<option value="23">1 Chronicles</option>
-								<option value="24">2 Chronicles</option>
-								<option value="25">Ezra</option>
-								<option value="26">Nehemiah</option>
-								<option value="27">Esther</option>
-								<option value="28">Job</option>
-								<option value="29">Psalms</option>
-								<option value="30">Proverbs</option>
-								<option value="31">Ecclesiastes</option>
-								<option value="32">Song of Solomon</option>
-								<option value="33">Isaiah</option>
-								<option value="34">Jeremiah</option>
-								<option value="35">Lamentations</option>
-								<option value="36">Ezekiel</option>
-								<option value="37">Daniel</option>
-								<option value="38">Hosea</option>
-								<option value="39">Joel</option>
-								<option value="40">Amos</option>
-								<option value="41">Obadiah</option>
-								<option value="42">Jonah</option>
-								<option value="43">Micah</option>
-								<option value="44">Nahum</option>
-								<option value="45">Habakkuk</option>
-								<option value="46">Zephaniah</option>
-								<option value="47">Haggai</option>
-								<option value="48">Zechariah</option>
-								<option value="49">Malachi</option>
-								<option value="50">Matthew</option>
-								<option value="51">Mark</option>
-								<option value="52">Luke</option>
-								<option value="53">John</option>
-								<option value="54">Acts</option>
-								<option value="55">Romans</option>
-								<option value="56">1 Corinthians</option>
-								<option value="57">2 Corinthians</option>
-								<option value="58">Galatians</option>
-								<option value="59">Ephesians</option>
-								<option value="60">Philippians</option>
-								<option value="61">Colossians</option>
-								<option value="62">1 Thessalonians</option>
-								<option value="63">2 Thessalonians</option>
-								<option value="64">1 Timothy</option>
-								<option value="65">2 Timothy</option>
-								<option value="66">Titus</option>
-								<option value="67">Philemon</option>
-								<option value="68">Hebrews</option>
-								<option value="69">James</option>
-								<option value="70">1 Peter</option>
-								<option value="71">2 Peter</option>
-								<option value="72">1 John</option>
-								<option value="73">2 John</option>
-								<option value="74">3 John</option>
-								<option value="75">Jude</option>
-								<option value="76">Revelation</option>
-						</select>
-						<select id="version" name="version" 
-							style="border-bottom-right-radius:10px;
-									width:50%;
-									height:calc(1.5rem + 0.75rem + 2px);
-									padding:0.375rem 0.75rem;
-									font-size:15px;
-									line-height:1.5;
-									border:1px solid #ced4da;
-									margin-left:-1px">
-							<optgroup label="Available Versions">
-								<option value="kjvs">KJV keyed to Strong's</option>
-							</optgroup>
-							<optgroup label="Coming Soon!" style="font-size:13px;display:none">
-								<option value="akjvs" disabled>American King James Version</option>
-								<option value="twb" disabled>Websters</option>
-								<option value="ylt" disabled>Young's Literal Translation</option>
-							</optgroup>
-						</select>
+					<div id="styles" class="card tab-pane fade in show" role="tabpanel" aria-labelledby="styles-tab">	
+						<div id="styles-collapse" data-parent="#tab-content" role="tabpanel" aria-labelledby="styles-heading">
+							<div class="card-body new-card-body">
+								<div class="row fontcolor-medium" style="display:block;padding:15px">
+									There are three different passage styles available...
+									<div style="clear:both"></div>
+									<div class="col-md-4" style="float:left">
+										<h5 style="margin:10px 0">Traditional</h5>
+										<div style="line-height:1.3;font-size:13px;margin-bottom:20px;height:100px">
+										The traditional passage style is the most common. This has been the standard layout for Bibles for centuries. The verses are separate and begin with the verse number, and the paragraphs are noted with the ¶ character.
+										</div>
+										<img src="{$plugin_url}/images/style-traditional.jpg" style="box-shadow:1px 1px 15px rgba(0,0,0,0.2);"/>
+									</div>
+									<div class="col-md-4" style="float:left">
+										<h5 style="margin:10px 0">Paragraph</h5>
+										<div style="line-height:1.3;font-size:13px;margin-bottom:20px;height:100px">
+										The paragraph passage style is used in many newer translations. The text flows as paragraphs, the verses are marked by a small superscript and the chapter number appear as a large colored number.
+										</div>
+										<img src="{$plugin_url}/images/style-paragraph.jpg"  style="box-shadow:1px 1px 15px rgba(0,0,0,0.2);"/>
+									</div>
+									<div class="col-md-4" style="float:left">
+										<h5 style="margin:10px 0">Reading</h5>
+										<div style="line-height:1.3;font-size:13px;margin-bottom:20px;height:100px">
+										The Reader's Bible is a very new creation. The text is laid out like a book, but with no verse markings. The book and chapter headings are displayed, but in the style of a typical book.
+										</div>
+										<img src="{$plugin_url}/images/style-reading.jpg"  style="box-shadow:1px 1px 15px rgba(0,0,0,0.2);"/>
+									</div>
+									<div style="clear:both;line-height:1.3;font-size:15px;padding:20px 20px">
+									If you are logged in the page will remember your choice as you study, and even when you return. If you are not logged in, it will only remember your choice for the current session.
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
-				</div>
-				<div id="form-fieldsets" class="row col-lg-3" style="float:left">
-					<fieldset class="col-lg-6 text-left form-group" style="max-width:47%;font-size:13px;border:none;float:left;margin-bottom:0">
-						<legend style="margin-bottom:-5px;font-weight:bold;display:block;font-family: 'Poppins', sans-serif;font-size:16px;white-space:nowrap">Passage Style</legend>
-						{$styles}
-					</fieldset>
-					<fieldset id="toggle-strongs-fieldset" class="col-lg-6 text-left form-group" style="max-width:47%;font-size:13px;border:none;margin-bottom:0">
-						<legend style="margin-bottom:-5px;font-weight:bold;display:block;font-family: 'Poppins', sans-serif;font-size:16px">Link Keyed</legend>
-						<input id="toggle-strongs"
-							type="checkbox" 
-							data-toggle="toggle" 
-							data-on="Strong&rsquo;s" 
-							data-off="None" 
-							data-onstyle="strongs" 
-							data-offstyle="none" 
-							data-width="110"
-							/>
-					</fieldset>
+					<div id="books" class="card tab-pane fade in show" role="tabpanel" aria-labelledby="books-tab">	
+						<div id="books-collapse" data-parent="#tab-content" role="tabpanel" aria-labelledby="books-heading">
+							<div class="card-body new-card-body">
+								<div class="row" style="padding:10px">
+									{$book_list}
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
-		</form>
-	</div>
-	EOD;
-	return $form;
-	}
-
-
-
-function virtual_bible_buildBookListModal()
-	{
-	$book_list=virtual_bible_getBookList();
-	$book_list_modal = <<<EOD
-	<div id="modal" class="modal" style="display:none;padding-top:50px;z-index:1000;position:fixed;left:0;top:0;width:100%;height:100%;background-color:rgba(0,0,0,0.4);font-family: 'Montserrat';">
-		<div class="modal-content" style="border-radius:10px;border:1px solid:#555;width:600px;margin:auto;background-color:#fff;position:relative;padding:20px;outline:0;;font-family: 'Montserrat';box-shadow:1px 1px 30px rgba(0,0,0,0.5)">
-			<span onclick="document.getElementById('modal').style.display='none'" style="cursor:pointer;position:absolute;top:0;right:10px;font-size:19px">&times;</span>
-			<h4 style="clear:both;font-family: 'Poppins', sans-serif;margin-top:0;margin-bottom:10px;font-weight:bold">Books of the Bible</h4>
-			<div class="row" style="font-size:13px;font-family: 'Montserrat';'">
-				{$book_list}
-			</div class="row">
-		</div>
-	</div>
-	EOD;
-	return $book_list_modal;
-	}
-
-
-
-function virtual_bible_buildChapterListModal($bookname)
-	{
-	global $_vb,$page_url;
-	$chapnum=$_vb->getChaptersInBook($bookname);
-	$chapters='';
-	$chapname='Chapter';
-	if($bookname=='Psalms'){$chapname='Psalm';}
-	for($c=1;$c<=$chapnum;$c++)
-		{
-		$chapters.="<a href=\"{$page_url}?keyword=$bookname+$c\" style=\"float:left;margin:2px 10px;width:80px\">$chapname $c</a> ";
-		}
-	$chapter_list_modal = <<<EOD
-	<div id="chapters-modal" class="modal" style="display:none;padding-top:50px;z-index:1000;position:fixed;left:0;top:0;width:100%;height:100%;background-color:rgba(0,0,0,0.4);font-family: 'Montserrat';">
-		<div class="modal-content" style="border-radius:10px;border:1px solid:#555;width:600px;margin:auto;background-color:#fff;position:relative;padding:20px;outline:0;;font-family: 'Montserrat';box-shadow:1px 1px 30px rgba(0,0,0,0.5)">
-			<span onclick="document.getElementById('chapters-modal').style.display='none'" style="cursor:pointer;position:absolute;top:0;right:10px;font-size:19px">&times;</span>
-			<h4 style="clear:both;font-family: 'Poppins', sans-serif;margin-top:0;margin-bottom:10px;font-weight:bold">Chapters in $bookname</h4>
-			<div class="row" style="font-size:13px;font-family: 'Montserrat';'">
-				{$chapters}
-			</div class="row">
-		</div>
-	</div>
-	EOD;
-	return $chapter_list_modal;
-	}
-
-
-function virtual_bible_buildStartHelp()
-	{
-	global $page_url,$plugin_url;
-	$tools=virtual_bible_getTools();
-	$book_list=virtual_bible_getBookList();
-	$start_help = <<<EOD
-	<ul class="nav nav-tabs" style="margin-top:40px;font-family: 'Montserrat';">
-		<li class="active">
-			<a data-toggle="tab" href="#how-to-search" style="text-decoration:none">
-				<h4 style="margin:0;font-family: 'Poppins', sans-serif">
-					<i class="fas fa-search fa-flip-horizontal"></i> 
-					&nbsp; How to Search
-				</h4>
-			</a>
-		</li>
-		<li>
-			<a data-toggle="tab" href="#tools" style="text-decoration:none">
-				<h4 style="margin:0;font-family: 'Poppins', sans-serif">
-					<i class="fas fa-wrench"></i>
-					&nbsp; Tools
-				</h4>
-			</a>
-		</li>
-		<li>
-			<a data-toggle="tab" href="#styles" style="text-decoration:none">
-				<h4 style="margin:0;font-family: 'Poppins', sans-serif">
-					<i class="fa-solid fa-swatchbook"></i>
-					&nbsp; Passage Styles
-				</h4>
-			</a>
-		</li>
-		<li>
-			<a data-toggle="tab" href="#books" style="text-decoration:none">
-				<h4 style="margin:0;font-family: 'Poppins', sans-serif">
-					<i class="fas fa-book"></i>
-					&nbsp; Books
-				</h4>
-			</a>
-		</li>
-	</ul>
-	<div class="tab-content" 
-		style="height:650px;font-family: 'Montserrat';font-size:15px;border:1px solid #ddd;margin-top:-2px;background-color:#fff;position:relative;z-index:100"> 
-		<div id="how-to-search" class="tab-pane fade in active" style="padding:0 10px">	
-			<p class="fontcolor-medium" style="margin-top:0;margin-left:10px;font-size:13px">
-				(Note: The example links have all parameter set to show the correct results.)
-			</p>
-			<h5 style="margin-bottom:5px;margin-top:15px;color:#000">The Basic Passage Search</h5>
-			<p class="fontcolor-medium" style="margin-top:0;margin-left:20px">
-				Find exact chapters and/or verses by typing the book, chapter, and/or verse in the search box.<br>
-				<em>Examples: <a href="{$page_url}?keyword=John+3:16">John 3:16</a> <small>(for a single verse)</small> or <a href="{$page_url}?keyword=John+3">John 3</a> <small>(for the entire chapter)</small> or <a href="{$page_url}?keyword=John+3:14-18">John 3:14-18</a> <small>(for a select passage within a chapter)</small></em><br />
-				Many, commonly-used abbreviations can be recognized, so <a href="{$page_url}?keyword=Jn+3:16">Jn 3:16</a> will be recongized as John 3:16.<br />
-				<small>Note: The verse list will be included automatically when you select just the chapter, so <em><a href="{$page_url}?keyword=John+3">John 3</a></em> will become <em><a href-="{$page_url}?keyword=John+3:1-36">John 3:1-36</a></em></small></p>
-			<h5 style="margin-bottom:5px;margin-top:15px;color:#000">The Basic Keyword Search</h4>
-			<p class="fontcolor-medium" style="margin-top:0;margin-left:20px">
-				Find verses containing a specific word.<br>
-				<em>Example: <a href="{$page_url}?keyword=love">love</a></em></p>
-			<h5 style="margin-bottom:5px;margin-top:15px;color:#000">More Advanced Keyword Search</h4>
-			<p class="fontcolor-medium" style="margin-top:0;margin-left:20px">
-				Find verses containing two or more words you want by typing them in, separated by a space.<br>
-				<em>Example: <a href="{$page_url}?keyword=christ+mercy">Christ mercy</a></em></p>
-			<p class="fontcolor-medium" style="margin-top:0;margin-left:20px">
-				Find verses containing partial words by using the wildcard * (an asterisk).<br>
-				<em>Example: <a href="{$page_url}?keyword=love*">love*</a> <small>(returns love, loves, loved, lovely, etc.)</small></em></p>
-			<p class="fontcolor-medium" style="margin-top:0;margin-left:20px">
-				Find verses containing specific sets of words<br>
-				<em>Example: <a href="{$page_url}?keyword=&quot;Jesus answered&quot;">&quot;Jesus answered&quot;</a> <small><br>(PLEASE NOTE: Due to the complexity of the database table containing the scriptures, the plugin currently can only hand a two-word combination. I hope to improve this in later updates.)</small></em></p>
-			<h5 style="margin-bottom:5px;margin-top:15px;color:#000">Using the Scope Option</h4>
-			<p class="fontcolor-medium" style="margin-top:0;margin-left:20px">
-				Use the scope drop-down menu (default is set to the Whole Bible) to limit your word search to a specific section of the Bible<br>
-				<em>Example: <a href="{$page_url}?keyword=love&scope=2">love</a> <small>(returns only instances of the word &ldquo;love&rdquo; in the New Testament)</small></em><br>
-			<small><em>Scope will be ignored for reference searches (i.e. John 3:16)</em></small></p>
-		</div>		
-		<div id="tools" class="tab-pane fade" style="padding: 0 10px">
-			{$tools}
-		</div>	
-		<div id="styles" class="tab-pane fade" style="padding: 0 10px">
-			<div class="row fontcolor-medium" style="display:block;padding:15px">
-				There are three different passage styles available...
-				<div style="clear:both"></div>
-				<div class="col-md-4" style="float:left">
-					<h5 style="margin:10px 0">Traditional</h5>
-					<div style="line-height:1.3;font-size:13px;margin-bottom:20px;height:100px">
-					The traditional passage style is the most common. This has been the standard layout for Bibles for centuries. The verses are separate and begin with the verse number, and the paragraphs are noted with the ¶ character.
-					</div>
-					<img src="{$plugin_url}/images/style-traditional.jpg" style="box-shadow:1px 1px 15px rgba(0,0,0,0.2);"/>
-				</div>
-				<div class="col-md-4" style="float:left">
-					<h5 style="margin:10px 0">Paragraph</h5>
-					<div style="line-height:1.3;font-size:13px;margin-bottom:20px;height:100px">
-					The paragraph passage style is used in many newer translations. The text flows as paragraphs, the verses are marked by a small superscript and the chapter number appear as a large colored number.
-					</div>
-					<img src="{$plugin_url}/images/style-paragraph.jpg"  style="box-shadow:1px 1px 15px rgba(0,0,0,0.2);"/>
-				</div>
-				<div class="col-md-4" style="float:left">
-					<h5 style="margin:10px 0">Reading</h5>
-					<div style="line-height:1.3;font-size:13px;margin-bottom:20px;height:100px">
-					The Reader's Bible is a very new creation. The text is laid out like a book, but with no verse markings. The book and chapter headings are displayed, but in the style of a typical book.
-					</div>
-					<img src="{$plugin_url}/images/style-reading.jpg"  style="box-shadow:1px 1px 15px rgba(0,0,0,0.2);"/>
-				</div>
-				<div style="clear:both;line-height:1.3;font-size:15px;padding:20px 20px">
-				If you are logged in the page will remember your choice as you study, and even when you return. If you are not logged in, it will only remember your choice for the current session.
-				</div>
-			</div>
-		</div>
-		<div id="books" class="tab-pane fade">
-			<div class="row" style="padding:10px">
-				{$book_list}
-			</div>
-		</div>
-	</div>
-	EOD;
-	return $start_help;
-	}
-
-
-	
-function virtual_bible_buildToolsContent($bid,$part='intro')
-	{
-	global $wpdb,$_vb;
-	$bookname=$_vb->getBookTitleFromId($bid);
-	$BookData=$_vb->getBookIdFromVagueTitle($bookname);
-	list($abbr)=explode(', ',$BookData['abbr']);
-	$Intro=dbFetch('virtual_bible_gty_intro_outline',array('book'=>$bid));
-	$text=$Intro[0]['text'];
-	$text=str_replace('&ndash;','-',$text);
-	$text=str_replace('<strong></strong>','',$text);
-	$text=str_replace('<p><strong>','<h5>',$text);
-	$text=str_replace('</strong></p>','</h5>',$text);	
-	
-	$plugin_path=str_replace('includes/','',plugin_dir_path(__FILE__));
-	$page_name=virtual_bible_getMeta('page_name');
-	$page_slug=sanitize_title($page_name);
-	$page_url=site_url().'/'.$page_slug.'/';
-	$text=preg_replace('/\(([0-9]+):/',"($abbr ".'$1:',$text);
-	$text=str_replace('(chap.',"($abbr",$text);
-	$regex=file_get_contents($plugin_path.'templates/ref-regex.tpl');
-	
-	$text=preg_replace($regex,'<a href="'.$page_url.'?keyword=$1+$2">$1 $2</a>',$text);
-
-	list($intro,$outline)=explode2list('<h5>Outline</h5>',$text);
-	if($part=='outline')
-		{
-		return '<h4>Outline of '.$bookname.'<small><br>by John MacArthur</small></h4>'.$outline.'<hr /><p><small class="copyright">Outline of '.$bookname.', Copyright &copy; 2007, <a href="https://www.gty.org" target="_blank">Grace To You.</a> All rights reserved. Used by permission.</small></p>';
-		}
-	else
-		{
-		return '<h4>Introduction to '.$bookname.'<small><br>by John MacArthur</small></h4>'.$intro.'<p><small class="copyright">Introduction to '.$bookname.', Copyright &copy; 2007, <a href="https://www.gty.org" target="_blank">Grace To You.</a> All rights reserved. Used by permission.</small></p>';
-		}
-	}
-
-
-function virtual_bible_buildStartPage()
-	{
-	global $reference;
-	$form=virtual_bible_buildForm($reference);
-	$tools=virtual_bible_getTools();
-	$book_list=virtual_bible_getBookList();
-	$book_list_modal=virtual_bible_buildBookListModal();
-	$start_help=virtual_bible_buildStartHelp();
-
-	$virtual_bible_page = <<<EOD
-	{$form}
-	{$start_help}
-	{$book_list_modal}
-	EOD;
-	return $virtual_bible_page;
-	}
-
-	
-
-function virtual_bible_buildResultsPage($keyword,$scope,$version,$layout)
-	{
-	global $reference,$_vb,$plugin_url;
-	$virtual_bible_eastons_installed=virtual_bible_is_module_installed('eastons');
-	$isRef=$_vb->isRef($keyword);
-	if($isRef['type']=='passage' or $isRef['type']=='verse')
-		{
-		$virtual_bible_page	= $_vb->referenceResults($keyword);
-		}
-	else		
-		{
-		$virtual_bible_page=$_vb->wordsearchResults($keyword,$scope);
+		</section>
+		EOD;
+		return $start_help;
 		}
 
-	return $virtual_bible_page;
-	}
-
-
-
-
-
-
-/******************************
- * 	BIBLE FUNCTIONS
- */
-
-class virtual_bible 
-	{
 		
+
+		
+/********************************************************************************************
+      _           _ _     _ _____           _      ____            _             _    __
+     | |__  _   _(_) | __| |_   _|__   ___ | |___ / ___|___  _ __ | |_ ___ _ __ | |_ / /
+     | '_ \| | | | | |/ _` | | |/ _ \ / _ \| / __| |   / _ \| '_ \| __/ _ \ '_ \| __| | 
+     | |_) | |_| | | | (_| | | | (_) | (_) | \__ \ |__| (_) | | | | ||  __/ | | | |_| | 
+     |_.__/ \__,_|_|_|\__,_| |_|\___/ \___/|_|___/\____\___/|_| |_|\__\___|_| |_|\__| | 
+                                                                                     \_\
+                       
+*********************************************************************************************/
+
+	
+	function buildToolsContent($bid,$part='intro')
+		{
+		global $wpdb;
+		$bookname=$this->getBookTitleFromId($bid);
+		$BookData=$this->getBookIdFromVagueTitle($bookname);
+		list($abbr)=explode(', ',$BookData['abbr']);
+		$Intro=$this->dbFetch('virtual_bible_gty_intro_outline',array('book'=>$bid));
+		$text=$Intro[0]['text'];
+		$text=str_replace('&ndash;','-',$text);
+		$text=str_replace('<strong></strong>','',$text);
+		$text=str_replace('<p><strong>','<h5>',$text);
+		$text=str_replace('</strong></p>','</h5>',$text);	
+		
+		$plugin_path=str_replace('includes/','',plugin_dir_path(__FILE__));
+		$page_name=$this->getMeta('page_name');
+		$page_slug=sanitize_title($page_name);
+		$page_url=site_url().'/'.$page_slug.'/';
+		$text=preg_replace('/\(([0-9]+):/',"($abbr ".'$1:',$text);
+		$text=str_replace('(chap.',"($abbr",$text);
+		$regex=file_get_contents($plugin_path.'templates/ref-regex.tpl');
+		
+		$text=preg_replace($regex,'<a href="'.$page_url.'?keyword=$1+$2">$1 $2</a>',$text);
+	
+		list($intro,$outline)=$this->explode2list('<h5>Outline</h5>',$text);
+		if($part=='outline')
+			{
+			return '<h4>Outline of '.$bookname.'<small><br>by John MacArthur</small></h4>'.$outline.'<hr /><p><small class="copyright">Outline of '.$bookname.', Copyright &copy; 2007, <a href="https://www.gty.org" target="_blank">Grace To You.</a> All rights reserved. Used by permission.</small></p>';
+			}
+		else
+			{
+			return '<h4>Introduction to '.$bookname.'<small><br>by John MacArthur</small></h4>'.$intro.'<p><small class="copyright">Introduction to '.$bookname.', Copyright &copy; 2007, <a href="https://www.gty.org" target="_blank">Grace To You.</a> All rights reserved. Used by permission.</small></p>';
+			}
+		}
+	
+
+
+		
+/********************************************************************************************
+      _           _ _     _ ____  _             _   ____                   __
+     | |__  _   _(_) | __| / ___|| |_ __ _ _ __| |_|  _ \ __ _  __ _  ___ / /
+     | '_ \| | | | | |/ _` \___ \| __/ _` | '__| __| |_) / _` |/ _` |/ _ \ | 
+     | |_) | |_| | | | (_| |___) | || (_| | |  | |_|  __/ (_| | (_| |  __/ | 
+     |_.__/ \__,_|_|_|\__,_|____/ \__\__,_|_|   \__|_|   \__,_|\__, |\___| | 
+                                                               |___/      \_\
+                                                                                           
+*********************************************************************************************/
+
+	function buildStartPage()
+		{
+		global $reference,$current_user;
+		$form=$this->buildForm($reference);
+		$tools=$this->getTools();
+		$book_list=$this->getBookList();
+		$book_list_modal=$this->buildBookListModal();
+		$start_help=$this->buildStartHelp();
+		$plugin_url=str_replace('includes/','',plugin_dir_url(__FILE__));
+		$user_id=$current_user->ID;
+		$noonce_watcher_url=wp_nonce_url($plugin_url.'ajax/worker.php','vb_watcher');
+	
+		$virtual_bible_page = <<<EOD
+		<div class="row study-bible-cover" style="
+			background-color:#fff;
+			height:100vh;
+			font-family: 'Montserrat', sans-serif;
+			color:#fafafa;
+			font-size:70px;
+			text-align:center;
+			font-weight:700;
+			display:block;
+			width:100%;
+			padding-top:100px;line-height:1;">
+			Loading
+		</div>
+		<div id="study-bible" class="start-page">
+			<div class="study-bible-form" style="display:none;transition:0.3s;filter: blur(5px)">
+				{$form}
+			</div>
+			<div class="start-help tools" style="display:none">
+				{$start_help}
+			</div>
+		</div>
+		{$book_list_modal}
+		<script>	
+		var vb_strongs=0;
+		var strongs_num='';
+		var _vb_user_id={$user_id};
+		window.addEventListener
+			(
+			'load',
+			function()
+				{
+				$('div.study-bible-form').fadeIn(600);
+				$('div.study-bible-form').css('filter','blur(0)');
+				$('div.study-bible-cover').fadeOut(300);
+				$('div.study-bible-debug').fadeIn(1000);
+				setTimeout
+					(
+					function()
+						{
+						$('div.start-help').fadeIn(750);
+						},500
+					);	
+				$(".collapse.show").each
+					(
+					function()
+						{
+						$(this).prev(".card-header").find(".fa").addClass("fa-minus").removeClass("fa-plus");
+						}
+					);
+				$(".collapse")
+					.on
+						(
+						'show.bs.collapse',function()
+							{
+							$(this).prev(".card-header").find(".fa").removeClass("fa-plus").addClass("fa-minus");
+							}
+						)
+					.on
+						(
+						'hide.bs.collaspe',function()
+							{
+							$(this).prev(".card-header").find(".fa").removeClass("fa-minus").addClass("fa-plus");
+							}
+						);
+				}
+			);
+
+			function saveUserData(key,value)
+				{
+				var watcher_nonce_url = '{$noonce_watcher_url}';
+				$.get
+					(
+					watcher_nonce_url, 
+					{function:'user_data_set',user:_vb_user_id,user_key:key,user_value:value},
+					function(data) 
+						{
+						if(data=='installed')
+							{
+							$("#settings-submit").prop('disabled',false);
+							}
+						}
+					);
+				}
+		</script>
+		EOD;
+		return $virtual_bible_page;
+		}
+
+
+		
+/********************************************************************************************
+      _           _ _     _ ____                 _ _       ____                   __
+     | |__  _   _(_) | __| |  _ \ ___  ___ _   _| | |_ ___|  _ \ __ _  __ _  ___ / /
+     | '_ \| | | | | |/ _` | |_) / _ \/ __| | | | | __/ __| |_) / _` |/ _` |/ _ \ | 
+     | |_) | |_| | | | (_| |  _ <  __/\__ \ |_| | | |_\__ \  __/ (_| | (_| |  __/ | 
+     |_.__/ \__,_|_|_|\__,_|_| \_\___||___/\__,_|_|\__|___/_|   \__,_|\__, |\___| | 
+                                                                      |___/      \_\
+$virtual_bible_page = $_vb->buildResultsPage($keyword,$scope,$version,$layout);
+*********************************************************************************************/
+
+	function buildResultsPage($keyword,$scope,$version,$layout)
+		{
+		global $reference,$plugin_url,$_vbm;
+		$virtual_bible_eastons_installed=$_vbm->is_module_installed('eastons');
+		$isRef=$this->isRef($keyword);
+		if($isRef['type']=='passage' or $isRef['type']=='verse')
+			{
+			$virtual_bible_page	= $this->referenceResults($keyword);
+			}
+		else		
+			{
+			$virtual_bible_page=$this->wordsearchResults($keyword,$scope);
+			}
+	
+		return $virtual_bible_page;
+		}
+
+
+
+
+
+		
+/********************************************************************************************
+      _     ____       __  __
+     (_)___|  _ \ ___ / _|/ /
+     | / __| |_) / _ \ |_| | 
+     | \__ \  _ <  __/  _| | 
+     |_|___/_| \_\___|_| | | 
+                          \_\
+
+$Array = isRef(string $keyword) : $Array['type'] as the type ('passage', 'verse', 'chapter' or 'invalid')
+ *********************************************************************************************/
 	function isRef($keyword)
 		{
 		$Return=[];
@@ -752,6 +927,17 @@ class virtual_bible
 		return $Return;
 		}
 
+
+/********************************************************************************************
+                 _   ____       __ ____        _  __                                _  __
+       __ _  ___| |_|  _ \ ___ / _| __ ) _   _| |/ /___ _   ___      _____  _ __ __| |/ /
+      / _` |/ _ \ __| |_) / _ \ |_|  _ \| | | | ' // _ \ | | \ \ /\ / / _ \| '__/ _` | | 
+     | (_| |  __/ |_|  _ <  __/  _| |_) | |_| | . \  __/ |_| |\ V  V / (_) | | | (_| | | 
+      \__, |\___|\__|_| \_\___|_| |____/ \__, |_|\_\___|\__, | \_/\_/ \___/|_|  \__,_| | 
+      |___/                              |___/          |___/                         \_\
+
+$Array = getRefByKeyword(string $k) : return Array of various properties reference ($k) refers to
+ *********************************************************************************************/
 
 	function getRefByKeyword($k)
 		{
@@ -994,8 +1180,19 @@ class virtual_bible
 		}
 
 
-		
-    
+
+/********************************************************************************************
+
+            _   ____              _    ___    _ _____                 __     __                    _____ _ _   _       __
+  __ _  ___| |_| __ )  ___   ___ | | _|_ _|__| |  ___| __ ___  _ __ __\ \   / /_ _  __ _ _   _  __|_   _(_) |_| | ___ / /
+ / _` |/ _ \ __|  _ \ / _ \ / _ \| |/ /| |/ _` | |_ | '__/ _ \| '_ ` _ \ \ / / _` |/ _` | | | |/ _ \| | | | __| |/ _ \ | 
+| (_| |  __/ |_| |_) | (_) | (_) |   < | | (_| |  _|| | | (_) | | | | | \ V / (_| | (_| | |_| |  __/| | | | |_| |  __/ | 
+ \__, |\___|\__|____/ \___/ \___/|_|\_\___\__,_|_|  |_|  \___/|_| |_| |_|\_/ \__,_|\__, |\__,_|\___||_| |_|\__|_|\___| | 
+ |___/                                                                             |___/                              \_\
+
+$Array = getBookIdFromVagueTitle($title) : return book data (which includes id)
+ *********************************************************************************************/
+		    
 	function getBookIdFromVagueTitle($title)
 		{
 		global $wpdb;
@@ -1028,7 +1225,16 @@ class virtual_bible
 
 
 
-		
+/********************************************************************************************
+            _ __     __                      ___        ____ _                 _             __
+  __ _  ___| |\ \   / /__ _ __ ___  ___  ___|_ _|_ __  / ___| |__   __ _ _ __ | |_ ___ _ __ / /
+ / _` |/ _ \ __\ \ / / _ \ '__/ __|/ _ \/ __|| || '_ \| |   | '_ \ / _` | '_ \| __/ _ \ '__| | 
+| (_| |  __/ |_ \ V /  __/ |  \__ \  __/\__ \| || | | | |___| | | | (_| | |_) | ||  __/ |  | | 
+ \__, |\___|\__| \_/ \___|_|  |___/\___||___/___|_| |_|\____|_| |_|\__,_| .__/ \__\___|_|  | | 
+ |___/                                                                  |_|                 \_\
+
+ $integer = getVersesInChapter(string $book, integet $chapter, boolean $debug=0)
+ *********************************************************************************************/
     
 	function getVersesInChapter($book,$chapter,$debug=0)
 		{
@@ -1052,6 +1258,17 @@ class virtual_bible
 
 
 
+/********************************************************************************************
+            _   ____              _    ___    _ _____                  _____ _ _   _       __
+  __ _  ___| |_| __ )  ___   ___ | | _|_ _|__| |  ___| __ ___  _ __ __|_   _(_) |_| | ___ / /
+ / _` |/ _ \ __|  _ \ / _ \ / _ \| |/ /| |/ _` | |_ | '__/ _ \| '_ ` _ \| | | | __| |/ _ \ | 
+| (_| |  __/ |_| |_) | (_) | (_) |   < | | (_| |  _|| | | (_) | | | | | | | | | |_| |  __/ | 
+ \__, |\___|\__|____/ \___/ \___/|_|\_\___\__,_|_|  |_|  \___/|_| |_| |_|_| |_|\__|_|\___| | 
+ |___/                                                                                    \_\
+
+ $integer = getBookIdFromTitle(string $booktitle) : 
+ *********************************************************************************************/
+
 
 		
 	function getBookIdFromTitle($booktitle)
@@ -1073,6 +1290,18 @@ class virtual_bible
 
 
 
+/********************************************************************************************
+            _ __     __                 ___ ____  ____        ____       __  __
+  __ _  ___| |\ \   / /__ _ __ ___  ___|_ _|  _ \| __ ) _   _|  _ \ ___ / _|/ /
+ / _` |/ _ \ __\ \ / / _ \ '__/ __|/ _ \| || | | |  _ \| | | | |_) / _ \ |_| | 
+| (_| |  __/ |_ \ V /  __/ |  \__ \  __/| || |_| | |_) | |_| |  _ <  __/  _| | 
+ \__, |\___|\__| \_/ \___|_|  |___/\___|___|____/|____/ \__, |_| \_\___|_| | | 
+ |___/                                                  |___/               \_\
+ 
+$integer = getVerseIDByRef(integer $bid,integer $cn, integer $vn) :
+ *********************************************************************************************/
+
+
 	function getVerseIDByRef($bid,$cn,$vn) # book id, chapter number, verse number
 		{
 		global $wpdb;
@@ -1089,21 +1318,31 @@ class virtual_bible
 
 
 
+/********************************************************************************************
+            _ __     __                       __
+  __ _  ___| |\ \   / /__ _ __ ___  ___  ___ / /
+ / _` |/ _ \ __\ \ / / _ \ '__/ __|/ _ \/ __| | 
+| (_| |  __/ |_ \ V /  __/ |  \__ \  __/\__ \ | 
+ \__, |\___|\__| \_/ \___|_|  |___/\___||___/ | 
+ |___/                                       \_\
+ 
+ $Array = getVerses(integer $bid,integer $chapter,array $Verses) : 
+ *********************************************************************************************/
 	
 
 	function getVerses($bid,$chapter,$Verses)
 		{
-		global $wpdb;
-		$virtual_bible_holman_installed=virtual_bible_is_module_installed('holman');
+		global $wpdb,$_vbm;
+		$virtual_bible_holman_installed=$_vbm->is_module_installed('holman');
 		$V=[];$table='virtual_bible_kjvs';
 		foreach($Verses as $v=>$verse)
 			{
 			if($v!='ref')
 				{
-				$V[$verse]=dbFetch1($table,array('book'=>$bid,'chapter'=>$chapter,'verse'=>$verse));
+				$V[$verse]=$this->dbFetch1($table,array('book'=>$bid,'chapter'=>$chapter,'verse'=>$verse));
 				if($virtual_bible_holman_installed)
 					{
-					$xref=dbFetch('virtual_bible_xref_holman',array('book'=>$bid,'chapter'=>$chapter,'verse'=>$verse),'ref');
+					$xref=$this->dbFetch('virtual_bible_xref_holman',array('book'=>$bid,'chapter'=>$chapter,'verse'=>$verse),'ref');
 					if($xref)
 						{
 						$V[$verse]['xref']=$xref;
@@ -1114,7 +1353,17 @@ class virtual_bible
 		return $V;
 		}
 
-    
+/********************************************************************************************
+            _   ___       _            _ _                        __
+  __ _  ___| |_|_ _|_ __ | |_ ___ _ __| (_)_ __   ___  __ _ _ __ / /
+ / _` |/ _ \ __|| || '_ \| __/ _ \ '__| | | '_ \ / _ \/ _` | '__| | 
+| (_| |  __/ |_ | || | | | ||  __/ |  | | | | | |  __/ (_| | |  | | 
+ \__, |\___|\__|___|_| |_|\__\___|_|  |_|_|_| |_|\___|\__,_|_|  | | 
+ |___/                                                           \_\
+ 
+ $Array = getInterlinear(integer $bid, integer $chapter, array $Verses)
+ *********************************************************************************************/   
+
 	function getInterlinear($bid,$chapter,$Verses)
 		{
 		global $wpdb;
@@ -1123,13 +1372,23 @@ class virtual_bible
 			{
 			if($v!='ref')
 				{
-				$V[$verse]=dbFetch1($table,array('book'=>$bid,'chapter'=>$chapter,'verse'=>$verse));
+				$V[$verse]=$this->dbFetch1($table,array('book'=>$bid,'chapter'=>$chapter,'verse'=>$verse));
 				}
 			}
 		return $V;
 		}
 
-    
+
+/********************************************************************************************
+            _   ____                 _                  ____ _                 _             __
+  __ _  ___| |_|  _ \ _ __ _____   _(_) ___  _   _ ___ / ___| |__   __ _ _ __ | |_ ___ _ __ / /
+ / _` |/ _ \ __| |_) | '__/ _ \ \ / / |/ _ \| | | / __| |   | '_ \ / _` | '_ \| __/ _ \ '__| | 
+| (_| |  __/ |_|  __/| | |  __/\ V /| | (_) | |_| \__ \ |___| | | | (_| | |_) | ||  __/ |  | | 
+ \__, |\___|\__|_|   |_|  \___| \_/ |_|\___/ \__,_|___/\____|_| |_|\__,_| .__/ \__\___|_|  | | 
+ |___/                                                                  |_|                 \_\
+ 
+ $Array = getPreviousChapter(string $booktitle, integer $chapter) : Return an array of the basic book data for the previous chapter
+ *********************************************************************************************/       
 
 
 
@@ -1165,6 +1424,16 @@ class virtual_bible
 		}
 
 
+/********************************************************************************************
+            _   _   _           _    ____ _                 _             __
+  __ _  ___| |_| \ | | _____  _| |_ / ___| |__   __ _ _ __ | |_ ___ _ __ / /
+ / _` |/ _ \ __|  \| |/ _ \ \/ / __| |   | '_ \ / _` | '_ \| __/ _ \ '__| | 
+| (_| |  __/ |_| |\  |  __/>  <| |_| |___| | | | (_| | |_) | ||  __/ |  | | 
+ \__, |\___|\__|_| \_|\___/_/\_\\__|\____|_| |_|\__,_| .__/ \__\___|_|  | | 
+ |___/                                               |_|                 \_\
+ 
+ $Array = getNextChapter(string $booktitle, integer $chapter)
+ *********************************************************************************************/   
     
 	function getNextChapter($booktitle,$chapter)
 		{
@@ -1198,14 +1467,24 @@ class virtual_bible
 			}
 		}
 
-	
+
+/********************************************************************************************
+            _   ____              _    _____ _ _   _      _____                    ___    _  __
+  __ _  ___| |_| __ )  ___   ___ | | _|_   _(_) |_| | ___|  ___| __ ___  _ __ ___ |_ _|__| |/ /
+ / _` |/ _ \ __|  _ \ / _ \ / _ \| |/ / | | | | __| |/ _ \ |_ | '__/ _ \| '_ ` _ \ | |/ _` | | 
+| (_| |  __/ |_| |_) | (_) | (_) |   <  | | | | |_| |  __/  _|| | | (_) | | | | | || | (_| | | 
+ \__, |\___|\__|____/ \___/ \___/|_|\_\ |_| |_|\__|_|\___|_|  |_|  \___/|_| |_| |_|___\__,_| | 
+ |___/                                                                                      \_\
+ 
+ $string = getBookTitleFromId(integer $bookid)
+ *********************************************************************************************/  	
 		
 	function getBookTitleFromId($bookid)
 		{
 		global $_mysql;
 		if($bookid)
 			{
-			$Row=dbFetch1('virtual_bible_books',array('id'=>$bookid),'book');
+			$Row=$this->dbFetch1('virtual_bible_books',array('id'=>$bookid),'book');
 			return $Row['book'];
 			}
 		else
@@ -1216,13 +1495,23 @@ class virtual_bible
 
 
 
+/********************************************************************************************
+            _    ____ _                 _                ___       ____              _     __
+  __ _  ___| |_ / ___| |__   __ _ _ __ | |_ ___ _ __ ___|_ _|_ __ | __ )  ___   ___ | | __/ /
+ / _` |/ _ \ __| |   | '_ \ / _` | '_ \| __/ _ \ '__/ __|| || '_ \|  _ \ / _ \ / _ \| |/ / | 
+| (_| |  __/ |_| |___| | | | (_| | |_) | ||  __/ |  \__ \| || | | | |_) | (_) | (_) |   <| | 
+ \__, |\___|\__|\____|_| |_|\__,_| .__/ \__\___|_|  |___/___|_| |_|____/ \___/ \___/|_|\_\ | 
+ |___/                           |_|                                                      \_\
+ 
+ $integer = getChaptersInBook(string $book)
+ *********************************************************************************************/  
 
     
 	function getChaptersInBook($book)
 		{
 		if($book)
 			{
-			$Result=dbFetch1('virtual_bible_books',array('book'=>$book));
+			$Result=$this->dbFetch1('virtual_bible_books',array('book'=>$book));
 			return $Result['chapters'];  
 			}
 		else
@@ -1231,15 +1520,29 @@ class virtual_bible
 			}
 		}
 
+
+/********************************************************************************************
+                         __     __                _____         _    __
+ _ __   __ _ _ __ ___  __\ \   / /__ _ __ ___  __|_   _|____  _| |_ / /
+| '_ \ / _` | '__/ __|/ _ \ \ / / _ \ '__/ __|/ _ \| |/ _ \ \/ / __| | 
+| |_) | (_| | |  \__ \  __/\ V /  __/ |  \__ \  __/| |  __/>  <| |_| | 
+| .__/ \__,_|_|  |___/\___| \_/ \___|_|  |___/\___||_|\___/_/\_\\__| | 
+|_|                                                                 \_\
+ 
+$Array = parseVerseText(string $text, array $Verse, boolean $format_first_letter=TRUE)
+ *********************************************************************************************/  
+
 		
-	function parseVerseText($text,$Verse,$format_first_letter=TRUE)
+	function parseVerseText($text,$Verse,$keyword='',$format_first_letter=TRUE)
 		{
 		$bid=$Verse['book'];
 		$v=$Verse['verse'];
-		$text=str_replace("\'","&rsquo;",$text);
-		$_text=str_replace('}{','} {',$text);
-		$_text=preg_replace('/{\(((H|G)[0-9]+)\)}/','',$_text);
-		preg_match_all('/(.*?)({((H|G)[0-9]+)}[ ,;.])/',$_text,$Matches);
+		$text=str_replace("\'","&rsquo;",$text);				// ↓ occasionally there will be a lone strong's number not associated with an english word
+		$_text=str_replace('}{','} {',$text);					// 		this separates it, so it can be seen as a separate word.
+		$_text=preg_replace('/{\(((H|G)[0-9]+)\)}/','',$_text);	// create a new variable without strong's markings.
+
+		# Being phrase extraction...							// I'm not using this, in this version, but hope to in future updates
+		preg_match_all('/(.*?)({((H|G)[0-9]+)}[ ,;.])/',$_text,$Matches);	// Find strong's marking (in original text)
 		$phrases='';
 		$use_second_word=FALSE;$_fl='';
 		foreach($Matches[0] as $p=>$toss)
@@ -1282,19 +1585,52 @@ class virtual_bible
 			$phrase=str_replace('¶','<span class="paragraph">¶</span>',$phrase);
 			# do if second word
 			# do capFilter
-			$phrases.="<phrase strongs=\"$strongs\" data-toggle=\"popover\" data-placement=\"bottom\" class=\"strongs phrase$show_class $p_num\">$phrase</phrase>";
+			$phrases.="<phrase strongs=\"$strongs\" data-toggle=\"popover\" data-placement=\"bottom\" data-container=\"#study-bible\" class=\"strongs phrase$show_class $p_num\">$phrase</phrase>";
 			
 			}
+		# ...End phrase extraction
 
+		# Begin word extraction...
 		$Text=explode(' ',$text);
 		$_text='';
-		$use_second_word=FALSE;$_fl='';
+		$use_second_word=FALSE;$_fl='';$_fl2='';
+		$is_keyword=false;
 		foreach($Text as $w=>$word)							// loop through all words
 			{
 			$strongs='';$_word='';
 			$_word=preg_replace('/\{(.*?)\}/','',$word);	// remove strongs markings in alternate variable
 			preg_match('/\{(.*?)\}/',$word,$Strongs);		// get strongs number from original word
 			$w_num='';
+			if(substr_count($keyword,'"')==2)
+				{
+				$_keyword=str_replace('"','',$keyword);
+				$Keywords=explode(' ',$_keyword);
+				}
+			if(isset($Keywords))
+				{
+				$__word=$_word;
+				if($is_keyword)
+					{
+					$_word="<strong>$_word</strong>";
+					$is_keyword=false;
+					}
+				if(isset($Text[$w+1]))
+					{
+					$__nword=$Text[$w+1];
+					$__nword=preg_replace('/\{(.*?)\}/','',$__nword);
+					$__word=str_replace('&rsquo;',"'",$_word);
+					$__nword=str_replace('&rsquo;',"'",$__nword);
+					$__word=preg_replace('/[^a-zA-Z \']/','',$__word);
+					$__nword=preg_replace('/[^a-zA-Z \']/','',$__nword);
+					if(strtolower($__word)==strtolower($Keywords[0]) and strtolower($__nword)==strtolower($Keywords[1]))
+						{
+						$_word="<strong>$_word</strong>";
+						$Text[$w+1]="<strong>{$Text[$w+1]}</strong>";
+						$is_keyword=true;
+						}
+					}
+				}
+			
 			if($w==0 and $v==1 and $format_first_letter)	// if it's the first word of the first verse...
 				{
 				$_word=str_replace('¶','',$_word);			// remove the paragraph marking
@@ -1310,7 +1646,8 @@ class virtual_bible
 						$additional_class='A';
 						}									// ↓ style the first letter
 					$_fl="<span class=\"first-letter $additional_class\" $style>$fl</span>";
-					$_word="$row";							// assign the rest of the word to the word.
+					$_fl2="<span class=\"first-letter\"$_fl</span>";
+					$_word="$_fl2$row";							// assign the rest of the word to the word.
 					}
 				else
 					{
@@ -1332,7 +1669,8 @@ class virtual_bible
 					$style='style="shape-outside:polygon(50% -10%,0 100%, 100% 100%);margin-right:5px"';
 					}
 				$_fl="<span class=\"first-letter\" $style>$fl</span>";
-				$_word="$row";
+				$_fl2="<span class=\"first-letter\"$_fl</span>";
+				$_word="$_fl2$row";
 				$use_second_word=FALSE;
 				}
 			$_word=$this->capFilter($_word);				// correct all cap words
@@ -1354,13 +1692,15 @@ class virtual_bible
 			if(isset($Strongs[1]))							// Does this word have a strong's number?...
 				{
 				$strongs=$Strongs[1];						// ↓style it accordingly
-				$_text.="<word strongs=\"$strongs\" data-toggle=\"popover\" data-placement=\"bottom\" class=\"strongs word $w_num $smallcaps\">$_word</word> ";
+				$_text.="<word strongs=\"$strongs\" data-toggle=\"popover\" data-placement=\"bottom\" data-container=\"#study-bible\" class=\"strongs word $w_num $smallcaps\">$_word</word> ";
 				}
 			else											// words without strong's number get styled differently
 				{
 				$_text.="<word class=\"word $w_num $smallcaps\">$_word</word> ";
 				}
+			$_fl2='';
 			}
+		# ...End word extraction
 		$Return['fl']=$_fl;
 		$Return['text']=$_text;
 		$Return['phrases']=$phrases;
@@ -1369,14 +1709,25 @@ class virtual_bible
 		}
 
 
+/********************************************************************************************
+
+           __                              ____                 _ _        __
+ _ __ ___ / _| ___ _ __ ___ _ __   ___ ___|  _ \ ___  ___ _   _| | |_ ___ / /
+| '__/ _ \ |_ / _ \ '__/ _ \ '_ \ / __/ _ \ |_) / _ \/ __| | | | | __/ __| | 
+| | |  __/  _|  __/ | |  __/ | | | (_|  __/  _ <  __/\__ \ |_| | | |_\__ \ | 
+|_|  \___|_|  \___|_|  \___|_| |_|\___\___|_| \_\___||___/\__,_|_|\__|___/ | 
+                                                                          \_\
+
+ $string = referenceResults(string $keyword)
+ *********************************************************************************************/
 
 	function referenceResults($keyword)
 		{
-		global $_debug,$page_url,$current_user,$reference;
-		$book_list=virtual_bible_getBookList();
-		$book_list2=virtual_bible_getBookList(6);
-		$book_list_modal=virtual_bible_buildBookListModal();
-		$style=virtual_bible_getUserMeta('style');
+		global $_debug,$page_url,$current_user,$reference,$_vbm;
+		$book_list=$this->getBookList();
+		$book_list2=$this->getBookList(6);
+		$book_list_modal=$this->buildBookListModal();
+		$style=$this->getUserMeta('style');
 		if(!$style){$style='traditional';}
 		$trad_checked='';$par_checked='';$read_checked='';
 		if($style=='traditional')
@@ -1393,7 +1744,7 @@ class virtual_bible
 			}
 		$isRef=$this->isRef($keyword);
 		$js='';
-		$virtual_bible_holman_installed=virtual_bible_is_module_installed('holman');
+		$virtual_bible_holman_installed=$_vbm->is_module_installed('holman');
 		if($virtual_bible_holman_installed=='installed')
 			{
 			$holman_xref_class='holman-xref';
@@ -1402,13 +1753,13 @@ class virtual_bible
 			{
 			$holman_xref_class='';
 			}
-		$virtual_bible_interlinear_installed=virtual_bible_is_module_installed('interlinear');
+		$virtual_bible_interlinear_installed=$_vbm->is_module_installed('interlinear');
 		$Ref=$this->getRefByKeyword($keyword);
 		$ref=$Ref['Verses']['ref'];
 		unset($Ref['Verses']['ref']);
 		$results='';
 		$reference=$Ref['clean-ref'];
-		$form=virtual_bible_buildForm($reference);
+		$form=$this->buildForm($reference);
 		$xref='';
 		if($Ref['chapter']>$Ref['debug']['BookData']['chapters'])
 			{
@@ -1468,7 +1819,6 @@ class virtual_bible
 						onmouseover=\"$('#verse_$bid"."_$chapter"."_$verse').css({'text-decoration':'underline'})\" 
 						onmouseout=\"$('#verse_$bid"."_$chapter"."_$verse').css({'text-decoration':'none'})\">
 						<b class=\"hebrew-verse-number\">&nbsp; $verse</b>&nbsp; $_text</div>";
-					#$iVerse[$verse]=$_text;
 					}
 				else
 					{
@@ -1523,30 +1873,30 @@ class virtual_bible
 			}
 
 		$bookname=$Ref['bookname'];$chapter=$Ref['chapter'];
-		$Outline=virtual_bible_getOutline($bid,$chapter);
+		$Outline=$this->getOutline($bid,$chapter);
 		if(!isset($Outline[0])){$Outline[0]='';}
-		$chapter_list_modal=virtual_bible_buildChapterListModal($bookname);
+		$chapter_list_modal=$this->buildChapterListModal($bookname);
 		$previousChapter=$this->getPreviousChapter($bookname,$chapter);
 		$previous_chapter="{$previousChapter['booktitle']}+{$previousChapter['chapter']}";
 		$prev_chap="{$previousChapter['booktitle']} {$previousChapter['chapter']}";
 		$nextChapter=$this->getNextChapter($bookname,$chapter);
 		$next_chapter="{$nextChapter['booktitle']}+{$nextChapter['chapter']}";
 		$next_chap="{$nextChapter['booktitle']} {$nextChapter['chapter']}";
-		$gty_intro=virtual_bible_buildToolsContent($bid,'intro');
-		$gty_outline=virtual_bible_buildToolsContent($bid,'outline');
+		$gty_intro=$this->buildToolsContent($bid,'intro');
+		$gty_outline=$this->buildToolsContent($bid,'outline');
 		$_debug.="<b>\$previous_chapter</b>".getPrintR($previous_chapter);
 		$results.="
-		<div id=\"study-bible\" class=\"row study-bible $style $holman_xref_class\">
+		<div id=\"ref-results\" class=\"row study-bible $style $holman_xref_class\">
 			<div id=\"bible\" class=\"row bible\" >
-				<div class=\"col-lg-12 row\" style=\"padding:00;margin:0;border-bottom:1px solid #ddd;margin-bottom:20px;\">
-					<div class=\"col-lg-1 offsetx-lg-2\" style=\"padding:10px 0;font-size:19px;\">
+				<div id=\"results-header\" class=\"col-md-12 row\">
+					<div class=\"col-xs-1 col-sm-1 \" style=\"padding:10px 0;font-size:19px;\">
 						<a href=\"$page_url?keyword=$previous_chapter\" style=\"color:#000;margin-top:-5px\" title=\"$prev_chap\" >
 							<i class=\"fas fa-circle-left\" style=\"display:block;margin-top:2px\"></i>
 							<!i class=\"fa-solid fa-left-long\"></i>
 							<!i class=\"fa-solid fa-circle-chevron-left\"></i>
 						</a>
 					</div>
-					<div class=\"col-lg-10\" style=\"font-size:13px;padding:10px 0\">
+					<div class=\"col-xs-10 col-sm-10\" style=\"font-size:13px;padding:10px 0\">
 						<span id=\"book-name\" style=\"float:left;text-transform:uppercase;font-family:Ova\">
 							<a href=\"#\" style=\"color:#000\">$bookname</a>
 						</span>
@@ -1554,7 +1904,7 @@ class virtual_bible
 							Chapter $chapter
 						</span>
 					</div>
-					<div class=\"col-lg-1\" style=\"padding:10px 0;text-align:right;font-size:19px;\">
+					<div class=\"col-xs-1 col-sm-1\" style=\"padding:10px 0;text-align:right;font-size:19px;\">
 						<a href=\"$page_url?keyword=$next_chapter\" style=\"color:#000\" title=\"$next_chap\">
 							<i class=\"fas fa-circle-right\" style=\"display:block;margin-top:2px\"></i>
 							<!i class=\"fas fa-arrow-right-long\"></i>
@@ -1596,7 +1946,7 @@ class virtual_bible
 					list($intro,$text)=explode('|',$text);
 					$_intro=preg_replace('/\{(.*?)\}/','',str_replace('¶','',$intro));
 					$text="¶$text";
-					$Intro=$this->parseVerseText($intro,$Verse,FALSE);
+					$Intro=$this->parseVerseText($intro,$Verse,'',FALSE);
 					$intro=$Intro['text'];
 					$intro_width=strlen($_intro);
 					if($intro_width>45)
@@ -1636,7 +1986,7 @@ class virtual_bible
 					onmouseout=\"document.getElementById('heb_$bid"."_$chapter"."_$v').style.backgroundColor=''\"";
 					}
 
-				$Text=$this->parseVerseText($text,$Verse);
+				$Text=$this->parseVerseText($text,$Verse,$keyword);
 				$_text=$Text['text'];
 				$_fl=$Text['fl'];
 				$v_num='';$chnum='';
@@ -1654,17 +2004,17 @@ class virtual_bible
 			}
 		$results.="</verses>
 			</div>
-			<div class=\"col-lg-12 row\" style=\"padding:0;margin:0;margin-top:20px;border-top:1px solid #ddd;\">
-				<div class=\"col-lg-1 offsetx-lg-2\" style=\"padding:10px 0;font-size:19px;\">
+			<div class=\"col-md-12 row\" style=\"padding:0;margin:0;margin-top:20px;border-top:1px solid #ddd;\">
+				<div class=\"col-xs-1 col-md-1\" style=\"padding:10px 0;font-size:19px;\">
 					<a href=\"$page_url?keyword=$previous_chapter\" style=\"color:#000;margin-top:-5px\" title=\"$prev_chap\" >
 						<i class=\"fas fa-circle-left\" style=\"display:block;margin-top:2px\"></i>
 						<!i class=\"fa-solid fa-left-long\"></i>
 						<!i class=\"fa-solid fa-circle-chevron-left\"></i>
 					</a>
 				</div>
-				<div class=\"col-lg-10\" style=\"font-size:13px;padding:10px 0\">
+				<div class=\"col-xs-10 col-md-10\" style=\"font-size:13px;padding:10px 0\">
 				</div>
-				<div class=\"col-lg-1\" style=\"padding:10px 0;text-align:right;font-size:19px;\">
+				<div class=\"col-xs-1 col-md-1\" style=\"padding:10px 0;text-align:right;font-size:19px;\">
 					<a href=\"$page_url?keyword=$next_chapter\" style=\"color:#000\" title=\"$next_chap\">
 						<i class=\"fas fa-circle-right\" style=\"display:block;margin-top:2px\"></i>
 						<!i class=\"fas fa-arrow-right-long\"></i>
@@ -1676,23 +2026,23 @@ class virtual_bible
 		$_tools = '
 				<ul class="nav nav-tabs tool-nav">
 					<li class="active">
-						<a data-toggle="tab" href="#tools-overview" style="text-decoration:none" title="introduction">
+						<a data-toggle="tab" href="#tools-overview" style="text-decoration:none">
 							<h4 style="margin:0;font-family: Poppins, sans-serif">
-								<i class="fas fa-wrench"></i> 
+								<i class="fas fa-wrench" data-title="<i class=\'fas fa-wrench\'></i> &nbsp;Tools" data-toggle="tooltip" data-html="true"></i> 
 							</h4>
 						</a>
 					</li>
 					<li>
-						<a data-toggle="tab" href="#introduction-results" style="text-decoration:none" title="introduction">
+						<a data-toggle="tab" href="#introduction-results" style="text-decoration:none">
 							<h4 style="margin:0;font-family: Poppins, sans-serif">
-								<i class="fas fa-door-open"></i> 
+								<i class="fas fa-door-open" data-title="<i class=\'fas fa-door-open\'></i> &nbsp;Introduction" data-toggle="tooltip" data-html="true"></i> 
 							</h4>
 						</a>
 					</li>
 					<li>
-						<a data-toggle="tab" href="#outline-results" style="text-decoration:none" title="Outline">
+						<a data-toggle="tab" href="#outline-results" style="text-decoration:none">
 							<h4 style="margin:0;font-family: Poppins, sans-serif">
-								<i class="fas fa-list-ol"></i>
+								<i class="fas fa-list-ol" data-title="<i class=\'fas fa-list-ol\'></i> &nbsp;Outline" data-toggle="tooltip" data-html="true"></i>
 							</h4>
 						</a>
 					</li>';
@@ -1700,9 +2050,9 @@ class virtual_bible
 			{
 			$_tools.='
 					<li>
-						<a data-toggle="tab" href="#hebgreek-results" style="text-decoration:none;padding:0px 15px 3px 15px">
-							<h4 style="margin:6px 0 0 0;">
-								<span style="font-size:29px;font-family: \'Times New Romans\';display:block;margin-top:-6px">&#1488;</span>
+						<a data-toggle="tab" href="#hebgreek-results" style="text-decoration:none;" title="Interlinear Bible">
+							<h4 style="margin:0;font-family: Poppins, sans-serif">
+								<i class="fas fa-globe" data-title="<i class=\'fas fa-globe\'></i> &nbsp;Interlinear Bible" data-toggle="tooltip" data-html="true"></i>
 							</h4>
 						</a>
 					</li>';
@@ -1722,14 +2072,12 @@ class virtual_bible
 						<p style=\"text-indent:3px;margin-bottom:5px;\">
 							<span class=\"tool-title\"><i class=\"fas fa-door-open\"></i> <b>Introduction</b></span> &mdash; Book introductions 
 						</p>
-						<p style=\"text-indent:3px\">
+						<p style=\"text-indent:3px;margin-bottom:5px;\">
 						<span class=\"tool-title\"><i class=\"fas fa-list-ol\"></i> <b>Outline</b></span> &mdash; Chapter and book outline 
 						</p>
-						<p style=\"text-indent:5px;\">
+						<p style=\"text-indent:3px;margin-bottom:5px;\">
 							<span class=\"tool-title\">
-								<span style=\"font-size:19px;font-family: 'Times New Romans';font-weight:bold;margin-right:-2px;\">&#1488;</span>
-								<span style=\"font-weight:normal\">/</span>
-								<span style=\"font-size:14px;font-family: 'Times New Romans';font-weight:bold;margin-left:-3px\">&Sigma;</span> 
+								<i class=\"fas fa-globe\"></i> 
 								<b>Interlinear Bible</b> 
 							</span>
 							&mdash; the Interlinar Hebrew/Greek text. It can be displayed alongside the English text, and the keyed words will be matched by highlighting the corresponding keyed word.
@@ -1898,10 +2246,26 @@ class virtual_bible
 	
 	
 		$virtual_bible_page = <<<EOD
-		<div class="row study-bible-cover style="backgroundColor:#fff;height:100vh">Loading...</div>
-		<div class="row study-bible-results" style="display:none">
-			{$form}
-			{$results}
+		<div class="row study-bible-cover" style="
+			background-color:#fff;
+			height:100vh;
+			font-family: 'Montserrat', sans-serif;
+			color:#fafafa;
+			font-size:70px;
+			text-align:center;
+			font-weight:700;
+			display:block;
+			width:100%;
+			padding-top:100px;line-height:1;">
+			Loading<small><br>{$reference}...</small>
+		</div>
+		<div id="study-bible" class="reference-results">
+			<div class="study-bible-form" style="display:none;transition:0.6s;filter:blur(15px)">
+				{$form}
+			</div>
+			<div class="row study-bible-results" style="display:none;transition:.9s;filter:blur(15px)">
+				{$results}
+			</div>
 		</div>
 		<hr>
 		<div class="study-bible-debug" style="display:none">
@@ -1915,14 +2279,18 @@ class virtual_bible
 			'load',
 			function()
 				{
-				$('div.study-bible-results').fadeIn(500);
-				$('div.study-bible-cover').fadeOut(500);
+				$('div.study-bible-form').fadeIn(600);
+				$('div.study-bible-form').css('filter','blur(0)');
+				$('div.study-bible-results').fadeIn(900);
+				$('div.study-bible-results').css('filter','blur(0)');
+				$('div.study-bible-cover').fadeOut(300);
 				$('div.study-bible-debug').fadeIn(1000);
 				$(function()
 					{
 					$('[data-toggle="tooltip"]').tooltip(
 						{
-						'delay':{show:50,hide:1}
+						'delay':{show:50,hide:1},
+						'template': '<div class="tooltip virtual-study-bible"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'
 						}
 					);
 					});
@@ -1935,11 +2303,24 @@ class virtual_bible
 		return $virtual_bible_page;
 		}
 
+/********************************************************************************************
 
+                       _                         _     ____                 _ _        __
+__      _____  _ __ __| |___  ___  __ _ _ __ ___| |__ |  _ \ ___  ___ _   _| | |_ ___ / /
+\ \ /\ / / _ \| '__/ _` / __|/ _ \/ _` | '__/ __| '_ \| |_) / _ \/ __| | | | | __/ __| | 
+ \ V  V / (_) | | | (_| \__ \  __/ (_| | | | (__| | | |  _ <  __/\__ \ |_| | | |_\__ \ | 
+  \_/\_/ \___/|_|  \__,_|___/\___|\__,_|_|  \___|_| |_|_| \_\___||___/\__,_|_|\__|___/ | 
+                                                                                      \_\
+
+$string = wordsearchResults(string $keyword, integer $scope)
+ *********************************************************************************************/
 
 	function wordsearchResults($keyword,$scope)
 		{
-		global $version;
+		global $version,$_vbm,$current_user;
+		$plugin_url=str_replace('includes/','',plugin_dir_url(__FILE__));
+		$user_id=$current_user->ID;
+		$noonce_watcher_url=wp_nonce_url($plugin_url.'ajax/worker.php','vb_watcher');
 		$search_type='';
 		$original_keyword=$keyword;
 		$_keyword=str_replace('`','"',$keyword);
@@ -1950,15 +2331,15 @@ class virtual_bible
 			$keyword=str_replace('\\','',$keyword);
 			$search_type='quotes';
 			}
-		$virtual_bible_eastons_installed=virtual_bible_is_module_installed('eastons');
-		$page_name=virtual_bible_getMeta('page_name');
+		$virtual_bible_eastons_installed=$_vbm->is_module_installed('eastons');
+		$page_name=$this->getMeta('page_name');
 		$page_slug=sanitize_title($page_name);
 		$page_url=site_url().'/'.$page_slug.'/';
 		$isRef=$this->isRef($keyword);
-		$results='<div class="row study-bible"><div class="row col-lg-6 words">';$chapter_list_modal='';
-		$book_list=virtual_bible_getBookList();
-		$book_list_modal=virtual_bible_buildBookListModal();
-		$form=virtual_bible_buildForm($original_keyword);
+		$results='<div class="row study-bible"><div class="row col-md-6 words">';$chapter_list_modal='';
+		$book_list=$this->getBookList();
+		$book_list_modal=$this->buildBookListModal();
+		$form=$this->buildForm($original_keyword);
 		$_debug='';
 		$_debug.='<b>$isRef</b>'.getPrintR($isRef);
 		if($search_type=='quotes'){$keyword=$_keyword;}
@@ -2022,9 +2403,8 @@ class virtual_bible
 			$results.="<div class=\"word-results-title\">$_start-$_end of $verse_count verses containing &ldquo;$keyword&rdquo;</div>$pagination";
 			$keyword=$_keyword;
 			$Verses=$this->getVersesByKeyword($keyword,$start,$scope);
-			$Keyword=[];
+			$Keywords=[];
 			$_debug.="<b>Verses</b> ".getPrintR($Verses);
-			$keyword=str_replace('"','',$keyword);
 
 			foreach($Verses as $v=>$Verse)
 				{
@@ -2035,7 +2415,7 @@ class virtual_bible
 				$chapter=$Verse['chapter'];
 				$verse=$Verse['verse'];
 				$this_in_context="$bookname+$chapter#context_$bid"."_$chapter"."_$verse";
-				$Text=$this->parseVerseText($text,$Verse,FALSE);
+				$Text=$this->parseVerseText($text,$Verse,$keyword,FALSE);
 				$text=str_replace('¶','',$Text['text']);
 				$text=$this->capFilter($text);		
 				$_debug.="<b>\$text</b>".getPrintR($text);
@@ -2048,21 +2428,6 @@ class virtual_bible
 						$Parts[$i] = preg_replace("/\b($_keyword)\b/", "<strong>$1$2</strong>", $Parts[$i]);
 						}
 					$text=implode('',$Parts);
-					}
-				elseif($search_type=='quotes')		// quotes
-					{
-					$__keyword='/('.str_ireplace(' ',')<\/word> <(.*?)>(',$keyword).')/';
-					write_log($keyword.' -- '.$__keyword);
-					preg_match($__keyword,$text,$Matches);
-					write_log($Matches);
-					$Keywords=explode(' ',$keyword);
-					$replace_from_string=$Matches[0];
-					$replace_to_string=$replace_from_string;
-					foreach($Keywords as $k)
-						{
-						$replace_to_string=preg_replace("/\b($k)\b/","<strong>$1</strong>",$replace_to_string);
-						}
-					$text=str_replace($replace_from_string,$replace_to_string,$text);
 					}
 				elseif(strstr($keyword,' '))				// multiple words
 					{
@@ -2152,7 +2517,7 @@ class virtual_bible
 		$plugin_url=str_replace('includes/','',plugin_dir_url(__FILE__));
 		$results.="
 			</div>
-			<div class=\"col-lg-6 tools\">
+			<div class=\"col-md-6 tools\">
 			{$_tools}
 			<div class=\"tab-content tool-content\" > 
 				<div id=\"tools-overview\" class=\"tab-pane fade in active\">	
@@ -2310,6 +2675,7 @@ class virtual_bible
 		
 		var vb_strongs=0;
 		var strongs_num='';
+		var _vb_user_id={$user_id};
 	
 		function reset_lex()
 			{
@@ -2364,12 +2730,48 @@ class virtual_bible
 				});
 
 			}	
+
+		function saveUserData(key,value)
+			{
+			var watcher_nonce_url = '{$noonce_watcher_url}';
+			$.get
+				(
+				watcher_nonce_url, 
+				{function:'user_data_set',user:_vb_user_id,user_key:key,user_value:value},
+				function(data) 
+					{
+					if(data=='installed')
+						{
+						$("#settings-submit").prop('disabled',false);
+						}
+					}
+				);
+			}
 		EOD;
 		$virtual_bible_page = <<<EOD
-		<div class="row study-bible-results" style="display:none">
-			{$form}
-			{$results}
+
+		<div class="row study-bible-cover" style="
+			background-color:#fff;
+			height:100vh;
+			font-family: 'Montserrat', sans-serif;
+			color:#fafafa;
+			font-size:70px;
+			text-align:center;
+			font-weight:700;
+			display:block;
+			width:100%;
+			padding-top:100px;line-height:1;">
+			Loading
 		</div>
+		<div id="study-bible" class="word-search-results">
+			<div class="study-bible-form" style="display:none;transition:0.6s;filter:blur(15px)">
+				{$form}
+			</div>
+			<div class="row study-bible-results" style="display:none;transition:.9s;filter:blur(15px)">
+				{$results}
+			</div>
+		</div>
+
 		<hr>
 		<div class="study-bible-debug" style="display:none">
 			{$_debug}
@@ -2383,7 +2785,12 @@ class virtual_bible
 			'load',
 			function()
 				{
-				$('div.study-bible-results').fadeIn(500);
+				$('div.study-bible-form').fadeIn(600);
+				$('div.study-bible-form').css('filter','blur(0)');
+				$('div.study-bible-results').fadeIn(900);
+				$('div.study-bible-results').css('filter','blur(0)');
+				$('div.study-bible-cover').fadeOut(300);
+				$('div.study-bible-debug').fadeIn(1000);
 				$('#scope').prop('selectedIndex',{$scope});
 				$('#version').prop('selectedIndex','{$version}');
 				{$js}
@@ -2395,6 +2802,17 @@ class virtual_bible
 		}
 		
 	
+
+/********************************************************************************************
+                 _____ _ _ _             __
+  ___ __ _ _ __ |  ___(_) | |_ ___ _ __ / /
+ / __/ _` | '_ \| |_  | | | __/ _ \ '__| | 
+| (_| (_| | |_) |  _| | | | ||  __/ |  | | 
+ \___\__,_| .__/|_|   |_|_|\__\___|_|  | | 
+          |_|                           \_\
+
+$string = capFilter(string $text)
+ *********************************************************************************************/  
 
 	function capFilter($text)
 		{
@@ -2422,6 +2840,16 @@ class virtual_bible
 		}
 
 
+/********************************************************************************************
+            _ __     __                  ____                  _   ____        _  __                                _  __
+  __ _  ___| |\ \   / /__ _ __ ___  ___ / ___|___  _   _ _ __ | |_| __ ) _   _| |/ /___ _   ___      _____  _ __ __| |/ /
+ / _` |/ _ \ __\ \ / / _ \ '__/ __|/ _ \ |   / _ \| | | | '_ \| __|  _ \| | | | ' // _ \ | | \ \ /\ / / _ \| '__/ _` | | 
+| (_| |  __/ |_ \ V /  __/ |  \__ \  __/ |__| (_) | |_| | | | | |_| |_) | |_| | . \  __/ |_| |\ V  V / (_) | | | (_| | | 
+ \__, |\___|\__| \_/ \___|_|  |___/\___|\____\___/ \__,_|_| |_|\__|____/ \__, |_|\_\___|\__, | \_/\_/ \___/|_|  \__,_| | 
+ |___/                                                                   |___/          |___/                         \_\
+
+ $integer = getVerseCountByKeyword(string $keyword, integer $scope=0)
+ *********************************************************************************************/  
 
 	function getVerseCountByKeyword($keyword,$scope=0)
 		{
@@ -2487,8 +2915,17 @@ class virtual_bible
 
 
 
-		
-		
+/********************************************************************************************
+            _ __     __                      ____        _  __                                _  __
+  __ _  ___| |\ \   / /__ _ __ ___  ___  ___| __ ) _   _| |/ /___ _   ___      _____  _ __ __| |/ /
+ / _` |/ _ \ __\ \ / / _ \ '__/ __|/ _ \/ __|  _ \| | | | ' // _ \ | | \ \ /\ / / _ \| '__/ _` | | 
+| (_| |  __/ |_ \ V /  __/ |  \__ \  __/\__ \ |_) | |_| | . \  __/ |_| |\ V  V / (_) | | | (_| | | 
+ \__, |\___|\__| \_/ \___|_|  |___/\___||___/____/ \__, |_|\_\___|\__, | \_/\_/ \___/|_|  \__,_| | 
+ |___/                                             |___/          |___/                         \_\
+
+ $Array = getVersesByKeyword(string $keyword, integer $start=0, integer $scope=0)
+ *********************************************************************************************/  
+				
 	function getVersesByKeyword($keyword,$start=0,$scope=0)
 		{
 		global $wpdb,$_debug,$ScopeKey;
@@ -2540,6 +2977,16 @@ class virtual_bible
 		}
 
 
+
+/********************************************************************************************
+                       _ ____                      _     _____ _ _ _                 __
+__      _____  _ __ __| / ___|  ___  __ _ _ __ ___| |__ |  ___(_) | |_ ___ _ __ ___ / /
+\ \ /\ / / _ \| '__/ _` \___ \ / _ \/ _` | '__/ __| '_ \| |_  | | | __/ _ \ '__/ __| | 
+ \ V  V / (_) | | | (_| |___) |  __/ (_| | | | (__| | | |  _| | | | ||  __/ |  \__ \ | 
+  \_/\_/ \___/|_|  \__,_|____/ \___|\__,_|_|  \___|_| |_|_|   |_|_|\__\___|_|  |___/ | 
+                                                                                    \_\
+$integer = wordSearchFilters(string $keyword, integer $scope=0) : returns number of occurances of $keyword in scope specified
+ *********************************************************************************************/  
 
 
 	function wordSearchFilters($keyword,$scope=0)
@@ -2641,6 +3088,116 @@ class virtual_bible
 
 
 
+/********************************************************************************************
+                      _           _      ____  _ _     _    __
+       _____  ___ __ | | ___   __| | ___|___ \| (_)___| |_ / /
+      / _ \ \/ / '_ \| |/ _ \ / _` |/ _ \ __) | | / __| __| | 
+     |  __/>  <| |_) | | (_) | (_| |  __// __/| | \__ \ |_| | 
+      \___/_/\_\ .__/|_|\___/ \__,_|\___|_____|_|_|___/\__| | 
+               |_|                                         \_\
+
+
+ *********************************************************************************************/  
+
+
+	function explode2list($delimiter,$string)
+		{
+		$Array=array_pad(explode($delimiter,$string),2,null);
+		return $Array;	
+		}
+
+
+
+
+
+
+/********************************************************************************************
+          _ _     _____    _       _     _  __
+       __| | |__ |  ___|__| |_ ___| |__ / |/ /
+      / _` | '_ \| |_ / _ \ __/ __| '_ \| | | 
+     | (_| | |_) |  _|  __/ || (__| | | | | | 
+      \__,_|_.__/|_|  \___|\__\___|_| |_|_| | 
+                                           \_\
+ (fetches one item from database)
+ *********************************************************************************************/  
+	
+
+
+	function dbFetch1($table,$Where='',$cell='*')
+		{
+		global $wpdb;
+		$table_name = $wpdb->prefix . $table;
+
+		if($Where)
+			{
+			$W=[];$where='';
+			foreach($Where as $column => $criteria)
+				{
+				$criteria=$wpdb->prepare('%s',$criteria);
+				$W[]="`$column`=$criteria";
+				}
+			$where='WHERE '.implode(' AND ',$W);
+			}
+
+		$query="SELECT $cell FROM $table_name $where LIMIT 1;";
+		$Results['query']=$query;
+		$Results['wpdb_get_results'] = $wpdb->get_results($query,ARRAY_A);	
+		if(isset($Results['wpdb_get_results'][0]))
+			{
+			$cache_out=json_encode($Results);
+			return $Results['wpdb_get_results'][0];
+			}
+		else
+			{
+			return FALSE;
+			}
+		}
+
+
+
+
+
+
+
+
+
+
+/********************************************************************************************
+          _ _     _____    _       _      __
+       __| | |__ |  ___|__| |_ ___| |__  / /
+      / _` | '_ \| |_ / _ \ __/ __| '_ \| | 
+     | (_| | |_) |  _|  __/ || (__| | | | | 
+      \__,_|_.__/|_|  \___|\__\___|_| |_| | 
+                                         \_\
+
+ (fetches multiple items from database)
+ *********************************************************************************************/  
+
+	function dbFetch($table,$Where='',$cell='*')
+		{
+		global $wpdb;
+		$table_name = $wpdb->prefix . $table;
+		$where='';
+		if($Where and $Where!='NULL')
+			{
+			$W=[];
+			foreach($Where as $column => $criteria)
+				{
+				$criteria=$wpdb->prepare('%s',$criteria);
+				$W[]="`$column`=$criteria";
+				}
+			$where='WHERE '.implode(' AND ',$W);
+			}
+
+		$query="SELECT $cell FROM $table_name $where;";
+		$Results['query']=$query;
+		$Results['wpdb_get_results'] = $wpdb->get_results($query,ARRAY_A);
+		return $Results['wpdb_get_results'];
+		}
+
+
+
+
 	}
 
 
@@ -2654,174 +3211,6 @@ class virtual_bible
 
 
 
-function explode2list($delimiter,$string)
-	{
-	$Array=array_pad(explode($delimiter,$string),2,null);
-	return $Array;	
-	}
-
-
-function dbFetch1_cached($table,$Where='',$cell='*')
-	{
-	global $wpdb;
-	$table_name = $wpdb->prefix . $table;
-	
-	if($Where)
-		{
-		$W=[];$where='';
-		foreach($Where as $column => $criteria)
-			{
-			$criteria=$wpdb->prepare('%s',$criteria);
-			$W[]="`$column`=$criteria";
-			}
-		$where='WHERE '.implode(' AND ',$W);
-		}
-
-	$query="SELECT $cell FROM $table_name $where LIMIT 1;";
-	$cache_file=base64_encode($query);
-	$cache_file=str_replace('=','',$cache_file);
-	$cache_file='dbf1-'.substr($cache_file,-30);
-	$plugin_path=str_replace('includes/','',plugin_dir_path(__FILE__));
-	if(file_exists("$plugin_path/cache/$cache_file.dat"))
-		{
-		$Results=json_decode(file_get_contents("$plugin_path/cache/$cache_file.dat"),true);	
-		return $Results['wpdb_get_results'][0];	
-		}
-	else
-		{
-		$Results['query']=$query;
-		$Results['wpdb_get_results'] = $wpdb->get_results($query,ARRAY_A);	
-		if(isset($Results['wpdb_get_results'][0]))
-			{
-			$cache_out=json_encode($Results);
-			write_cache($cache_out,$cache_file);
-			return $Results['wpdb_get_results'][0];
-			}
-		else
-			{
-			return FALSE;
-			}
-		}
-	}
-
-
-
-function dbFetch1($table,$Where='',$cell='*')
-	{
-	global $wpdb;
-	$table_name = $wpdb->prefix . $table;
-	
-	if($Where)
-		{
-		$W=[];$where='';
-		foreach($Where as $column => $criteria)
-			{
-			$criteria=$wpdb->prepare('%s',$criteria);
-			$W[]="`$column`=$criteria";
-			}
-		$where='WHERE '.implode(' AND ',$W);
-		}
-
-	$query="SELECT $cell FROM $table_name $where LIMIT 1;";
-	$Results['query']=$query;
-	$Results['wpdb_get_results'] = $wpdb->get_results($query,ARRAY_A);	
-	if(isset($Results['wpdb_get_results'][0]))
-		{
-		$cache_out=json_encode($Results);
-		return $Results['wpdb_get_results'][0];
-		}
-	else
-		{
-		return FALSE;
-		}
-	}
-
-
-
-function dbFetch0($table,$Where='',$cell='*')
-	{
-	global $wpdb;
-	$table_name = $wpdb->prefix . $table;
-	
-	if($Where)
-		{
-		$W=[];$where='';
-		foreach($Where as $column => $criteria)
-			{
-			$criteria=$wpdb->prepare('%s',$criteria);
-			$W[]="`$column`=$criteria";
-			}
-		$where='WHERE '.implode(' AND ',$W);
-		}
-
-	$query="SELECT $cell FROM $table_name $where;";
-	$Results['query']=$query;
-	$Results['wpdb_get_results'] = $wpdb->get_results($query,ARRAY_A);	
-
-#	return $Results['wpdb_get_results'][0];
-	return $Results;
-	}
-
-
-
-function dbFetch($table,$Where='',$cell='*')
-	{
-	global $wpdb;
-	$table_name = $wpdb->prefix . $table;
-	$where='';
-	if($Where and $Where!='NULL')
-		{
-		$W=[];
-		foreach($Where as $column => $criteria)
-			{
-			$criteria=$wpdb->prepare('%s',$criteria);
-			$W[]="`$column`=$criteria";
-			}
-		$where='WHERE '.implode(' AND ',$W);
-		}
-
-	$query="SELECT $cell FROM $table_name $where;";
-	$Results['query']=$query;
-	$Results['wpdb_get_results'] = $wpdb->get_results($query,ARRAY_A);
-	return $Results['wpdb_get_results'];
-	}
-
-function dbFetch_cached($table,$Where='',$cell='*')
-	{
-	global $wpdb;
-	$table_name = $wpdb->prefix . $table;
-	$where='';
-	if($Where and $Where!='NULL')
-		{
-		$W=[];
-		foreach($Where as $column => $criteria)
-			{
-			$criteria=$wpdb->prepare('%s',$criteria);
-			$W[]="`$column`=$criteria";
-			}
-		$where='WHERE '.implode(' AND ',$W);
-		}
-
-	$query="SELECT $cell FROM $table_name $where;";
-	$cache_file=base64_encode($query);
-	$cache_file=str_replace('=','',$cache_file);
-	$cache_file='dbf-'.substr($cache_file,-30);
-	$plugin_path=str_replace('includes/','',plugin_dir_path(__FILE__));
-	if(file_exists("$plugin_path/cache/$cache_file.dat"))
-		{
-		$Results=json_decode(file_get_contents("$plugin_path/cache/$cache_file.dat"),true);		
-		}
-	else
-		{
-		$Results['query']=$query;
-		$Results['wpdb_get_results'] = $wpdb->get_results($query,ARRAY_A);
-		$cache_out=json_encode($Results);
-		write_cache($cache_out,$cache_file);
-		}
-
-	return $Results['wpdb_get_results'];
-#	return $Results;
-	}
 
 
 function getPrintR($array)
@@ -2838,27 +3227,4 @@ function getPrintR($array)
     }
 
 
-function write_cache($data,$file_name)
-	{	
-	$plugin_path=str_replace('includes/','',plugin_dir_path(__FILE__));
-	if(substr($file_name,4)!='.dat')
-		{
-		$file_name.='.dat';
-		}
-	$Files=glob("$plugin_path/cache/*.dat");
-	$threshhold=strtotime('-1 hour');
-	foreach($Files as $file)
-		{
-		if(is_file($file))
-			{
-			if($threshhold >= filemtime($file))
-				{
-				unlink($file);
-				}
-			}
-		}
-	$fp = fopen("$plugin_path/cache/$file_name", "w");
-	fwrite ($fp, $data);
-	fclose ($fp);
-	}
 ?>

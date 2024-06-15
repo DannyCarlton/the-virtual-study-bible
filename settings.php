@@ -7,8 +7,8 @@ if(!defined('ABSPATH'))
 
 wp_register_style('vb-bootstrap-css', plugins_url().'/the-virtual-study-bible/css/bootstrap.css');
 wp_enqueue_style('vb-bootstrap-css');
-wp_register_style('vb-fonts-css', plugins_url().'/the-virtual-study-bible/css/fontawesome.css');
-wp_enqueue_style('vb-fonts-css');
+#wp_register_style('vb-fonts-css', plugins_url().'/the-virtual-study-bible/css/fontawesome.css');
+#wp_enqueue_style('vb-fonts-css');
 wp_register_style('vb-logofont-css', plugins_url().'/the-virtual-study-bible/css/logofont.css');
 wp_enqueue_style('vb-logofont-css');
 wp_register_style('vb-stepwizard-css', plugins_url().'/the-virtual-study-bible/css/stepwizard.css');
@@ -29,7 +29,7 @@ wp_enqueue_script('vb-stepwizard-js');
 include_once(plugin_dir_path(__FILE__).'includes/modules.php');
 include_once(plugin_dir_path(__FILE__).'includes/functions.php');
 
-$virtual_bible_page_name=virtual_bible_getMeta('page_name');
+$virtual_bible_page_name=$_vb->getMeta('page_name');
 if(!$virtual_bible_page_name){$virtual_bible_page_name='Study Bible';}
 $virtual_bible_page_name_slug=sanitize_title($virtual_bible_page_name);
 
@@ -43,7 +43,7 @@ while ($file = readdir($_handle))
 		$_name=str_replace('.xml','',$file);
 		$Modules[$_name]=[];
 		$Modules[$_name]['file']=$file;
-		$Modules[$_name]['installed']=virtual_bible_is_module_installed($_name);
+		$Modules[$_name]['installed']=$_vbm->is_module_installed($_name);
 		$__moduleData=simplexml_load_file($module_path.$file, 'SimpleXMLElement', LIBXML_NOCDATA);
 		$Modules[$_name]['type']=(string)$__moduleData->type;
 		$Modules[$_name]['description']=(string)$__moduleData->description;
@@ -54,11 +54,10 @@ while ($file = readdir($_handle))
 		}
 	}
 closedir($_handle);
-#write_log($Modules);
 
-$virtual_bible_traditional_select=virtual_bible_getMeta('style_traditional');
-$virtual_bible_paragraph_select=virtual_bible_getMeta('style_paragraph');
-$virtual_bible_reader_select=virtual_bible_getMeta('style_reader');
+$virtual_bible_traditional_select=$_vb->getMeta('style_traditional');
+$virtual_bible_paragraph_select=$_vb->getMeta('style_paragraph');
+$virtual_bible_reader_select=$_vb->getMeta('style_reader');
 
 $virtual_bible_settings_nonce=wp_create_nonce('virtual bible settings');
 
@@ -200,11 +199,11 @@ if(isset($_POST['virtual-bible-post-submitted']))
 											{	
 											if($Module['installed']!='')
 												{
-												echo virtual_bible_module_installed_html($_name,$Module['color'],$Module['icon'],$Module['title'],$Module['description'],plugin_dir_url(__FILE__),$Module['installed']);
+												echo $_vbm->module_installed_html($_name,$Module['color'],$Module['icon'],$Module['title'],$Module['description'],plugin_dir_url(__FILE__),$Module['installed']);
 												}
 											else
 												{
-												echo virtual_bible_module_uninstalled_html($_name,$Module['color'],$Module['icon'],$Module['title'],$Module['description'],plugin_dir_url(__FILE__));
+												echo $_vbm->module_uninstalled_html($_name,$Module['color'],$Module['icon'],$Module['title'],$Module['description'],plugin_dir_url(__FILE__));
 												}								 											
 											}
 										}
@@ -234,11 +233,11 @@ if(isset($_POST['virtual-bible-post-submitted']))
 											{
 											if($Module['installed']!='')
 												{
-												echo virtual_bible_module_installed_html($_name,$Module['color'],$Module['icon'],$Module['title'],$Module['description'],plugin_dir_url(__FILE__),$Module['installed']);
+												echo $_vbm->module_installed_html($_name,$Module['color'],$Module['icon'],$Module['title'],$Module['description'],plugin_dir_url(__FILE__),$Module['installed']);
 												}
 											else
 												{
-												echo virtual_bible_module_uninstalled_html($_name,$Module['color'],$Module['icon'],$Module['title'],$Module['description'],plugin_dir_url(__FILE__));
+												echo $_vbm->module_uninstalled_html($_name,$Module['color'],$Module['icon'],$Module['title'],$Module['description'],plugin_dir_url(__FILE__));
 												}	
 											}
 										}
@@ -419,13 +418,21 @@ if(isset($_POST['virtual-bible-post-submitted']))
 								<?php
 								foreach($Modules as $_name=>$Module)
 									{
-									if($Module['installed']!='')
+									if($Module['installed']=='installed')
 										{
 										echo "
-										<button type=\"button\" class=\"btn btn-{$Module['color']}-faded pill border-{$Module['color']} btn-module dark\" style=\"text-shadow:1px 1px 5px rgba(0, 0, 0, 0.56)\">
+										<button type=\"button\" class=\"btn btn-{$Module['color']}-faded pill border-{$Module['color']} btn-module dark button-{$_name}\" style=\"text-shadow:1px 1px 5px rgba(0, 0, 0, 0.56)\">
 											<i class=\"fa-solid fa-{$Module['icon']}\"></i> &nbsp;
 											{$Module['title']}
 										</button>";
+										}
+									else
+										{
+										echo "
+										<button type=\"button\" class=\"btn btn-{$Module['color']}-faded pill border-{$Module['color']} btn-module dark button-{$_name}\" style=\"text-shadow:1px 1px 5px rgba(0, 0, 0, 0.56);display:none\">
+											<i class=\"fa-solid fa-{$Module['icon']}\"></i> &nbsp;
+											{$Module['title']}
+										</button>";										
 										}
 									}
 								?>
@@ -515,12 +522,12 @@ window.addEventListener('load',function()
 			{
 			if($Module['type']=='Basic')
 				{
-				echo virtual_bible_module_uninstalled_js($_name,plugin_dir_url(__FILE__));
+				echo $_vbm->module_uninstalled_js($_name,plugin_dir_url(__FILE__));
 				}
 			else
 				{
-				echo virtual_bible_module_uninstalled_js($_name,plugin_dir_url(__FILE__));
-				echo virtual_bible_module_installed_js($_name,plugin_dir_url(__FILE__));
+				echo $_vbm->module_uninstalled_js($_name,plugin_dir_url(__FILE__));
+				echo $_vbm->module_installed_js($_name,plugin_dir_url(__FILE__));
 
 				}
 
@@ -533,9 +540,9 @@ window.addEventListener('load',function()
 		var nonce_url = "<?php echo wp_nonce_url(plugin_dir_url(__FILE__).'ajax/select-unselect-style.php','select-unselect-style'); ?>";
 		e.preventDefault();
 		var virtual_bible_style_selected=$(this).attr('id');
-		console.log(virtual_bible_style_selected);
+//		console.log(virtual_bible_style_selected);
 		var target=virtual_bible_style_selected.replace('virtual-bible-style-','');
-		console.log('target='+target);
+//		console.log('target='+target);
 		$.ajax(
 			{
 			type: 'POST',

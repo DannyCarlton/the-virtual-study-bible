@@ -23,7 +23,7 @@ if(isset($_GET['_vbnonce']) and $_GET['_vbnonce']=='1234567')
 if($verify)
 	{
 	$plugin_url=str_replace('includes/','',plugin_dir_url(__FILE__));
-	$page_name=virtual_bible_getMeta('page_name');
+	$page_name=$_vb->getMeta('page_name');
 	$page_slug=sanitize_title($page_name);
 	$page_url=site_url().'/'.$page_slug.'/';
 	$_vb = new virtual_bible();

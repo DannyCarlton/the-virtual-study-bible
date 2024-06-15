@@ -7,77 +7,35 @@ https://codex.wordpress.org/I18n_for_WordPress_Developers								← For allowin
 https://make.wordpress.org/core/handbook/testing/automated-testing/phpunit/				← Creating a testing environment
 
 TODAY...  
-	"who art"
-	icon for interlinear
-	use gears for page load
-		hide just verse and tools pane on page load.
-		Try to make filler image
+	Help pages 
+	♥ Contribute page 
 	Make help popovers for the various parts 
-	dictionary has two entries for some words.
-	Consolidate all styles (other than passage styles) into one file.
-	Consolidate as much js as possible into one file.
-	move text to templates
-	Newer modules may require a specific update of the plugin to work.
-	Scrape BLB interlinear (wlc/kjv) to get proper keying of phrases
-	provide link to study bible start page
+	Show only enabled features in splash page helps
 	
 
-ERRORS... 
-	Step#4 not showing installed modules unless reloaded
-	lexicon 07474 (word search love) ra`yah links 07453 which shows 0reya2 as a strong's word 
-	word tools lexicon, greek links don't work
-	Song of Solomon: No outline
-	Colossians 1:2 missing from Greek (may not be the only verse missing)
-	James: no xref
+ERRORS...  
+	Changing passage Style on splash page causes JS error 
+	So does Link Keyed 
+	John 3: space between first and second letter
 
 
 TO DO IN NEXT UPDATE...
+	dictionary has two entries for some words.
+	James: no xref
+	Scrape BLB interlinear (wlc/kjv) to get proper keying of phrases
 	Word Search 
 		List related words. (love: loves, loveth; get list of lexicon entries, then list of words those entries are linked to)
 	makes strongs apply to entire phrase
 	topics!
+	Newer modules may require a specific update of the plugin to work.
 
 
-
-
-TO DO... 
-	Tools pane... 
-		main (for help)
-		*Introduction 
-		Outline (adjust css)
-		Hebrew/Greek.
-	tag/trigger strong's 
-	tag/trigger dictionary words 
-	move long variables to a class
-	If just 1 or 2 verse...
-	Paragraph Style 
-	Reader Style 
-	Maybe show xref verse as tooltip 
-	tablet and mobile layouts
-
-LATER...
-
-NOTES...
-	Stepwizard positions page at the top of the form... 
-		form can be moved to the top of the page, or to the top of the wizard (below the title)
-	For strong's and Easton, popovers instead of right margin.
 			
 
 
 
 
 https://developer.wordpress.org/plugins/plugin-basics/
-
-Redesign virtualbible.org as a plugin site.
-
-The current form of the Settings page... 
-	Once installed, use a different format to show 
-		modules (installed, not installed, with new modules highlighted.)
-		Styles used and new styles available.
-Fontawesome rotating arrows on submit button 
-Use wordpress user id to save individual user choices.
-If not logged in ??
-
 
 
 https://www.sitepoint.com/how-to-use-ajax-in-wordpress-a-real-world-example/
@@ -89,48 +47,6 @@ https://wpmudev.com/blog/using-ajax-with-wordpress/
 https://www.codetab.org/tutorial/wordpress-plugin-development/ajax/wordpress-ajax/
 
 
-Step #1... 
-	Get plugin to install... 
-Step #2... 
-	Display Dashboard...
-		Modules...
-		Help...
-		(link to) Settings...
-		(link t) Contribute...
-Step #3...
-	Load modules.
-
-
-
-
-
-What the plugin should do... 
-	Installation... 
-		create needed database tables...
-			kjvs,books,
-			USed for PIM: av,av_coding_json,books,commentary_*,easton_dic,intro_gty,kjv_books,kjv_ref,lex_greek,lex_hebrew,outline,text_greek,text_hebrew,text_kjv,xref_holman
-		import data for database tables.
-			kjvs, books, strong's, Easton, 
-			kjvs (add paragraph markings) [in the future: add italicized, words in red, poetry]
-			[outline, thompson, akjv, websters, geneva, margin notes, ylt]
-		Create page for accessing data.
-	When active... 
-		Display splash page.
-		provide reference search.
-		provide keyword search.
-		Display search results.
-		passage... 
-			In column with xref.
-		word search... 
-			As verses with word in bold.
-			Linked to verse in context (full chapter with the verse highlighted)
-		Two column display... 
-			Verses (with xref) on the left.
-			Study elements on the right.
-		Links words to Strong's definitions.
-		Links words to Easton definitions.
-	Settings Page... 
-		Xxx
 
 
 register_activation_hook( __FILE__, 'virtual_bible_load_db_books');

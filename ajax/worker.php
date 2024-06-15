@@ -18,7 +18,7 @@ if(isset($_GET['function']))
 		{
 		if($_GET['function']=='settings_watch')
 			{
-			if(virtual_bible_is_module_installed('kjvs') and virtual_bible_is_module_installed('strongs'))
+			if($_vbm->is_module_installed('kjvs') and $_vbm->is_module_installed('strongs'))
 				{
 				echo 'installed';
 				}
@@ -35,21 +35,18 @@ if(isset($_GET['function']))
 				if($_GET['user']=='0')
 					{
 					setcookie('__vb_style',$style,time()+3600,"/");
-					#		write_log($current_user);
 					}
 				else
 					{
 					$key=$_GET['user_key'];
 					$value=$_GET['user_value'];
-					virtual_bible_putUserMeta($key,$value);
+					$_vb->putUserMeta($key,$value);
 					}
 				}
 			}
 		else
 			{
-			write_log($_GET);
 			}
-#		write_log($current_user);
 		}
 	}
 

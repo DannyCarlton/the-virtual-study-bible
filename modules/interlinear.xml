@@ -7,7 +7,7 @@
 		<![CDATA[This will load the Interlinar Hebrew/Greek text. It can be displayed alongside the English text, and the keyed words will be matched by highlighting the corresponding keyed word.<small style="display:block;">[size: 44M]</small>]]>
 	</description>
 	<color>danger</color>
-	<icon>&#038;#1488;</icon>
+	<icon>globe</icon>
 	<title>Interlinear Bible</title>
 	<load_books>TRUE</load_books>
 	<section>

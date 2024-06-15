@@ -1,11 +1,39 @@
 
-	div.study-bible-results 
+
+
+#study-bible .tools .help-title
+	{
+	margin-left:7px;
+	}
+
+#study-bible .tools .container
+	{
+	padding:0;
+	clear:both;
+	}
+
+#study-bible .tools .tab-pane
+	{
+	background-color:#fafafa;
+	}
+
+/***************************************
+      ___                 _                 
+     / _ \__   _____ _ __| | __ _ _   _ ___ 
+    | | | \ \ / / _ \ '__| |/ _` | | | / __|
+    | |_| |\ V /  __/ |  | | (_| | |_| \__ \
+     \___/  \_/ \___|_|  |_|\__,_|\__, |___/
+                                  |___/     
+
+****************************************/
+	#study-bible div.study-bible-results 
 		{
-		display:none;
 		margin:0;
+		font-family: "Montserrat", sans-serif;
 		}
 	div.study-bible-cover 
 		{
+		display:block;
 		background-color:#fff;
 		height:100vh;
 		font-family: "Montserrat", sans-serif;
@@ -17,35 +45,82 @@
 		width:100%;
 		padding-top:100px;
 		}
+	#study-bible div.start-help
+		{
+		display:none;
+		}
+
+		
+
+	#study-bible.row 
+		{
+		margin-left:0;
+		margin-right:0;
+		}
+
+
+	
+
+	.study-bible-form .bible-search-form .drop-down select#scope
+		{
+		border-bottom-left-radius:10px;
+		width:50%;
+		height:calc(1.5rem + 0.75rem + 2px);
+		padding:0.375rem 0.75rem;
+		font-size:15px;
+		line-height:1.5;
+		border:1px solid #ced4da;
+		}
+
+	.study-bible-form .bible-search-form .drop-down select#version
+		{
+		border-bottom-right-radius:10px;
+		width:50%;
+		height:calc(1.5rem + 0.75rem + 2px);
+		padding:0.375rem 0.75rem;
+		font-size:15px;
+		line-height:1.5;
+		border:1px solid #ced4da;
+		margin-left:-1px
+		}
 
 
 /***************************************
-		TOOLS
-
+    _____           _     
+   |_   _|__   ___ | |___ 
+     | |/ _ \ / _ \| / __|
+     | | (_) | (_) | \__ \
+     |_|\___/ \___/|_|___/
+                       
 ****************************************/
 
-	ul.nav.nav-tabs {
+	#study-bible .tools ul.nav.nav-tabs 
+		{
 		clear: both;
 		}
 
-	ul.nav.nav-tabs li {
+	#study-bible .tools ul.nav.nav-tabs li 
+		{
 		list-style: none;
 		float: left;
 		}   
 
-	.nav>li>a {
+	#study-bible .tools .nav>li>a 
+		{
 		position: relative;
 		display: block;
 		padding: 10px 15px;
 		}
 
-	.nav {
+	#study-bible .tools .nav 
+		{
 		padding-left: 0;
 		margin-bottom: 0;
 		list-style: none;
 		}  
 
-	.nav-tabs>li>a {
+	#study-bible .tools .nav-tabs>li>a 
+		{
 		margin-right: 2px;
 		line-height: 1.42857143;
 		border: 1px solid transparent;
@@ -54,54 +129,82 @@
 		height:100%;
 		}
 
-	.nav-tabs>li>a>h4 {
+	#study-bible .tools .nav-tabs>li>a>h4 
+		{
 		color:#777;
 		}
 
-	.nav-tabs>li.active>a>h4 {
+	#study-bible .tools .nav-tabs>li.active>a>h4 
+		{
 		color:#833;
 		}
 
-	.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+	#study-bible .tools .nav-tabs>li.active>a, #study-bible .tools .nav-tabs>li.active>a:focus, #study-bible .tools .nav-tabs>li.active>a:hover 
+		{
 		color: #000;
 		cursor: default;
-		background-color: #fff;
+		background-color: #fafafa;
 		border: 1px solid #ddd;
 		border-bottom-color: transparent;
 		position:relative;
-		z-index:101;
+		z-index:1;
 		margin-top:2px;
 		}
 
-	.nav>li {
+	#study-bible .tools .nav>li 
+		{
 		position: relative;
 		display: block;
 		}
-	.nav-tabs>li {
+
+	#study-bible .tools .nav-tabs>li 
+		{
 		float: left;
 		margin-bottom: -1px;
 		}
 
-	.nav:after, .nav:before, .navbar-collapse:after, .navbar-collapse:before, .navbar-header:after, .navbar-header:before, .navbar:after, .navbar:before, .pager:after, .pager:before, .panel-body:after, .panel-body:before, .row:after, .row:before {
+	#study-bible .tools .nav:after, 
+	#study-bible .tools .nav:before, 
+	#study-bible .tools .navbar-collapse:after, 
+	#study-bible .tools .navbar-collapse:before, 
+	#study-bible .tools .navbar-header:after, 
+	#study-bible .tools .navbar-header:before, 
+	#study-bible .tools .navbar:after, 
+	#study-bible .tools .navbar:before, 
+	#study-bible .tools .pager:after, 
+	#study-bible .tools .pager:before, 
+	#study-bible .tools .panel-body:after, 
+	#study-bible .tools .panel-body:before, 
+	#study-bible .tools .row:after, .row:before 
+		{
 		display: table;
 		content: " ";
 		}
 
-	.nav:after, .navbar-collapse:after, .navbar-header:after, .navbar:after, .pager:after, .panel-body:after, .row:after {
+	#study-bible .tools .nav:after, 
+	#study-bible .tools .navbar-collapse:after, 
+	#study-bible .tools .navbar-header:after, 
+	#study-bible .tools .navbar:after, 
+	#study-bible .tools .pager:after, 
+	#study-bible .tools .panel-body:after, .row:after 
+		{
 		clear: both;
 		} 
 
-	.nav-tabs {
+	#study-bible .tools .nav-tabs 
+		{
 		border-bottom: 1px solid #ddd;
 		} 
 
-	.nav-item.tools {
+	#study-bible .tools .nav-item.tools 
+		{
 		font-size: 12px;
 		width:50px;
 		text-align:center;
 		}
 	
-	.nav-item.tools a.nav-link {
+	#study-bible .tools .nav-item.tools a.nav-link 
+		{
 		padding: 7px 9px 7px 9px;
 		border-top-left-radius: 5px!important;
 		border-top-right-radius: 5px!important;
@@ -110,44 +213,51 @@
 		height:45px;
 		}
 	
-	.nav-item.tools a:hover.nav-link {
+	#study-bible .tools .nav-item.tools a:hover.nav-link 
+		{
 		background-color: #666666;
 		color: #fff;
 		}
 	
-	.nav-item.tools a.nav-link.active {
+	#study-bible .tools .nav-item.tools a.nav-link.active 
+		{
 		border-top-left-radius: 5px!important;
 		border-top-right-radius: 5px!important;
 		background-color: #a10f2b!important;
 		color: #fff;
 		}
 	
-	.nav-item.tools.active a.nav-link {
+	#study-bible .tools .nav-item.tools.active a.nav-link 
+		{
 		border-top-left-radius: 5px!important;
 		border-top-right-radius: 5px!important;
 		background-color: #a10f2b!important;
 		color: #fff;
 		}
 	
-	.nav-item.tools a.nav-link.active::before {
+	#study-bible .tools .nav-item.tools a.nav-link.active::before 
+		{
 		display: none;
 		}
 	
-	.nav-item.tools a:hover.nav-link.active {
+	#study-bible .tools .nav-item.tools a:hover.nav-link.active 
+		{
 		color: #fff;
 		}	
 
-	.tools a.nav-link i {
+	#study-bible .tools .tools a.nav-link i 
+		{
 		font-size: 25px;
 		}
 
-
-	blockquote {
+	#study-bible .tools blockquote 
+		{
 		border-color:transparent!important;
 		color:#000!important;
 		}
 
-	#outline-data .title {
+	#study-bible .tools #outline-data .title 
+		{
 		margin-bottom:7px;
 		font-weight:bold;
 		font-size:15px;
@@ -155,46 +265,52 @@
 
 
 
-	.tab-pane:not(.active) {
+	#study-bible .tools .tab-pane:not(.active) 
+		{
 		display: none;
 		}  
 
-	.tools p 
+	#study-bible .tools p 
 		{
 		line-height:1.4;
 		text-indent:20px;
 		margin:0;
 		font-family: "Montserrat", sans-serif;
 		}
-	.tools blockquote 
+
+	#study-bible .tools blockquote 
 		{
 		line-height:1.4;
 		margin-left:10px;
 		padding:0;
 		}
-	.tools blockquote:before 
+
+	#study-bible .tools blockquote:before 
 		{
 		content: "";
 		}
-	.tools blockquote p 
+
+	#study-bible .tools blockquote p 
 		{
 		margin:0;
 		}
-	.tools small 
+
+	#study-bible .tools small 
 		{
 		font-family: "Montserrat", sans-serif;
 		}
-	.tool-title 
+
+	#study-bible .tools .tool-title 
 		{
 		color:#833;
 		}
 
-	.tools
+	#study-bible .tools
 		{
 		margin-left:-15px;
 		padding-right:10px;
 		position:relative;
-		z-index:100;
+		z-index:0;
 		padding-left:30px;
 		font-size:11.5px;
 		background-color:#fafafa;
@@ -205,12 +321,38 @@
 		max-width:50%;
 		display:block;
 		}
-	.holman-xref .tools
+
+	#study-bible .start-help.tools 
+		{
+		margin-left:0;
+		padding-right:0;
+		position:relative;
+		z-index:0;
+		padding-left:0;
+		font-size:15px;
+		background-color:transparent;
+		margin-top:0;
+		border-radius:0;
+		margin-bottom: 0px;
+		padding-top:0px;
+		max-width:100%;		
+		}
+
+	#study-bible .start-help.tools .tab-content
+		{
+		background-color:#fafafa;
+		font-family: 'Montserrat';
+		font-size:15px;
+		position:relative;
+		z-index:0
+		}
+
+	#study-bible .holman-xref .tools
 		{
 		margin-left:-15px;
 		padding-right:10px;
 		position:relative;
-		z-index:100;
+		z-index:0;
 		padding-left:30px;
 		font-size:11.5px;
 		background-color:#fafafa;
@@ -221,28 +363,33 @@
 		max-width:47%;
 		display:block;
 		}
-	.tool-nav 
+
+	#study-bible .tools .tool-nav 
 		{
 		margin-top:-67px;
 		margin-bottom:-10px;
 		border-bottom:1px solid #fafafa;
 		}
-	.tool-nav>li>a 
+
+	#study-bible .tools .tool-nav>li>a 
 		{
 		padding:10px 15px;
 		}
-	.tool-nav>li.active>a, .tool-nav>li.active>a:focus, .tool-nav>li.active>a:hover
+
+	#study-bible .tools .tool-nav>li.active>a, 
+	#study-bible .tools .tool-nav>li.active>a:focus, 
+	#study-bible .tools .tool-nav>li.active>a:hover
 		{
 		background-color:#fafafa;
 		border:1px solid #fafafa;
 		}
-	.tool-content 
+
+	#study-bible .tools .tool-content 
 		{
 		margin-top:45px;
 		}
 
-
-	#introduction-results strong 
+	#study-bible .tools #introduction-results strong 
 		{
 		display:block;
 		text-indent:0;
@@ -253,7 +400,8 @@
 		letter-spacing:1px;
 		margin-top:10px;
 		}
-	#introduction-results h4 
+
+	#study-bible .tools #introduction-results h4 
 		{
 		text-align:center;
 		font-family:Poppins,san-serif;
@@ -261,7 +409,8 @@
 		line-height:1;
 		color:#833;
 		}
-	#introduction-results h5
+
+	#study-bible .tools #introduction-results h5
 		{
 		display:block;
 		text-indent:0;
@@ -275,23 +424,25 @@
 		color:#833;
 		background-color:#fafafa;
 		position:relative;
-		z-index:100;
+		z-index:0;
 		overflow:hidden;
 		text-transform:uppercase;
 		}
-	#introduction-results p 
+
+	#study-bible .tools #introduction-results p 
 		{
 		text-align:justify;
 		font-family: "Montserrat", sans-serif;
 		}
-	#introduction-results hr 
+
+	#study-bible .tools #introduction-results hr 
 		{
 		border:none;
 		height:1px;
 		background-color:#ddd;
 		}
 
-	#outline-results strong 
+	#study-bible .tools #outline-results strong 
 		{
 		display:block;
 		text-indent:0;
@@ -302,7 +453,8 @@
 		letter-spacing:1px;
 		margin-top:10px;
 		}
-	#outline-results h4 
+
+	#study-bible .tools #outline-results h4 
 		{
 		text-align:center;
 		font-family:Poppins,san-serif;
@@ -310,7 +462,8 @@
 		line-height:1;
 		color:#833;
 		}
-	#outline-results h5
+
+	#study-bible .tools #outline-results h5
 		{
 		display:block;
 		text-indent:0;
@@ -322,40 +475,65 @@
 		color:#833;
 		font-style:italic;
 		}
-	#outline-results p 
+
+	#study-bible .tools #outline-results td 
+		{
+		border:none;
+		font-family: "Montserrat", sans-serif;
+		line-height:1.2;
+		}
+
+	#study-bible .tools #outline-results td strong
+		{
+		border:none;
+		font-family: "Montserrat", sans-serif;
+		font-weight:700;
+		white-space:nowrap;
+		font-size:13px;
+		letter-spacing:0;
+		margin:0;
+		}
+
+	#study-bible .tools #outline-results p 
 		{
 		text-align:justify;
 		font-family: "Montserrat", sans-serif;
 		}
-	#outline-results hr 
+
+	#study-bible .tools #outline-results hr 
 		{
 		border:none;
 		height:1px;
 		background-color:#ddd;
 		}
-	#outline-results blockquote 
+
+	#study-bible .tools #outline-results blockquote 
 		{
 		line-height:1.4;
 		margin-left:20px;
 		padding:0;
 		}
-	#outline-results blockquote p
+
+	#study-bible .tools #outline-results blockquote p
 		{
 		margin:5px 0;
 		}
-	.hebrew
+
+	#study-bible .tools .hebrew
 		{
 		display:block;
 		font-family:'Times New Roman',serif;
 		text-align:right !important;
 		font-size:27px;
 		}
-	.interlinear
+
+	#study-bible .tools .interlinear
 		{
 		display:block;
 		font-family:'Times New Roman',serif;
 		}
-	.interlinear h4 
+
+	#study-bible .tools .interlinear h4 
 		{
 		text-align:center;
 		color:#800;
@@ -364,7 +542,8 @@
 		font-size:21px;
 		margin-top:-35px;
 		}
-	.hebrew-verse 
+
+	#study-bible .tools .hebrew-verse 
 		{
 		margin-right:15px;
 		line-height:.7;
@@ -373,7 +552,8 @@
 		display:flex;
 		flex-wrap:wrap;
 		}
-	.hebrew-verse-number 
+
+	#study-bible .tools .hebrew-verse-number 
 		{
 		float:right;
 		font-size:12px;
@@ -381,14 +561,16 @@
 		margin-right:-15px;
 		font-family: 'Ovo',serif;
 		}
-	.hebrew h4 
+
+	#study-bible .tools .hebrew h4 
 		{
 		text-align:center;
 		color:#800;
 		font-family: Poppins, san-serif;
 		margin-bottom:0px;
 		}
-	.int-heb-word 
+
+	#study-bible .tools .int-heb-word 
 		{
 		text-align:center;
 		padding:1px 2px;
@@ -397,26 +579,28 @@
 		border:1px solid transparent;
 		cursor:default;
 		}
-	.int-heb-word .heb
+
+	#study-bible .tools .int-heb-word .heb
 		{
 		font-size:20px;
 		font-weight:700;
 		}
-	.int-heb-word .eng
+
+	#study-bible .tools .int-heb-word .eng
 		{
 		display:block;
 		font-family: "Montserrat", sans-serif;
 		font-size:10px;
 		margin-top:4px;
 		}
-	#hebgreek-results 
+
+	#study-bible .tools #hebgreek-results 
 		{
 		margin-left:-10px;
 		margin-right:-10px;
 		}
-
 	
-	.int-gre-word 
+	#study-bible .tools .int-gre-word 
 		{
 		text-align:center;
 		padding:0 1px;
@@ -426,12 +610,14 @@
 		cursor:default;
 		line-height:.8;
 		}
-	.int-gre-word .gre
+
+	#study-bible .tools .int-gre-word .gre
 		{
 		font-size:14.5px;
 		font-weight:700;
 		}
-	.int-gre-word .eng
+
+	#study-bible .tools .int-gre-word .eng
 		{
 		display:block;
 		font-family: "Montserrat", sans-serif;
@@ -439,7 +625,7 @@
 		margin-top:4px;
 		}
 
-	.tooltip .tooltip-inner
+	.virtual-study-bible.tooltip .tooltip-inner
 		{
 		background:#fff;
 		background: linear-gradient(180deg, #fff 0%,#ffe 100%);
@@ -449,8 +635,10 @@
 		border-radius:7%;
 		line-height:1.3;
 		border: 5px ridge rgba(226, 154, 21, 0.5);
+		max-width:1000px;
 		}
-	.tooltip .tooltip-inner .hebrew
+
+	.virtual-study-bible.tooltip .tooltip-inner .hebrew
 		{
 		font-family:'Times New Roman',serif;
 		text-align:center !important;
@@ -459,7 +647,8 @@
 		font-weight:600;
 		white-space:nowrap;
 		}
-	.tooltip .tooltip-inner .greek
+
+	.virtual-study-bible.tooltip .tooltip-inner .greek
 		{
 		font-family:'Times New Roman',serif;
 		text-align:center !important;
@@ -468,31 +657,53 @@
 		font-weight:600;
 		white-space:nowrap;
 		}
-	.tooltip .tooltip-inner .trans
+
+	.virtual-study-bible.tooltip .tooltip-inner .trans
 		{
 		text-align:center;
 		font-size:13px;
 		font-style:italic;
 		margin-top:-5px;
 		}
-	.tooltip .tooltip-inner .parse
+
+	.virtual-study-bible.tooltip .tooltip-inner .parse
 		{
 		text-align:center;
 		font-size:11px;
+		max-width:200px;
+		margin-left:auto;
+		margin-right:auto;
 		}
-	.tooltip .tooltip-inner .english
+
+	.virtual-study-bible.tooltip .tooltip-inner .english
 		{
 		text-align:center;
 		white-space:nowrap;
 		font-size:17px
 		}
-	.greek
+
+	h4 .virtual-study-bible.tooltip .tooltip-inner
+		{
+		background:#800;
+		box-shadow:1px 1px 10px rgba(0,0,0,0.3);
+		font-family: "Montserrat", sans-serif;
+		color:#fff;
+		line-height:1.3;
+		border: none;
+		border-radius:7%;
+		max-width:1000px;
+		transform: translateY(-10px);
+		white-space:nowrap;
+		}
+
+	#study-bible .tools .greek
 		{
 		display:block;
 		font-family:'Times New Roman',serif;
 		font-size:19px;
 		}
-	.greek-verse 
+
+	#study-bible .tools .greek-verse 
 		{
 		line-height:1.3;
 		direction:ltr;
@@ -500,13 +711,15 @@
 		flex-wrap:wrap;
 		margin:5px;
 		}
-	.greek-verse-number 
+
+	#study-bible .tools .greek-verse-number 
 		{
 		font-size:12px;
 		margin-top:4px;
 		margin-right:-5px;
 		}
-	.greek h4 
+
+	#study-bible .tools .greek h4 
 		{
 		text-align:center;
 		color:#800;
@@ -515,23 +728,26 @@
 		margin-bottom:10px;
 		}
 	
-		#filter-results 
+	#study-bible .tools #filter-results 
 		{
 		font-family: "Montserrat", sans-serif;
 		padding-left:15px;
 		font-size:13px;
 		line-height:1.5;
 		}
-	#filter-results a
+
+	#study-bible .tools #filter-results a
 		{
 		font-weight:600;
 		padding:5px 10px;
 		}
-	#filter-results a:hover
+
+	#study-bible .tools #filter-results a:hover
 		{
 		background-color:#eee;
 		}
-	#filter-results h4
+
+	#study-bible .tools #filter-results h4
 		{
 		font-family:Poppins,san-serif;
 		font-weight:500;
@@ -541,14 +757,13 @@
 		color:#833;
 		letter-spacing:.5px;
 		}
-	.filter-results-item span 
+
+	#study-bible .tools .filter-results-item span 
 		{
 		margin-left:-10px;
 		}
-	.filter-results-item
-		{
-		}
-	#eastons-results h4
+
+	#study-bible .tools #eastons-results h4
 		{
 		font-family:Poppins,san-serif;
 		color:#833;
@@ -558,34 +773,40 @@
 		margin:0;
 		margin-top:-30px;
 		}
-	#eastons-results 
+
+	#study-bible .tools #eastons-results 
 		{
 		font-family: "Montserrat", sans-serif;
 		padding-left:15px;
 		font-size:13px;
 		line-height:1.5;
 		}
-	.word-tools-eastons-def	
+
+	#study-bible .tools .word-tools-eastons-def	
 		{
 		margin-bottom:20px;
 		}
-	#word-tools-eastons-content p	
+
+	#study-bible .tools #word-tools-eastons-content p	
 		{
 		text-align:justify;
 		margin-right:10px;
 		}
-	#word-tools-eastons-content b 
+
+	#study-bible .tools #word-tools-eastons-content b 
 		{
 		margin-left:-20px;
 		}
-	#lexicon-results 
+
+	#study-bible .tools #lexicon-results 
 		{
 		font-family: "Montserrat", sans-serif;
 		padding-left:15px;
 		font-size:13px;
 		line-height:1.5;
 		}
-	#lexicon-results h4
+
+	#study-bible .tools #lexicon-results h4
 		{
 		font-family:Poppins,san-serif;
 		color:#833;
@@ -596,7 +817,8 @@
 		margin-top:-30px;
 		margin-bottom:-10px;
 		}
-	.lexicon-results-count
+
+	#study-bible .tools .lexicon-results-count
 		{
 		font-size:16px;
 		margin-bottom:20px;
@@ -604,146 +826,191 @@
 		font-weight:650;
 		margin-left:15px;
 		}
-	.lexicon-results-item
+
+	#study-bible .tools .lexicon-results-item
 		{
 		display:block;
 		margin-top:10px;
 		font-size:14px;
 		}
-	.lexicon-results-item-header 
+
+	#study-bible .tools .lexicon-results-item-header 
 		{
 		cursor:pointer;
 		}
-	.lexicon-results-item b
+
+	#study-bible .tools .lexicon-results-item b
 		{
 		font-weight:550;
 		color:#800;
 		margin:0;
 		margin-left:15px;
 		font-size:15px;
-
 		}
-	.lexicon-results-item .orig-word
+
+	#study-bible .tools .lexicon-results-item .orig-word
 		{
 		font-family:'Times New Roman', serif;
 		font-size:21px;
 		margin-left:5px;
 		margin-right:5px;
 		}
-	.lexicon-results-item .translit
+
+	#study-bible .tools .lexicon-results-item .translit
 		{
 		font-weight:600;
 		margin-right:5px;
 		}
-	.lexicon-results-item .phonetic
-		{
-		}
-	.lexicon-results-item .pos
-		{
-		}
-	.lexicon-results-item .def
+
+	#study-bible .tools .lexicon-results-item .def
 		{
 		display:block;
 		text-indent:15px;
 		}
-	.lexicon-results-item .pos ol 
+
+	#study-bible .tools .lexicon-results-item .pos ol 
 		{
 		margin:0;
 		display:inline;
 		padding:0;
 		}
-	.lexicon-results-item .pos li 
+
+	#study-bible .tools .lexicon-results-item .pos li 
 		{
 		display:inline;
 		margin-right:5px;
 		}
-	.lexicon-results-item .pos li:after
+
+	#study-bible .tools .lexicon-results-item .pos li:after
 		{
 		content:";";
 		}
-
 	
-	#tools-overview .book-list 
+	#study-bible .tools #tools-overview .book-list 
 		{
 		padding:0 6px;
 		font-size:18px;
 		}
 
-	#how-to-search p 
+	#study-bible .start-help.tools #how-to-search p 
 		{
 		line-height:1.5;
+		text-indent:0;
 		}
 
-	#tools p 
+	#study-bible .start-help.tools #tools p 
 		{
 		line-height:1.5;
+		margin-top:20px;
+		text-indent:0;
+		margin-left:10px;
+		margin-right:10px;
+		}
+
+	
+	#study-bible .start-help.tools #tools .tools-p-header 
+		{
+		font-size:19px;
 		}
 
 /****************************************
-		POPOVER
+     ____                                     
+    |  _ \ ___  _ __   _____   _____ _ __ ___ 
+    | |_) / _ \| '_ \ / _ \ \ / / _ \ '__/ __|
+    |  __/ (_) | |_) | (_) \ V /  __/ |  \__ \
+    |_|   \___/| .__/ \___/ \_/ \___|_|  |___/
+               |_|                            
 
 *****************************************/
 
-	.popover-content 
+	#study-bible .popover-content 
 		{
 		width:400px;
 		line-height:1.3;
 		}
-	verse .popover 
+
+	#study-bible .popover.fade 
+		{
+		width:400px;
+		line-height:1.3;
+		}
+
+	#study-bible verse .popover 
 		{
 		max-width:400px;
 		box-shadow:1px 1px 10px rgba(0,0,0,0.2);
 		border-radius:10px;
 		}
-	.def .popover 
+
+	#study-bible .def .popover 
 		{
 		border-radius:10px;
 		}
-	.popover-title-strongs 
+
+	#study-bible .popover-title-strongs 
 		{
 		background-color:#800;
 		color:#fff;
 		font-size:16px;
 		font-family: "Montserrat", sans-serif;
-		padding-left:10px;
+		padding-left:0;
 		border-top-left-radius:10px;
 		border-top-right-radius:10px;
+		padding:0 15px;
 		}
-	.popover-orig-word 
+
+	#study-bible .popover-orig-word 
 		{
 		font-family:'Times New Roman',serif;
 		color:#fff;
 		}
-	.popover-title-strongs b.popover-orig-word 
+
+	#study-bible .popover-title-strongs b.popover-orig-word 
 		{
 		color:#fff;
 		margin:0;
 		font-size:22px;
 		}
-	.popover-title-strongs b 
+
+	#study-bible .popover-title-strongs b 
 		{
 		display:inline;
 		font-size:22px
 		}
-	.popover-strongs-close 
+
+	#study-bible .popover-strongs-close 
 		{
 		float:right;
-		margin-right:8px;
+		margin-right:-5px;
 		font-size:12px;
 		margin-top:2px;
 		cursor:pointer;
 		color:#fff;
 		font-family: "Montserrat", sans-serif;
 		padding-left:10px;
-	}
-	.popover-content-strongs 
+		}
+
+	#study-bible .popover-content-strongs 
 		{
 		padding:5px 15px 10px;
 		font-family: "Montserrat", sans-serif;
 		font-size:15px;
 		text-indent:0;
+		widthx:400px;
 		}
-	xref .popover.fade
+
+	#study-bible .lex-translit 
+		{
+		font-style:italic;
+		widthx:400px;
+		}
+
+	#study-bible .lex-definition 
+		{
+		widthx:400px;
+		}
+
+	#study-bible xref .popover.fade
 		{
 		max-width:300px;
 		box-shadow:1px 1px 10px rgba(0,0,0,0.2);
@@ -752,13 +1019,14 @@
 		margin-top:-10px;
 		}
 
-	xref .popover-content 
+	#study-bible xref .popover-content 
 		{
 		width:300px;
 		line-height:1.3;
 		border-radius:10px;
 		}
-	.popover-xref-close 
+
+	#study-bible .popover-xref-close 
 		{
 		float:right;
 		margin-right:-12px;
@@ -769,7 +1037,8 @@
 		font-family: "Montserrat", sans-serif;
 		padding-left:10px;
 		}
-	.popover-content-xref 
+
+	#study-bible .popover-content-xref 
 		{
 		padding:15px 20px;
 		font-family: 'Ovo',serif;
@@ -780,25 +1049,30 @@
 		border-radius:10px;
 		border:1px solid #ccc;
 		}
-	.popover-content-xref verse
+
+	#study-bible .popover-content-xref verse
 		{
 		display:inline;
-		text-align:none;
-		text-indent:none;
+		text-indent:0;
 		}
-	.popover-content-xref sup
+
+	#study-bible .popover-content-xref sup
 		{
 		font-size:9px;
 		}
 
 /*****************************************
-		FORM
+     _____ _            ____                      _       _____                    
+    |_   _| |__   ___  / ___|  ___  __ _ _ __ ___| |__   |  ___|__  _ __ _ __ ___  
+      | | | '_ \ / _ \ \___ \ / _ \/ _` | '__/ __| '_ \  | |_ / _ \| '__| '_ ` _ \ 
+      | | | | | |  __/  ___) |  __/ (_| | | | (__| | | | |  _| (_) | |  | | | | | |
+      |_| |_| |_|\___| |____/ \___|\__,_|_|  \___|_| |_| |_|  \___/|_|  |_| |_| |_|
 
 ****************************************/
 
 
 
-	.bible-search-form {
+	.study-bible-form .bible-search-form {
 		text-align:left!important;
 		position:relative;
 		padding-right:15px;
@@ -808,10 +1082,11 @@
 		max-width:56.5%;
 		}
 
-	.study-bible-form-row 
+	.study-bible-form .study-bible-form-row 
 		{
 		width:100%;
 		}
+
 	.study-bible-form 
 		{
 		width:100%;
@@ -819,21 +1094,21 @@
 		margin-bottom:10px;
 		}
 
-	#form-fieldsets 
+	.study-bible-form #form-fieldsets 
 		{
 		max-width:45%;
 		padding-right:0;
 		padding-left:30px;
 		}
-
 	
-	.btn-strongs 
+	.study-bible-form .btn-strongs 
 		{
 		color:#fff;
 		background-color:#833;
 		border-color:#833;
 		}
-	.btn-none 
+
+	.study-bible-form .btn-none 
 		{
 		color:#000;
 		background-color:#eee;
@@ -842,82 +1117,139 @@
 
 
 /****************************************
-		MODALS
-
+     __  __           _       _     
+    |  \/  | ___   __| | __ _| |___ 
+    | |\/| |/ _ \ / _` |/ _` | / __|
+    | |  | | (_) | (_| | (_| | \__ \
+    |_|  |_|\___/ \__,_|\__,_|_|___/
+                                
 ****************************************/
 
-	#modal a {
+	#vb-book-list-modal a 
+		{
 		color:#a10f2b;
 		text-decoration:none;
 		}
 
-	#modal a:hover {
+	#vb-book-list-modal a:hover 
+		{
 		text-decoration:underline;
 		}
 
 
+
+
 /***************************************
-		PAGINATION
+     ____             _             _   _             
+    |  _ \ __ _  __ _(_)_ __   __ _| |_(_) ___  _ __  
+    | |_) / _` |/ _` | | '_ \ / _` | __| |/ _ \| '_ \ 
+    |  __/ (_| | (_| | | | | | (_| | |_| | (_) | | | |
+    |_|   \__,_|\__, |_|_| |_|\__,_|\__|_|\___/|_| |_|
+                |___/                                 
 
 ***************************************/
 
 
-.pagination {
-	display:flex;
-	padding-left:0;
-	list-style:none;
-	border-radius:0.25rem;
-	}
-.page-item.active .page-link {
-	background:#fff;
-	border-color:#fff;
-	color:#ae3535;
-	border-radius:3px;
-	}
-.page-item .page-link:hover {
-	background:#cc1133;
-	color:#fff;
-}
-.page-link {
-	background:#ae3535;
-	color:#fff;
-	border-color:#ae3535;
-	position:relative;
-	display:block;
-	margin-left:-1px;
-	padding:0.25rem 0.5rem;
-	font-size:.875rem;
-	line-height:1.5;
-	}
-a.page-link {
-	text-decoration: none;
-	}
+	#study-bible .pagination 
+		{
+		display:flex;
+		padding-left:0;
+		list-style:none;
+		border-radius:0.25rem;
+		}
 
-/*****************************************
-	KEYWORD RESULTS
+	#study-bible .page-item.active .page-link 
+		{
+		background:#fff;
+		border-color:#fff;
+		color:#ae3535;
+		border-radius:3px;
+		}
 
-****************************************/
+	#study-bible .page-item .page-link:hover 
+		{
+		background:#cc1133;
+		color:#fff;
+		}
 
+	#study-bible .page-link 
+		{
+		background:#ae3535;
+		color:#fff;
+		border-color:#ae3535;
+		position:relative;
+		display:block;
+		margin-left:-1px;
+		padding:0.25rem 0.5rem;
+		font-size:.875rem;
+		line-height:1.5;
+		}
 
-	.keyword-result {
-		border-bottom:1px solid #ddd;
-		margin-bottom:0;
-		padding-bottom:20px;
-		padding-top:0;
-		margin-top:0;
-		font-family: 'Ovo', serif;
-		}	
+	#study-bible a.page-link 
+		{
+		text-decoration: none;
+		}
+	
+	#study-bible .words .pagination 
+		{
+		margin-left:auto;
+		margin-right:auto;
+		margin-top:10px;
+		margin-bottom:10px;
+		justify-content:center;
+		}
 
-	.context {
-		margin-top:-100px;
-		margin-bottom:100px;
+	#study-bible .words .pagination .page-item .page-link
+		{
+		background-color:#fff;
+		color:#800;
+		border-color:#ddd;
+		font-family: "Montserrat", sans-serif;
+		font-weight:450;
+		width:40px;
+		text-align:center;
+		white-space:nowrap;
+		}
+
+	#study-bible .words .pagination .page-item.active .page-link
+		{
+		background-color:#800;
+		color:#fff;
+		}
+
+	#study-bible .words .pagination .page-item.first .page-link
+		{
+		border-top-left-radius:15px;
+		border-bottom-left-radius:15px;
+		padding-left:15px;
+		}
+
+	#study-bible .words .pagination .page-item.last .page-link
+		{
+		border-top-right-radius:15px;
+		border-bottom-right-radius:15px;
+		padding-right:28px;
 		}
 
 
 /******************************************
-			TRADITIONAL
+   _____              _ _ _   _                   _ 
+  |_   _| __ __ _  __| (_) |_(_) ___  _ __   __ _| |
+    | || '__/ _` |/ _` | | __| |/ _ \| '_ \ / _` | |
+    | || | | (_| | (_| | | |_| | (_) | | | | (_| | |
+    |_||_|  \__,_|\__,_|_|\__|_|\___/|_| |_|\__,_|_|
 
 *******************************************/
+
+	#study-bible #results-header 
+		{
+		padding:00;
+		margin:0;
+		border-bottom:1px solid #ddd;
+		margin-bottom:20px;
+		}
+
+
 
 	.study-bible.traditional verses
 		{
@@ -960,6 +1292,11 @@ a.page-link {
 		margin-right:0px;
 		line-height:75px;
 		margin-left:-6px;
+		}
+
+	.study-bible.traditional .first-word .first-letter
+		{
+		display:none;
 		}
 
 	.study-bible.traditional .first-verse .first-word
@@ -1080,8 +1417,13 @@ a.page-link {
 
 
 /*******************************************************
-		PARAGRAPH
-	
+    ____                                       _     
+    |  _ \ __ _ _ __ __ _  __ _ _ __ __ _ _ __ | |__  
+    | |_) / _` | '__/ _` |/ _` | '__/ _` | '_ \| '_ \ 
+    |  __/ (_| | | | (_| | (_| | | | (_| | |_) | | | |
+    |_|   \__,_|_|  \__,_|\__, |_|  \__,_| .__/|_| |_|
+                          |___/          |_|          
+						
 ********************************************************/
 
 	.study-bible.paragraph verses
@@ -1149,10 +1491,10 @@ a.page-link {
 
 	.study-bible.paragraph .first-letter
 		{
-		display:inline;
+		display:none;
 		}
 
-	.study-bible.paragraph .first-letter
+	.study-bible.paragraph .first-word .first-letter
 		{
 		display:inline;
 		margin:0!important;
@@ -1179,8 +1521,6 @@ a.page-link {
 		display:none;
 		}
 
-
-
 	xref 
 		{
 		display:block;
@@ -1197,16 +1537,16 @@ a.page-link {
 		}
 
 	.verse xref b 
-			{
-			margin-right:0px;
-			display:inline!important;
-			font-size:12px;
-			}
+		{
+		margin-right:0px;
+		display:inline!important;
+		font-size:12px;
+		}
 	
 	xref a 
-			{
-			color:#555;
-			}
+		{
+		color:#555;
+		}
 	
 
 
@@ -1221,7 +1561,11 @@ a.page-link {
 
 
 /*******************************************************
-		READER
+   _____ _            ____                _           _       ____  _ _     _      
+  |_   _| |__   ___  |  _ \ ___  __ _  __| | ___ _ __( )___  | __ )(_) |__ | | ___ 
+    | | | '_ \ / _ \ | |_) / _ \/ _` |/ _` |/ _ \ '__|// __| |  _ \| | '_ \| |/ _ \
+    | | | | | |  __/ |  _ <  __/ (_| | (_| |  __/ |    \__ \ | |_) | | |_) | |  __/
+    |_| |_| |_|\___| |_| \_\___|\__,_|\__,_|\___|_|    |___/ |____/|_|_.__/|_|\___|
 	
 ********************************************************/
 
@@ -1233,7 +1577,7 @@ a.page-link {
 		border-radius:10px
 		}
 
-	.study-bible.reading .tools 
+	#study-bible .study-bible.reading .tools 
 		{
 		display:none;
 		}
@@ -1248,16 +1592,26 @@ a.page-link {
 		display:none;
 		}
 
+	.study-bible.reading outline .avoid-break
+		{
+		display:inline-block;
+		}
+
 	.study-bible.reading outline.pos-0 
 		{
 		display:block;
 		width:100%;
 		text-align:center;
-		margin-top:-65px;
 		font-family: "Montserrat", sans-serif;
 		color:#800;
 		font-size:21px;
 		letter-spacing:-.5px;
+		font-weight:200;
+		margin-bottom:10px;
+		max-width:80%;
+		margin-left:auto;
+		margin-right:auto;
+		line-height:1.3;
 		}
 
 	.study-bible.reading b.verse-number 
@@ -1287,6 +1641,11 @@ a.page-link {
 		color:#800;
 		}
 
+	.study-bible.reading .first-word .first-letter
+		{
+		display:none;
+		}
+
 	.study-bible.reading .verse:has(.A)
 		{
 		margin-left:45px!important;
@@ -1300,10 +1659,9 @@ a.page-link {
 	.study-bible.reading .bible 
 		{
 		max-width:95%;
-		}
-		
+		}		
 
-	.study-bible.reading verses 
+	.study-bible.reading div#bible.bible verses 
 		{
 		display:block;
 		font-family: 'Ovo',serif;
@@ -1352,7 +1710,15 @@ a.page-link {
 	
 
 
-
+/*******************************************************
+      ____                           _   ____  _ _     _        ____  _         _           
+     / ___| ___ _ __   ___ _ __ __ _| | | __ )(_) |__ | | ___  / ___|| |_ _   _| | ___  ___ 
+    | |  _ / _ \ '_ \ / _ \ '__/ _` | | |  _ \| | '_ \| |/ _ \ \___ \| __| | | | |/ _ \/ __|
+    | |_| |  __/ | | |  __/ | | (_| | | | |_) | | |_) | |  __/  ___) | |_| |_| | |  __/\__ \
+     \____|\___|_| |_|\___|_|  \__,_|_| |____/|_|_.__/|_|\___| |____/ \__|\__, |_|\___||___/
+                                                                      |___/             
+	
+********************************************************/
 
 
 
@@ -1360,7 +1726,7 @@ a.page-link {
 	.bible 
 		{		
 		position:relative;
-		z-index:101;
+		z-index:1;
 		background-color:#fff;
 		box-shadow:0px 0px 7px rgba(0,0,0,0.1),inset -15px 0 15px -15px rgba(0,0,0,0.2);
 		border:1px solid #ddd;
@@ -1372,7 +1738,7 @@ a.page-link {
 	.holman-xref .bible 
 		{
 		position:relative;
-		z-index:101;
+		z-index:1;
 		background-color:#fff;
 		box-shadow:0px 0px 7px rgba(0,0,0,0.1),inset -15px 0 15px -15px rgba(0,0,0,0.2);
 		border:1px solid #ddd;
@@ -1381,28 +1747,23 @@ a.page-link {
 		max-width:53%;		
 		}
 
-	div.study-bible
+	#study-bible div.study-bible
 		{
 		margin:0;
 		}
-	div.bible.row
+
+	#study-bible div.bible.row
 		{
 		margin:0;
 		display:block;
 		}
 
-
-
-	.smallcaps 
+	#study-bible .smallcaps 
 		{
 		font-variant:small-caps;
-		}
+		}		
 
-
-
-		
-
-	intro.intro
+	#study-bible intro.intro
 		{
 		display:block;
 		width:90%;
@@ -1412,13 +1773,34 @@ a.page-link {
 		font-size:16px;
 		margin-left:auto;
 		margin-right:auto;
+		}	
+	
+	#study-bible .holman-xref verses
+		{
+		border-left:1px solid #eee;
+		margin-left:14%;
+		padding-left:10px !important;
+		color:#000;
 		}
 	
+
+
+/*******************************************************
+     _  __                                _   ____                 _ _       
+    | |/ /___ _   ___      _____  _ __ __| | |  _ \ ___  ___ _   _| | |_ ___ 
+    | ' // _ \ | | \ \ /\ / / _ \| '__/ _` | | |_) / _ \/ __| | | | | __/ __|
+    | . \  __/ |_| |\ V  V / (_) | | | (_| | |  _ <  __/\__ \ |_| | | |_\__ \
+    |_|\_\___|\__, | \_/\_/ \___/|_|  \__,_| |_| \_\___||___/\__,_|_|\__|___/
+              |___/                                                   
+
+********************************************************/
+
+		
 	.words 
 		{		
 		position:relative;
 		display:block;
-		z-index:101;
+		z-index:1;
 		background-color:#fff;
 		box-shadow:0px 0px 7px rgba(0,0,0,0.1);
 		border:1px solid #ddd;
@@ -1426,6 +1808,7 @@ a.page-link {
 		padding:10px 25px 25px 25px;
 		margin:0;
 		}
+
 	.word-results
 		{
 		display:block;
@@ -1438,6 +1821,7 @@ a.page-link {
 		border-bottom:1px solid #ddd;
 		padding-bottom:10px;
 		}
+
 	.word-results-reference 
 		{
 		font-weight:bold;
@@ -1446,20 +1830,24 @@ a.page-link {
 		font-size:15px;
 		color:#800;
 		}
+
 	.word-results-reference .in-context 
 		{
 		float:right;
 		font-weight:normal;
 		font-size:12px;
 		}
+
 	.word-results-reference .in-context a
 		{
 		color:#800;
 		}
+
 	.word-results-text 
 		{
 		text-align:justify;
 		}
+
 	.word-results-title 
 		{
 		display:block;
@@ -1469,75 +1857,344 @@ a.page-link {
 		border-bottom:solid 1px #ddd;
 		margin-bottom:10px;
 		}
-	.words .pagination 
-		{
-		margin-left:auto;
-		margin-right:auto;
-		margin-top:10px;
-		margin-bottom:10px;
-		justify-content:center;
-		}
-	.words .pagination .page-item .page-link
-		{
-		background-color:#fff;
-		color:#800;
-		border-color:#ddd;
-		font-family: "Montserrat", sans-serif;
-		font-weight:450;
-		width:40px;
-		text-align:center;
-		white-space:nowrap;
-		}
-	.words .pagination .page-item.active .page-link
-		{
-		background-color:#800;
-		color:#fff;
-		}
-	.words .pagination .page-item.first .page-link
-		{
-		border-top-left-radius:15px;
-		border-bottom-left-radius:15px;
-		padding-left:15px;
-		}
-	.words .pagination .page-item.last .page-link
-		{
-		border-top-right-radius:15px;
-		border-bottom-right-radius:15px;
-		padding-right:28px;
-		}
-		
 		
 
-/********************************/
 
+
+/*******************************************************
+     _____     _     _      _   
+    |_   _|_ _| |__ | | ___| |_ 
+      | |/ _` | '_ \| |/ _ \ __|
+      | | (_| | |_) | |  __/ |_ 
+      |_|\__,_|_.__/|_|\___|\__|
+
+********************************************************/
 	
-	
-	.holman-xref verses
+
+
+	@media (max-width: 768px) and (min-width:600px)
 		{
-		border-left:1px solid #eee;
-		margin-left:14%;
-		padding-left:10px !important;
-		color:#000;
-		}
 
-	
+		#study-bible.row 
+			{
+			margin-left:0;
+			margin-right:0;
+			}
 
 
-	@media (max-width: 750px) and (min-width:600px){
+/*****************************************
+     _____ _            ____                      _       _____                    
+    |_   _| |__   ___  / ___|  ___  __ _ _ __ ___| |__   |  ___|__  _ __ _ __ ___  
+      | | | '_ \ / _ \ \___ \ / _ \/ _` | '__/ __| '_ \  | |_ / _ \| '__| '_ ` _ \ 
+      | | | | | |  __/  ___) |  __/ (_| | | | (__| | | | |  _| (_) | |  | | | | | |
+      |_| |_| |_|\___| |____/ \___|\__,_|_|  \___|_| |_| |_|  \___/|_|  |_| |_| |_|
+
+****************************************/
+
 
 		.bible-search-form {
 			flex:0 0 75%;
 			max-width: 75%;
+			}			
+
+		.study-bible-form #form-fieldsets 
+			{
+			max-width:45%;
+			padding-right:0;
+			padding-left:0px;
 			}
+
+/****************************************
+     ____                                     
+    |  _ \ ___  _ __   _____   _____ _ __ ___ 
+    | |_) / _ \| '_ \ / _ \ \ / / _ \ '__/ __|
+    |  __/ (_) | |_) | (_) \ V /  __/ |  \__ \
+    |_|   \___/| .__/ \___/ \_/ \___|_|  |___/
+               |_|                            
+
+*****************************************/
+
+		#study-bible .popover-content 
+			{
+			width:350px; 
+			}
+
+		#study-bible .popover.fade 
+			{
+			width:350px; 
+			}
+
+		#study-bible .popover-content-strongs 
+			{
+			font-size:13px; 
+			}
+
+			
+
+		xref 
+			{
+			display:block;
+			font-size:10px;
+			width:12%;
+			text-align:left;
+			line-height:.9;
+			text-indent:0;
+			margin-top:6px;
+			position:absolute;
+			left:7px;
+			font-family: 'Ovo',serif;
+			background-color:#fff;
+			}
+
+		.verse xref b 
+			{
+			font-size:10px;
+			}
+
+		#study-bible .holman-xref verses 
+			{
+			margin-left:12%;
+			padding-left:9px !important;
+			}
+
+
+
+		.study-bible.traditional verses 
+			{
+			font-size:16px;
+			}
+
+
+		.study-bible.paragraph verses 
+			{
+			font-size:16px;
+			}
+
+		.study-bible.paragraph b.verse-number 
+			{
+			font-size:8.5px;
+			}
+
+		.study-bible.reading .bible 
+			{
+			max-width:100%;
+			}
+
+		.study-bible.reading div#bible.bible verses 
+			{
+			font-size:21px;
+			}
+
+
+
+
 
 		}
 
 
-	@media (max-width: 599px){
+/*******************************************************
+     __  __       _     _ _      
+    |  \/  | ___ | |__ (_) | ___ 
+    | |\/| |/ _ \| '_ \| | |/ _ \
+    | |  | | (_) | |_) | | |  __/
+    |_|  |_|\___/|_.__/|_|_|\___|                                 
 
-		.bible-search-form {
-			flex:0 0 100%;
-			max-width: 100%;
+********************************************************/
+
+	@media (max-width: 599px)
+		{
+
+		#study-bible .tools .help-title
+			{
+			display:block;
+			font-family: "Montserrat", sans-serif;
+			font-size:13px;
+			}
+
+		#study-bible .tools .nav-tabs>li>a>h4 
+			{
+			text-align:center;
+			}
+
+		#study-bible .tools ul.nav.nav-tabs li 
+			{
+			max-width:25%;
+			width:35%;
+			}
+
+		.col-xs-1 
+			{
+			flex:0 0 8.3333%;
+			max-width:8.3333%;
+			}
+
+		.col-xs
+			{
+			flex:0 0 50%;
+			max-width:50%;
+			}
+
+		.col-xs-10 
+			{
+			flex:0 0 83.3333%;
+			max-width:83.3333%;
+			}
+
+		#study-bible #results-header 
+			{
+			margin-bottom:0;
+			padding:0 5px;
+			}
+
+		.study-bible-form .bible-search-form 
+			{
+			max-width:100%;
+			padding:0;
+			margin-bottom:10px;
+			}
+
+		.study-bible-form .vb-form-container
+			{
+			max-width:100%;
+			padding:0;
+			}
+
+		.study-bible-form .study-bible-form-row 
+			{
+			display:flex;
+			margin:0;
+			}
+
+		.study-bible-form .bible-search-form .drop-down select#version
+			{
+			font-size:12px;
+			}
+
+		.study-bible-form .bible-search-form .drop-down select#version optgroup
+			{
+			font-size:12px;
+			}
+
+		.study-bible-form #form-fieldsets 
+			{
+			max-width:100%;
+			padding-right:0;
+			padding-left:0;
+			}
+
+		#study-bible .holman-xref .tools
+			{
+			display:none;
+			}
+
+		.holman-xref .bible 
+			{
+			position:relative;
+			z-index:1;
+			background-color:#fff;
+			box-shadow:none;
+			border:none;
+			border-radius:0;
+			padding:0;
+			max-width:100%;		
+			}
+
+			
+
+		xref 
+			{
+			display:block;
+			font-size:10px;
+			width:12%;
+			text-align:left;
+			line-height:.9;
+			text-indent:0;
+			margin-top:6px;
+			position:absolute;
+			left:7px;
+			font-family: 'Ovo',serif;
+			background-color:#fff;
+			margin-left:-4.5%;
+			}
+
+		.verse xref b 
+			{
+			font-size:10px;
+			}
+
+		#study-bible .holman-xref verses 
+			{
+			margin-left:12%;
+			padding-left:9px !important;
+			}
+
+		.study-bible.paragraph b.verse-number 
+			{
+			font-size:8.5px;
+			}
+
+
+
+		.study-bible.traditional verses 
+			{
+			font-size:16px;
+			}
+
+
+		.study-bible.paragraph verses 
+			{
+			font-size:16px;
+			}
+
+		.study-bible.reading .bible 
+			{
+			max-width:100%;
+			}
+
+		.study-bible.reading div#bible.bible verses 
+			{
+			font-size:21px;
+			}
+
+		.study-bible.reading #book-name 
+			{
+			margin-left:0;
+			}
+
+		.study-bible.reading #chapter-number 
+			{
+			margin-right:0;
+			}
+
+		#study-bible .tools 
+			{
+			display:none;
+			}
+
+		#study-bible.word-search-results #passage-style 
+			{
+			display:none;
+			}
+
+		#study-bible #form-fieldsets 
+			{
+			display:block;
+			}
+
+		#study-bible #toggle-strongs-fieldset 
+			{
+			float:right;
+			display:block;
+			width:auto;
+			}
+
+		#study-bible .words 
+			{
+			box-shadow:none;
+			border:none;
+			border-radius:0;
+			padding:0;
+
 			}
 
 		}

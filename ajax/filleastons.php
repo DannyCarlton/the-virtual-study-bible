@@ -18,7 +18,7 @@ if($verify)
 	$dic_word=$_GET['keyword'];
 	$dic_word=preg_replace("/[^A-Za-z ]/",'',$dic_word);
 
-	$page_name=virtual_bible_getMeta('page_name');
+	$page_name=$_vb->getMeta('page_name');
 	$page_slug=sanitize_title($page_name);
 	$page_url=site_url().'/'.$page_slug.'/';
 	$dicWords=explode(' ',$dic_word);

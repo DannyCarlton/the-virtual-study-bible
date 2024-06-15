@@ -26,7 +26,6 @@ if($verify)
 		$Keywords=explode(' ',$keyword);
 		foreach($Keywords as $keyword)
 			{
-
 			$Entries=getLexEntriesByKeyword($keyword);
 			$word_count=count($Entries);
 			$plugin_url=str_replace('includes/','',plugin_dir_url(__FILE__));
@@ -49,23 +48,24 @@ if($verify)
 					$lan='Greek';$_l='G';
 					$table_name='virtual_bible_lexicon_greek';
 					}
-				$lexData=dbFetch1($table_name,array('id'=>$strongs));
+				$lexData=$_vb->dbFetch1($table_name,array('id'=>$strongs));
 				$orig_word=$lexData['orig_word_utf8'];
 				$translit=$lexData['translit'];
 				$phonetic=$lexData['phonetic'];
 				$pos=str_replace('\"','"',$lexData['part_of_speech']);
 				$st_def=str_replace('\"','"',$lexData['st_def']);
+				$st_def=str_replace('\\','',$st_def);
 				preg_match_all('/«(.*?)»/',$st_def,$Links);
 				foreach($Links[0] as $link)
 					{
 					$k=$link;
 					$v=str_replace('«','',$k);
 					$v=str_replace('»','',$v);
-					$st_def=str_replace($k,"<lex class=\"strongs\" strongs=\"$v\" data-toggle=\"popover\" data-placement=\"right\" onclick=\"
+					$st_def=str_replace($k,"<lex class=\"strongs\" strongs=\"$v\" data-toggle=\"popover\" data-placement=\"bottom\" data-container=\"#study-bible\" onclick=\"
 					$(this).popover
 						(
 							{
-							placement : 'right', 
+							placement : 'bottom', 
 							html: true,
 							'content' : function()
 								{

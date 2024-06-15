@@ -20,7 +20,6 @@ if($verify)
 	if(isset($_GET['keyword']))
 		{
 		$keyword=$_GET['keyword'];
-		write_log($keyword);
 		$page_url=$_GET['pageurl'];
 		$cache_file=base64_encode("$keyword");
 		$cache_file=str_replace('=','',$cache_file);

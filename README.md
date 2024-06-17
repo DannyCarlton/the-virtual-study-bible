@@ -1,1 +1,1 @@
-# the-virtual-study-bible
+# The Virtual Study Bible Wordpress Plugin

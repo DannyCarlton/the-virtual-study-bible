@@ -834,6 +834,8 @@ class virtual_bible
 						}
 					);
 				}
+		function set_lex(){}		// This prevents toggling the Link Keyed field from causing a JS error.
+		function reset_lex(){}		// Same as a above...
 		</script>
 		EOD;
 		return $virtual_bible_page;
@@ -2268,9 +2270,9 @@ $Array = parseVerseText(string $text, array $Verse, boolean $format_first_letter
 			</div>
 		</div>
 		<hr>
-		<div class="study-bible-debug" style="display:none">
+		<!-- div class="study-bible-debug" style="display:none">
 			{$_debug}
-		</div>
+		</div -->
 		{$book_list_modal}
 		{$chapter_list_modal}
 		<script>	
@@ -2285,15 +2287,18 @@ $Array = parseVerseText(string $text, array $Verse, boolean $format_first_letter
 				$('div.study-bible-results').css('filter','blur(0)');
 				$('div.study-bible-cover').fadeOut(300);
 				$('div.study-bible-debug').fadeIn(1000);
-				$(function()
-					{
-					$('[data-toggle="tooltip"]').tooltip(
+				$(
+					function()
 						{
-						'delay':{show:50,hide:1},
-						'template': '<div class="tooltip virtual-study-bible"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'
+						$('[data-toggle="tooltip"]').tooltip
+							(
+								{
+								'delay':{show:50,hide:1},
+								'template': '<div class="tooltip virtual-study-bible"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'
+								}
+							);
 						}
-					);
-					});
+				);
 				{$js}
 				}
 			);
@@ -2480,14 +2485,14 @@ $string = wordsearchResults(string $keyword, integer $scope)
 					<li class="active">
 						<a data-toggle="tab" href="#tools-overview" style="text-decoration:none" title="Tools">
 							<h4 style="margin:0;font-family: Poppins, sans-serif">
-								<i class="fas fa-wrench"></i> 
+								<i class="fas fa-wrench" data-title="<i class=\'fas fa-wrench\'></i> &nbsp;Tools" data-toggle="tooltip" data-html="true"></i> 
 							</h4>
 						</a>
 					</li>
 					<li>
 						<a id="word-tools-filter" data-toggle="tab" href="#filter-results" style="text-decoration:none" title="Filter">
 							<h4 style="margin:0;font-family: Poppins, sans-serif">
-								<i class="fas fa-filter"></i> 
+								<i class="fas fa-filter" data-title="<i class=\'fas fa-filter\'></i> &nbsp;Filter" data-toggle="tooltip" data-html="true"></i> 
 							</h4>
 						</a>
 					</li>';
@@ -2498,7 +2503,7 @@ $string = wordsearchResults(string $keyword, integer $scope)
 					<li>
 						<a id="word-tools-eastons" data-toggle="tab" href="#eastons-results" style="text-decoration:none" title="Dictionary">
 							<h4 style="margin:0;font-family: Poppins, sans-serif">
-								<i class="fas fa-book"></i>
+								<i class="fas fa-book" data-title="<i class=\'fas fa-book\'></i> &nbsp;Easton&rsquo;s Bible Dictionary" data-toggle="tooltip" data-html="true"></i>
 							</h4>
 						</a>
 					</li>';
@@ -2507,7 +2512,7 @@ $string = wordsearchResults(string $keyword, integer $scope)
 					<li>
 						<a id="word-tools-lexicon" data-toggle="tab" href="#lexicon-results"  style="text-decoration:none" title="Lexicons">
 							<h4 style="margin:0;font-family: Poppins, sans-serif">
-								<i class="fas fa-language"></i>
+								<i class="fas fa-language" data-title="<i class=\'fas fa-language\'></i> &nbsp;Lexicons" data-toggle="tooltip" data-html="true"></i>
 							</h4>
 						</a>
 					</li>
@@ -2773,9 +2778,9 @@ $string = wordsearchResults(string $keyword, integer $scope)
 		</div>
 
 		<hr>
-		<div class="study-bible-debug" style="display:none">
+		<!-- div class="study-bible-debug" style="display:none">
 			{$_debug}
-		</div>
+		</div -->
 		{$book_list_modal}
 		{$chapter_list_modal}
 		<script>	
@@ -2794,7 +2799,20 @@ $string = wordsearchResults(string $keyword, integer $scope)
 				$('#scope').prop('selectedIndex',{$scope});
 				$('#version').prop('selectedIndex','{$version}');
 				{$js}
+				$(
+					function()
+						{
+						$('[data-toggle="tooltip"]').tooltip
+							(
+								{
+								'delay':{show:50,hide:1},
+								'template': '<div class="tooltip virtual-study-bible"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'
+								}
+							);
+						}
+					);
 				}
+
 			);
 		</script>
 		EOD;

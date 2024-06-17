@@ -28,13 +28,16 @@ if(isset($_GET['_vbnonce']) and $_GET['_vbnonce']=='1234567')	//This is used int
 
 if($verify)
 	{
-	$strnum=$_GET['strongs'];
-	
+	$strnum=$_GET['strongs'];	
 	$_l=substr($strnum,0,1);
-	if($_l=='0')
+	if($_l=='0' or $_l=='H')
 		{
 		$_l='H';
 		$strnum=substr($strnum,1);
+		}
+	if($_l=='G')
+		{
+		$strnum=substr($strnum,1);		
 		}
 	elseif($_l!='H')
 		{
@@ -53,7 +56,6 @@ if($verify)
 		{
 		if($_l=='G' and $strnum>5625)
 			{
-			write_log("$_l $strnum");
 			}
 		else
 			{

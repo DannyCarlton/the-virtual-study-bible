@@ -71,7 +71,7 @@ if(isset($_GET['name']))
 				flush();
 				$table_name = 'virtual_bible_books';
 				$Books=[];
-				$_Books=dbFetch($table_name);
+				$_Books=$_vb->dbFetch($table_name);
 				foreach($_Books as $Book)
 					{
 					$bookname=$Book['book'];
@@ -174,7 +174,7 @@ if(isset($_GET['name']))
 
 	
 
-			$module_status=virtual_bible_getMeta("module_$module_name");
+			$module_status=$_vb->getMeta("module_$module_name");
 #			write_log($module_status);
 			$table_name = $wpdb->prefix . 'virtual_bible_meta';
 			if($module_status=='disabled')

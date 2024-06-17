@@ -7,8 +7,6 @@ if(!defined('ABSPATH'))
 
 wp_register_style('vb-bootstrap-css', plugins_url().'/the-virtual-study-bible/css/bootstrap.css');
 wp_enqueue_style('vb-bootstrap-css');
-#wp_register_style('vb-fonts-css', plugins_url().'/the-virtual-study-bible/css/fontawesome.css');
-#wp_enqueue_style('vb-fonts-css');
 wp_register_style('vb-logofont-css', plugins_url().'/the-virtual-study-bible/css/logofont.css');
 wp_enqueue_style('vb-logofont-css');
 wp_register_style('vb-stepwizard-css', plugins_url().'/the-virtual-study-bible/css/stepwizard.css');

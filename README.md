@@ -12,36 +12,39 @@ Variables that function as a sort of pseudo-constant (for example $_mysql) that 
 
 Also, it's easier for me to see the logic in a function or statement if I spread it out a bit vertically. This applies to both PHP and JavaScript. For example where typically coders would do this... 
 ```
-	if($some_choice){
-		$then_do_this;
-	}
+if($some_choice){
+	$then_do_this;
+}
 ```
+
 	I would structure it... 
 ```
-	if($some_choice)
-		{
-		$then_do_this;
-		} 
+if($some_choice)
+	{
+	$then_do_this;
+	} 
 ```
+
 	...and even in JavaScript, I repeat the pattern even for parentheses (most of the time) so you'd see... 
 ```			
-	$("#some-element-trigger").on
-		(
-		"click", function(e)
-			{
-			$.ajax
-				(
+$("#some-element-trigger").on
+	(
+	"click", function(e)
+		{
+		$.ajax
+			(
+				{
+				type: "GET",
+				url: nonce_url,
+				data: {keyword:keyword},
+				success: function(data)
 					{
-					type: "GET",
-					url: nonce_url,
-					data: {keyword:keyword},
-					success: function(data)
-						{
-						$("#some-element-content").html(data);
-						}
+					$("#some-element-content").html(data);
 					}
-				);
-			}
-		);
+				}
+			);
+		}
+	);
 ```
+
 Yes, not an efficient use of vertical space, but, to me, much easier to read when I'm scanning through thousands of lines of code.

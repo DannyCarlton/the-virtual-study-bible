@@ -2430,7 +2430,7 @@ $string = wordsearchResults(string $keyword, integer $scope)
 					$Parts = preg_split('/(<(?:[^"\'>]|"[^"<]*"|\'[^\'<]*\')*>)/', $text, -1, PREG_SPLIT_DELIM_CAPTURE);
 					for ($i=0; $i<count($Parts); $i+=2) 
 						{
-						$Parts[$i] = preg_replace("/\b($_keyword)\b/", "<strong>$1$2</strong>", $Parts[$i]);
+						$Parts[$i] = preg_replace("/\b($_keyword)\b/i", "<strong>$1$2</strong>", $Parts[$i]);
 						}
 					$text=implode('',$Parts);
 					}
@@ -2442,7 +2442,7 @@ $string = wordsearchResults(string $keyword, integer $scope)
 						$Parts = preg_split('/(<(?:[^"\'>]|"[^"<]*"|\'[^\'<]*\')*>)/', $text, -1, PREG_SPLIT_DELIM_CAPTURE);
 						for ($i=0; $i<count($Parts); $i+=2) 
 							{
-							$Parts[$i] = preg_replace("/\b($k)\b/", "<strong>$1</strong>", $Parts[$i]);
+							$Parts[$i] = preg_replace("/\b($k)\b/i", "<strong>$1</strong>", $Parts[$i]);
 							}
 						$text=implode('',$Parts);
 						}
@@ -2452,7 +2452,7 @@ $string = wordsearchResults(string $keyword, integer $scope)
 					$Parts = preg_split('/(<(?:[^"\'>]|"[^"<]*"|\'[^\'<]*\')*>)/', $text, -1, PREG_SPLIT_DELIM_CAPTURE);
 					for ($i=0; $i<count($Parts); $i+=2) 
 						{
-						$Parts[$i] = preg_replace("/\b($keyword)\b/", "<strong>$1</strong>", $Parts[$i]);
+						$Parts[$i] = preg_replace("/\b($keyword)\b/i", "<strong>$1</strong>", $Parts[$i]);
 						}
 					$text=implode('',$Parts);
 					}
@@ -3212,10 +3212,6 @@ $integer = wordSearchFilters(string $keyword, integer $scope=0) : returns number
 		$Results['wpdb_get_results'] = $wpdb->get_results($query,ARRAY_A);
 		return $Results['wpdb_get_results'];
 		}
-
-
-
-
 	}
 
 
@@ -3227,6 +3223,30 @@ $integer = wordSearchFilters(string $keyword, integer $scope=0) : returns number
 */
 
 
+
+function write_cache($data,$file_name)
+	{	
+	$plugin_path=str_replace('includes/','',plugin_dir_path(__FILE__));
+	if(substr($file_name,4)!='.dat')
+		{
+		$file_name.='.dat';
+		}
+	$Files=glob("$plugin_path/cache/*.dat");
+	$threshhold=strtotime('-1 hour');
+	foreach($Files as $file)
+		{
+		if(is_file($file))
+			{
+			if($threshhold >= filemtime($file))
+				{
+				unlink($file);
+				}
+			}
+		}
+	$fp = fopen("$plugin_path/cache/$file_name", "w");
+	fwrite ($fp, $data);
+	fclose ($fp);
+	}
 
 
 

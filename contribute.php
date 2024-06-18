@@ -25,6 +25,7 @@ if(!defined('ABSPATH'))
 	include_once(plugin_dir_path(__FILE__).'includes/functions.php');
 
 ?>
+<link href="https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap" rel="stylesheet" />
 <style>
 	#wpcontent
 		{
@@ -141,7 +142,7 @@ if(!defined('ABSPATH'))
 						<h4 class="poppins-black">Method #2: Opinions, Advice, Observations, Expertise!</h4>
 
 						<p style="text-align:justify;font-size:16px">
-							 The raw code of this plugin is available online at my <a href="https://github.com/DannyCarlton/the-virtual-study-bible" target="_blanl">GitHub repository</a> so  anyone can see it, review it, analyze it and see what I did wrong (or right, maybe?) I know I'm not the tightest coder so any help in improving the code would be welcome (GitHub offers links for issues and discussions, which get emailed to me.)
+							 The raw code of this plugin is available online at my <a href="https://github.com/DannyCarlton/the-virtual-study-bible" target="_blank">GitHub repository</a> so  anyone can see it, review it, analyze it and see what I did wrong (or right, maybe?) I know I'm not the tightest coder so any help in improving the code would be welcome (GitHub offers links for issues and discussions, which get emailed to me.)
 						</p>
 
 						<p style="text-align:justify;font-size:16px">
@@ -166,6 +167,10 @@ if(!defined('ABSPATH'))
 							I have an account for donations at <a href="https://ko-fi.com/dannycarltonministrysites" target="_blank">Ko-Fi-com</a>. That's generally the easiest way to send money. They've been very reliable over the years.
 						</p>
 
+						<p style="text-align:right;font-size:21px;margin-bottom:30px;">
+							&mdash;&mdash;&mdash;<span style="font-family: 'Rock Salt', cursive;font">Danny Carlton</span>
+						</p>
+
 						<p style="text-align:justify;font-size:16px">
 							&nbsp;
 						</p>
@@ -176,7 +181,7 @@ if(!defined('ABSPATH'))
 							These, and more, are included in my Ministry Portfolio at <a href="https://DannyCarlton.org" target="_blank">DannyCarlton.org</a>.
 						</p>
 
-						<div class="col-md-4 panel panel-default" style="width:30%;padding:0;height:250px;max-height:250px;margin-right:5px">
+						<div class="col-sm-3 col-md-4 panel panel-default">
 							<div class="panel-heading" style="font-weight:600;font-size:15px;padding:5px 15px">
 								<a href="https://phpBible.org" target="_blank">phpBible.org</a> 
 								<span style="font-weight:300;font-size:12px;float:right">
@@ -188,7 +193,7 @@ if(!defined('ABSPATH'))
 							</div>
 						</div>
 
-						<div class="col-md-4 panel panel-default" style="width:30%;padding:0;height:250px;max-height:250px;margin-right:5px">
+						<div class="col-sm-3 col-md-4 panel panel-default">
 							<div class="panel-heading" style="font-weight:600;font-size:15px;padding:5px 15px">
 								<a href="https://kjBible.org" target="_blank">kjBible.org</a>
 								<span style="font-weight:300;font-size:12px;float:right">
@@ -200,7 +205,7 @@ if(!defined('ABSPATH'))
 							</div>
 						</div>
 
-						<div class="col-md-4 panel panel-default" style="width:30%;padding:0;height:250px;max-height:250px;margin-right:5px">
+						<div class="col-sm-3 col-md-4 panel panel-default">
 							<div class="panel-heading" style="font-weight:600;font-size:15px;padding:5px 15px">
 								<a href="https://myOpenBible.org" target="_blank">myOpenBible.org</a>
 								<span style="font-weight:300;font-size:12px;float:right">
@@ -212,7 +217,7 @@ if(!defined('ABSPATH'))
 							</div>
 						</div>
 
-						<div class="col-md-4 panel panel-default" style="width:30%;padding:0;height:250px;max-height:250px;margin-right:5px">
+						<div class="col-sm-3 col-md-4 panel panel-default">
 							<div class="panel-heading" style="font-weight:600;font-size:15px;padding:5px 15px">
 								<a href="https://NavesTopicalBible.org" targt="_blank">NavesTopicalBible.org</a>
 								<span style="font-weight:300;font-size:12px;float:right">
@@ -226,7 +231,7 @@ if(!defined('ABSPATH'))
 
 
 
-						<div class="col-md-4 panel panel-default" style="width:30%;padding:0;height:250px;max-height:250px;margin-right:5px">
+						<div class="col-sm-3 col-md-4 panel panel-default">
 							<div class="panel-heading" style="font-weight:600;font-size:15px;padding:5px 15px">
 								<a href="https://StrongsConcordance.org" targt="_blank">StrongsConcordance.org</a>
 								<span style="font-weight:300;font-size:10px;float:right">
@@ -238,7 +243,7 @@ if(!defined('ABSPATH'))
 							</div>
 						</div>
 
-						<div class="col-md-4 panel panel-default" style="width:30%;padding:0;height:250px;max-height:250px;margin-right:5px">
+						<div class="col-sm-3 col-md-4 panel panel-default">
 							<div class="panel-heading" style="font-weight:600;font-size:15px;padding:5px 15px">
 								<a href="https://SystematicTheology.us" targt="_blank">SystematicTheology.us</a>
 								<span style="font-weight:300;font-size:12px;float:right">
@@ -250,7 +255,7 @@ if(!defined('ABSPATH'))
 							</div>
 						</div>
 
-						<div class="col-md-4 panel panel-default" style="width:30%;padding:0;height:250px;max-height:250px;margin-right:5px">
+						<div class="col-sm-3 col-md-4 panel panel-default">
 							<div class="panel-heading" style="font-weight:600;font-size:14px;padding:5px 15px">
 								<a href="https://SpurgeonsMorningandEvening.org" targt="_blank">SpurgeonsMorningandEvening.org</a>
 								<span style="font-weight:300;font-size:12px;float:right">
@@ -262,7 +267,7 @@ if(!defined('ABSPATH'))
 							</div>
 						</div>
 
-						<div class="col-md-4 panel panel-default" style="width:30%;padding:0;height:250px;max-height:250px;margin-right:5px">
+						<div class="col-sm-3 col-md-4 panel panel-default">
 							<div class="panel-heading" style="font-weight:600;font-size:15px;padding:5px 15px">
 								<a href="https://CountryHymns.com" targt="_blank">CountryHymns.com</a>
 								<span style="font-weight:300;font-size:12px;float:right">
@@ -274,7 +279,7 @@ if(!defined('ABSPATH'))
 							</div>
 						</div>
 
-						<div class="col-md-4 panel panel-default" style="width:30%;padding:0;height:250px;max-height:250px;margin-right:5px">
+						<div class="col-sm-3 col-md-4 panel panel-default">
 							<div class="panel-heading" style="font-weight:600;font-size:15px;padding:5px 15px">
 								<a href="https://MatthewHenry.uk" targt="_blank">MatthewHenry.uk</a>
 								<span style="font-weight:300;font-size:12px;float:right">
@@ -286,7 +291,7 @@ if(!defined('ABSPATH'))
 							</div>
 						</div>
 
-						<div class="col-md-4 panel panel-default" style="width:30%;padding:0;height:250px;max-height:250px;margin-right:5px">
+						<div class="col-sm-3 col-md-4 panel panel-default">
 							<div class="panel-heading" style="font-weight:600;font-size:15px;padding:5px 15px">
 								<a href="https://myBibleMemes.com" targt="_blank">myBibleMemes.com</a>
 								<span style="font-weight:300;font-size:12px;float:right">
@@ -298,7 +303,7 @@ if(!defined('ABSPATH'))
 							</div>
 						</div>
 
-						<div class="col-md-4 panel panel-default" style="width:30%;padding:0;height:250px;max-height:250px;margin-right:5px">
+						<div class="col-sm-3 col-md-4 panel panel-default">
 							<div class="panel-heading" style="font-weight:600;font-size:15px;padding:5px 15px">
 								<a href="https://Vocabularium.org" targt="_blank">Vocabularium.org</a>
 								<span style="font-weight:300;font-size:12px;float:right">
@@ -312,7 +317,7 @@ if(!defined('ABSPATH'))
 
 
 
-						<div class="col-md-4 panel panel-default" style="width:30%;padding:0;height:250px;max-height:250px;margin-right:5px">
+						<div class="col-sm-3 col-md-4 panel panel-default">
 							<div class="panel-heading" style="font-weight:600;font-size:15px;padding:5px 15px">
 								<a href="https://xmlBible.org" targt="_blank">xmlBible.org</a>
 								<span style="font-weight:300;font-size:12px;float:right">
@@ -324,7 +329,7 @@ if(!defined('ABSPATH'))
 							</div>
 						</div>
 
-						<div class="col-md-4 panel panel-default" style="width:30%;padding:0;height:250px;max-height:250px;margin-right:5px">
+						<div class="col-sm-3 col-md-4 panel panel-default">
 							<div class="panel-heading" style="font-weight:600;font-size:15px;padding:5px 15px">
 								<a href="https://osBible.org" targt="_blank">osBible.org</a>
 								<span style="font-weight:300;font-size:12px;float:right">
@@ -336,7 +341,7 @@ if(!defined('ABSPATH'))
 							</div>
 						</div>
 
-						<div class="col-md-4 panel panel-default" style="width:30%;padding:0;height:250px;max-height:250px;margin-right:5px">
+						<div class="col-sm-3 col-md-4 panel panel-default">
 							<div class="panel-heading" style="font-weight:600;font-size:15px;padding:5px 15px">
 								<a href="https://jsonBible.com" targt="_blank">jsonBible.com</a>
 								<span style="font-weight:300;font-size:12px;float:right">

@@ -825,6 +825,7 @@
 		border-bottom:1px solid #ddd;
 		font-weight:650;
 		margin-left:15px;
+		margin-top:20px;
 		}
 
 	#study-bible .tools .lexicon-results-item
@@ -1280,6 +1281,12 @@
 	.study-bible.traditional 	.verse
 		{
 		display:block;
+		}
+
+	.study-bible.traditional 	.context
+		{
+		margin-top:-200px;
+		margin-bottom:200px;
 		}
 
 
@@ -1857,8 +1864,22 @@
 		border-bottom:solid 1px #ddd;
 		margin-bottom:10px;
 		}
-		
 
+
+
+/*****************************
+
+Pushing the sidebar to the bottom for  width typically acceptable, but leaving no real room for the study bible
+
+******************************/
+		
+@media (max-width: 950px)
+	{
+	.has-sidebar main 
+		{
+		width:100%;
+		}
+	}
 
 
 /*******************************************************

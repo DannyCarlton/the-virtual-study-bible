@@ -8935,6 +8935,28 @@ h4
 	}
 
 
+div.col-sm-3.col-md-4.panel.panel-default 
+	{
+	width:30%;
+	padding:0;
+	height:250px;
+	max-height:250px;
+	margin-right:5px;
+	}
+
+
+@media only screen and (max-width: 1100px) 
+	{
+
+	div.col-sm-3.col-md-4.panel.panel-default 
+		{
+		width:45%;
+		padding:0;
+		height:250px;
+		max-height:250px;
+		margin-right:5px;
+		}
+	}
 
 
 @media only screen and (max-width: 768px) 
@@ -8947,7 +8969,6 @@ h4
 		{
 		height:400px;
 		}
-
 
 	}
 

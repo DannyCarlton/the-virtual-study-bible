@@ -17,7 +17,7 @@ if($some_choice){
 }
 </pre>
 
-	I would structure it... 
+I would structure it... 
 
 <pre>
 if($some_choice)
@@ -26,7 +26,7 @@ if($some_choice)
 	} 
 </pre>
 
-	...and even in JavaScript, I repeat the pattern even for parentheses (most of the time) so you'd see... 
+...and even in JavaScript, I repeat the pattern even for parentheses (most of the time) so you'd see... 
 
 <pre>			
 $("#some-element-trigger").on

@@ -19,16 +19,16 @@ if($some_choice){
 
 	I would structure it... 
 
-```
+<pre>
 if($some_choice)
 	{
 	$then_do_this;
 	} 
-```
+</pre>
 
 	...and even in JavaScript, I repeat the pattern even for parentheses (most of the time) so you'd see... 
 
-```			
+<pre>			
 $("#some-element-trigger").on
 	(
 	"click", function(e)
@@ -47,6 +47,6 @@ $("#some-element-trigger").on
 			);
 		}
 	);
-```
+</pre>
 
 Yes, not an efficient use of vertical space, but, to me, much easier to read when I'm scanning through thousands of lines of code.

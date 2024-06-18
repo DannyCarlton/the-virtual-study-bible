@@ -21,6 +21,7 @@ if($verify)
 	$page_name=$_vb->getMeta('page_name');
 	$page_slug=sanitize_title($page_name);
 	$page_url=site_url().'/'.$page_slug.'/';
+	$plugin_path=str_replace('ajax/','',plugin_dir_path(__FILE__));
 	$dicWords=explode(' ',$dic_word);
 	foreach($dicWords as $dic_word)
 		{
@@ -29,7 +30,7 @@ if($verify)
 		$Results = $wpdb->get_results("SELECT * from $table_name WHERE `reference` = '$dic_word' LIMIT 1;", ARRAY_A);
 		if(isset($Results[0]))
 			{
-			$regex=file_get_contents('ref-regex.tpl');
+			$regex=file_get_contents($plugin_path.'templates/ref-regex.tpl');
 			$Eastons=$Results[0];
 			$def=$Eastons['definition'];
 			$ref=$Eastons['reference'];

@@ -11,13 +11,14 @@ I like being able to tell arrays apart from simple variables, so I always used c
 Variables that function as a sort of pseudo-constant (for example $_mysql) that more or less remain unchanged throughout the script, I generally begin with a single underscore. And more recently I began formatting the variable names for objects with a capital letter and two underscores at the beginning (for example $__moduleData).
 
 Also, it's easier for me to see the logic in a function or statement if I spread it out a bit vertically. This applies to both PHP and JavaScript. For example where typically coders would do this... 
-```
+<pre>
 if($some_choice){
 	$then_do_this;
 }
-```
+</pre>
 
 	I would structure it... 
+
 ```
 if($some_choice)
 	{
@@ -26,7 +27,7 @@ if($some_choice)
 ```
 
 	...and even in JavaScript, I repeat the pattern even for parentheses (most of the time) so you'd see... 
-	
+
 ```			
 $("#some-element-trigger").on
 	(

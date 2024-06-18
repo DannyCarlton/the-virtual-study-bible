@@ -22,9 +22,11 @@ if($some_choice){
 if($some_choice)
 	{
 	$then_do_this;
-	} ```
+	} 
+```
 
 	...and even in JavaScript, I repeat the pattern even for parentheses (most of the time) so you'd see... 
+	
 ```			
 $("#some-element-trigger").on
 	(

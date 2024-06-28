@@ -11,7 +11,7 @@
 	<title>Strong’s Hebrew and Greek Lexicons</title>
 	<load_books>FALSE</load_books>
 	<section>
-		<section_name>Hebrews</section_name>
+		<section_name>Hebrew</section_name>
 		<data_source>https://cdn.virtualbible.org/virtual_bible_lex_hebrew.csv</data_source>
 		<use_fopen>TRUE</use_fopen>
 		<table_name>virtual_bible_lexicon_hebrew</table_name>

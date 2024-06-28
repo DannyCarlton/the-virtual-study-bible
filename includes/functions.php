@@ -22,8 +22,9 @@ $ScopeKey[10]='&& `book` > "58" && `book` < "66" ';
 
 
 $page_name=$_vb->getMeta('page_name');
+$virtual_bible_pageInfo=$_vb->get_page_by_title($page_name);
+$page_url=$virtual_bible_pageInfo->guid;
 $page_slug=sanitize_title($page_name);
-$page_url=site_url().'/'.$page_slug.'/';
 $reference='';
 $plugin_url=str_replace('includes/','',plugin_dir_url(__FILE__));
 
@@ -222,26 +223,27 @@ class virtual_bible
 
 	function getTools()
 		{
-		global $_vbm;
+		global $_vbm,$page_url;
 		$virtual_bible_interlinear_installed=$_vbm->is_module_installed('interlinear');
 		$virtual_bible_holman_installed=$_vbm->is_module_installed('holman');
 		$virtual_bible_eastons_installed=$_vbm->is_module_installed('eastons');
 			
 		$tools=$this->getTemplate('tools');
+		$tools=str_replace('{$page_url}',$page_url,$tools);
 		$tools.= "
 			<style>
 			";
 		if($virtual_bible_interlinear_installed!='installed')
 			{
-			$tools.= "#virtual-bible-splash-tools-interlinear {display:none;}\n";
+			$tools.= "#study-bible p#virtual-bible-splash-tools-interlinear {display:none;}\n";
 			}
 		if($virtual_bible_holman_installed!='installed')
 			{
-			$tools.= "#virtual-bible-splash-tools-holman {display:none;}\n";
+			$tools.= "#study-bible p#virtual-bible-splash-tools-holman {display:none;}\n";
 			}
 		if($virtual_bible_eastons_installed!='installed')
 			{
-			$tools.= "#virtual-bible-splash-tools-eastons {display:none;}\n";
+			$tools.= "#study-bible p#virtual-bible-splash-tools-eastons {display:none;}\n";
 			}
 		$tools.="</style>";
 		return $tools;
@@ -352,25 +354,23 @@ class virtual_bible
 		$cols=12/$column_width;
 		$rows_count=ceil(66/$cols);
 		$_book_list='';
-		$book_list.="<div class=\"col-sm-$column_width\" style=\"white-space:nowrap\" title=\"$rows_count\">";
+		$book_list.="<ul>";
 		foreach($Books as $n=>$Book)
 			{
 			if($r==$rows_count)
 				{
-				$book_list.="</div><div class=\"col-md-$column_width\" style=\"white-space:nowrap\">";
 				$r=0;
 				}
 			if(isset($Book['book']))
 				{
 				$book=$Book['book'];
 				$abbr=sanitize_title($book);
-				$_book_list.="<div class=\"col-xs col-md-$column_width\"><a href=\"$page_url?keyword=$abbr+1\">$book</a></div>\n";
-				$book_list.="<a href=\"$page_url?keyword=$abbr+1\">$book</a><br>";
+				$book_list.="<li><a href=\"$page_url?keyword=$abbr+1\">$book</a></li>\n";
 				}
 			$r++;
 			}
-		$book_list.="</div>";
-		return $_book_list;
+		$book_list.="</ul>";
+		return $book_list;
 		}
 
 
@@ -453,7 +453,8 @@ class virtual_bible
 
 	function buildForm($reference)
 		{
-		global $page_url;
+		global $page_url,$plugin_url;
+		$nonce_url_ref_guess = 	wp_nonce_url($plugin_url.'ajax/ref-guesses.php','ref_guesses');
 		if($reference)
 			{
 			$reference=str_replace('`','&quot;',$reference);
@@ -464,21 +465,34 @@ class virtual_bible
 		$form=str_replace('{$page_url}',$page_url,$form);
 		$form=str_replace('{$reference}',$reference,$form);
 		$form=str_replace('{$styles}',$styles,$form);
+		$form=str_replace('{$guess_url}',$nonce_url_ref_guess,$form);
 		return $form;
 		}
 
 
+
+		
+/********************************************************************************************
+      _           _ _     _ ____              _    _     _     _   __  __           _       _  __
+     | |__  _   _(_) | __| | __ )  ___   ___ | | _| |   (_)___| |_|  \/  | ___   __| | __ _| |/ /
+     | '_ \| | | | | |/ _` |  _ \ / _ \ / _ \| |/ / |   | / __| __| |\/| |/ _ \ / _` |/ _` | | | 
+     | |_) | |_| | | | (_| | |_) | (_) | (_) |   <| |___| \__ \ |_| |  | | (_) | (_| | (_| | | | 
+     |_.__/ \__,_|_|_|\__,_|____/ \___/ \___/|_|\_\_____|_|___/\__|_|  |_|\___/ \__,_|\__,_|_| | 
+                                                                                              \_\
+
+*********************************************************************************************/
+		
 
 
 	function buildBookListModal()
 		{
 		$book_list=$this->getBookList();
 		$book_list_modal = <<<EOD
-		<div id="vb-book-list-modal" class="modal fade-scale" style="display:none;padding-top:50px;z-index:1000;position:fixed;left:0;top:0;width:100%;height:100%;background-color:rgba(0,0,0,0.4);font-family: 'Montserrat';">
-			<div class="modal-content" style="border-radius:10px;border:1px solid:#555;width:600px;margin:auto;background-color:#fff;position:relative;padding:20px;outline:0;;font-family: 'Montserrat';box-shadow:1px 1px 30px rgba(0,0,0,0.5)">
+		<div id="vb-book-list-modal" class="modal fade-scale" style="">
+			<div class="modal-content" style="">
 				<span onclick="document.getElementById('vb-book-list-modal').style.display='none'" style="cursor:pointer;position:absolute;top:0;right:10px;font-size:19px">&times;</span>
 				<h4 style="clear:both;font-family: 'Poppins', sans-serif;margin-top:0;margin-bottom:10px;font-weight:bold">Books of the Bible</h4>
-				<div class="row" style="font-size:13px;font-family: 'Montserrat';'">
+				<div class="row" style="font-size:13px;font-family: 'Montserrat';">
 					{$book_list}
 				</div class="row">
 			</div>
@@ -513,11 +527,11 @@ class virtual_bible
 			$chapters.="<a href=\"{$page_url}?keyword=$bookname+$c\" style=\"float:left;margin:2px 10px;width:80px\">$chapname $c</a> ";
 			}
 		$chapter_list_modal = <<<EOD
-		<div id="chapters-modal" class="modal" style="display:none;padding-top:50px;z-index:1000;position:fixed;left:0;top:0;width:100%;height:100%;background-color:rgba(0,0,0,0.4);font-family: 'Montserrat';">
-			<div class="modal-content" style="border-radius:10px;border:1px solid:#555;width:600px;margin:auto;background-color:#fff;position:relative;padding:20px;outline:0;;font-family: 'Montserrat';box-shadow:1px 1px 30px rgba(0,0,0,0.5)">
+		<div id="chapters-modal" class="modal" style="display:none;padding-top:50px;z-index:1000;position:fixed;left:0;top:0;width:100%;height:100%;background-color:rgba(0,0,0,0.4);font-family: 'Montserrat';min-width:100%;">
+			<div class="modal-content" style="">
 				<span onclick="document.getElementById('chapters-modal').style.display='none'" style="cursor:pointer;position:absolute;top:0;right:10px;font-size:19px">&times;</span>
 				<h4 style="clear:both;font-family: 'Poppins', sans-serif;margin-top:0;margin-bottom:10px;font-weight:bold">Chapters in $bookname</h4>
-				<div class="row" style="font-size:13px;font-family: 'Montserrat';'">
+				<div class="row" style="font-size:13px;font-family: 'Montserrat';margin-left:-9px">
 					{$chapters}
 				</div class="row">
 			</div>
@@ -547,19 +561,17 @@ class virtual_bible
 		$tools=$this->getTools();
 		$book_list=$this->getBookList();
 		$start_help = <<<EOD
-		<section class="study-bible-tab-wrap">
-			<div class="container">
 				<ul class="nav nav-tabs" style="margin-top:40px;font-family: 'Montserrat';">
 					<li class="active nav-item">
 						<a id="how-to-search-tab" class="nav-link active" data-toggle="tab" href="#how-to-search" style="text-decoration:none">
 							<h4 style="margin:0;font-family: 'Poppins', sans-serif">
 								<i class="fas fa-search fa-flip-horizontal"></i> 
-								<span class="help-title">How to Search</span>
+								<span class="help-title">Search</span>
 							</h4>
 						</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" data-toggle="tab" href="#tools" style="text-decoration:none">
+						<a class="nav-link" data-toggle="tab" href="#start-tools" style="text-decoration:none">
 							<h4 style="margin:0;font-family: 'Poppins', sans-serif">
 								<i class="fas fa-wrench"></i>
 								<span class="help-title">Tools</span>
@@ -570,7 +582,7 @@ class virtual_bible
 						<a class="nav-link" data-toggle="tab" href="#styles" style="text-decoration:none">
 							<h4 style="margin:0;font-family: 'Poppins', sans-serif">
 								<i class="fa-solid fa-swatchbook"></i>
-								<span class="help-title">Passage Styles</span>
+								<span class="help-title">Styles</span>
 							</h4>
 						</a>
 					</li>
@@ -591,17 +603,17 @@ class virtual_bible
 								<p class="fontcolor-medium" style="margin-top:0;margin-left:10px;font-size:13px">
 									(Note: The example links have all parameter set to show the correct results.)
 								</p>
-								<h5 style="margin-bottom:5px;margin-top:15px;color:#000">The Basic Passage Search</h5>
+								<h5 style="margin-bottom:5px;margin-top:15px;">The Basic Passage Search</h5>
 								<p class="fontcolor-medium" style="margin-top:0;margin-left:20px">
 									Find exact chapters and/or verses by typing the book, chapter, and/or verse in the search box.<br>
 									<em>Examples: <a href="{$page_url}?keyword=John+3:16">John 3:16</a> <small>(for a single verse)</small> or <a href="{$page_url}?keyword=John+3">John 3</a> <small>(for the entire chapter)</small> or <a href="{$page_url}?keyword=John+3:14-18">John 3:14-18</a> <small>(for a select passage within a chapter)</small></em><br />
 									Many, commonly-used abbreviations can be recognized, so <a href="{$page_url}?keyword=Jn+3:16">Jn 3:16</a> will be recongized as John 3:16.<br />
 									<small>Note: The verse list will be included automatically when you select just the chapter, so <em><a href="{$page_url}?keyword=John+3">John 3</a></em> will become <em><a href-="{$page_url}?keyword=John+3:1-36">John 3:1-36</a></em></small></p>
-								<h5 style="margin-bottom:5px;margin-top:15px;color:#000">The Basic Keyword Search</h4>
+								<h5 style="margin-bottom:5px;margin-top:15px;">The Basic Keyword Search</h4>
 								<p class="fontcolor-medium" style="margin-top:0;margin-left:20px">
 									Find verses containing a specific word.<br>
 									<em>Example: <a href="{$page_url}?keyword=love">love</a></em></p>
-								<h5 style="margin-bottom:5px;margin-top:15px;color:#000">More Advanced Keyword Search</h4>
+								<h5 style="margin-bottom:5px;margin-top:15px;">More Advanced Keyword Search</h4>
 								<p class="fontcolor-medium" style="margin-top:0;margin-left:20px">
 									Find verses containing two or more words you want by typing them in, separated by a space.<br>
 									<em>Example: <a href="{$page_url}?keyword=christ+mercy">Christ mercy</a></em></p>
@@ -611,7 +623,7 @@ class virtual_bible
 								<p class="fontcolor-medium" style="margin-top:0;margin-left:20px">
 									Find verses containing specific sets of words<br>
 									<em>Example: <a href="{$page_url}?keyword=&quot;Jesus answered&quot;">&quot;Jesus answered&quot;</a> <small><br>(PLEASE NOTE: Due to the complexity of the database table containing the scriptures, the plugin currently can only hand a two-word combination. I hope to improve this in later updates.)</small></em></p>
-								<h5 style="margin-bottom:5px;margin-top:15px;color:#000">Using the Scope Option</h4>
+								<h5 style="margin-bottom:5px;margin-top:15px;">Using the Scope Option</h4>
 								<p class="fontcolor-medium" style="margin-top:0;margin-left:20px">
 									Use the scope drop-down menu (default is set to the Whole Bible) to limit your word search to a specific section of the Bible<br>
 									<em>Example: <a href="{$page_url}?keyword=love&scope=2">love</a> <small>(returns only instances of the word &ldquo;love&rdquo; in the New Testament)</small></em><br>
@@ -620,7 +632,7 @@ class virtual_bible
 							</div>
 						</div>
 					</div>		
-					<div id="tools" class="card tab-pane fade in show" role="tabpanel" aria-labelledby="tools-tab">	
+					<div id="start-tools" class="card tab-pane fade in show" role="tabpanel" aria-labelledby="tools-tab">	
 						<div id="tools-collapse" data-parent="#tab-content" role="tabpanel" aria-labelledby="tools-heading">
 							<div class="card-body new-card-body">
 							{$tools}
@@ -635,21 +647,21 @@ class virtual_bible
 									<div style="clear:both"></div>
 									<div class="col-md-4" style="float:left">
 										<h5 style="margin:10px 0">Traditional</h5>
-										<div style="line-height:1.3;font-size:13px;margin-bottom:20px;height:100px">
+										<div class="style-description">
 										The traditional passage style is the most common. This has been the standard layout for Bibles for centuries. The verses are separate and begin with the verse number, and the paragraphs are noted with the ¶ character.
 										</div>
 										<img src="{$plugin_url}/images/style-traditional.jpg" style="box-shadow:1px 1px 15px rgba(0,0,0,0.2);"/>
 									</div>
 									<div class="col-md-4" style="float:left">
 										<h5 style="margin:10px 0">Paragraph</h5>
-										<div style="line-height:1.3;font-size:13px;margin-bottom:20px;height:100px">
+										<div class="style-description">
 										The paragraph passage style is used in many newer translations. The text flows as paragraphs, the verses are marked by a small superscript and the chapter number appear as a large colored number.
 										</div>
 										<img src="{$plugin_url}/images/style-paragraph.jpg"  style="box-shadow:1px 1px 15px rgba(0,0,0,0.2);"/>
 									</div>
 									<div class="col-md-4" style="float:left">
 										<h5 style="margin:10px 0">Reading</h5>
-										<div style="line-height:1.3;font-size:13px;margin-bottom:20px;height:100px">
+										<div class="style-description">
 										The Reader's Bible is a very new creation. The text is laid out like a book, but with no verse markings. The book and chapter headings are displayed, but in the style of a typical book.
 										</div>
 										<img src="{$plugin_url}/images/style-reading.jpg"  style="box-shadow:1px 1px 15px rgba(0,0,0,0.2);"/>
@@ -671,8 +683,6 @@ class virtual_bible
 						</div>
 					</div>
 				</div>
-			</div>
-		</section>
 		EOD;
 		return $start_help;
 		}
@@ -761,11 +771,14 @@ class virtual_bible
 			font-weight:700;
 			display:block;
 			width:100%;
-			padding-top:100px;line-height:1;">
+			padding-top:100px;
+			line-height:1;
+			min-width:100%;
+			border-radius:20px;">
 			Loading
 		</div>
 		<div id="study-bible" class="start-page">
-			<div class="study-bible-form" style="display:none;transition:0.3s;filter: blur(5px)">
+			<div class="study-bible-form container" style="display:none;transition:0.3s;filter: blur(5px)">
 				{$form}
 			</div>
 			<div class="start-help tools" style="display:none">
@@ -785,7 +798,6 @@ class virtual_bible
 				$('div.study-bible-form').fadeIn(600);
 				$('div.study-bible-form').css('filter','blur(0)');
 				$('div.study-bible-cover').fadeOut(300);
-				$('div.study-bible-debug').fadeIn(1000);
 				setTimeout
 					(
 					function()
@@ -793,31 +805,53 @@ class virtual_bible
 						$('div.start-help').fadeIn(750);
 						},500
 					);	
-				$(".collapse.show").each
+				$('input#search-input-field').on
 					(
-					function()
+					'keydown', function(e)
 						{
-						$(this).prev(".card-header").find(".fa").addClass("fa-minus").removeClass("fa-plus");
+						var keyvalue = e.which;
+						if(keyvalue == 40)
+							{
+							e.preventDefault();
+							$('[tabindex=1]').focus();
+							}
 						}
 					);
-				$(".collapse")
-					.on
-						(
-						'show.bs.collapse',function()
+				$('#my-guesses-div').on
+					(
+					'keydown', function(e)
+						{
+						var keyvalue = e.which;
+						console.log('key value is '+keyvalue);
+						if(keyvalue == 40)	// down arrow
 							{
-							$(this).prev(".card-header").find(".fa").removeClass("fa-plus").addClass("fa-minus");
+							e.preventDefault();
+							var tabindex = $(":focus").attr('tabindex');
+							var kw=$(":focus").html();
+							tabindex++;
+							$('[tabindex='+tabindex +']').focus();
 							}
-						)
-					.on
-						(
-						'hide.bs.collaspe',function()
+						if(keyvalue == 38)	// up arrow
 							{
-							$(this).prev(".card-header").find(".fa").removeClass("fa-minus").addClass("fa-plus");
+							e.preventDefault();
+							var tabindex = $(":focus").attr('tabindex');
+							var kw=$(":focus").html();
+							tabindex--;
+							$('[tabindex='+tabindex +']').focus();
 							}
-						);
+						if(keyvalue == 13)	// return
+							{
+							e.preventDefault();
+							var kw=$(":focus").html();
+							$("#search-input-field").val(kw+' ');
+							$('#my-guesses-div').css('display','none');
+							$("#search-input-field").focus();
+							}
+						}
+					);
 				}
 			);
-
+			
 			function saveUserData(key,value)
 				{
 				var watcher_nonce_url = '{$noonce_watcher_url}';
@@ -890,7 +924,6 @@ $Array = isRef(string $keyword) : $Array['type'] as the type ('passage', 'verse'
 		$Return=[];
 		$Return['keyword']=$keyword;
 		$Ref=$this->getRefByKeyword($keyword);
-		$Return['debug']['Ref']=$Ref;
 		if(isset($Ref['bid']))
 			{
 			$bid=$Ref['bid'];
@@ -944,8 +977,6 @@ $Array = getRefByKeyword(string $k) : return Array of various properties referen
 	function getRefByKeyword($k)
 		{
 		$vid='';$_V=[];$_V2=[];$vid2='';$bid2=0;$cid2=0;
-		$_debug=[];
-		$Return['debug']['original key']=$k;
 
 		# clean up reference string
 		$_k=urldecode($k);
@@ -973,7 +1004,6 @@ $Array = getRefByKeyword(string $k) : return Array of various properties referen
 			$_k=preg_replace('/^3-/', '3 ',$_k);
 			}
 		$_k=ltrim($_k);$_k2='';
-		$Return['debug']['cleaned key']=$_k;
 		if(strstr($_k,'-'))								//This means it's a series of verses.
 			{
 			$Keys=explode('-',$_k);
@@ -996,9 +1026,7 @@ $Array = getRefByKeyword(string $k) : return Array of various properties referen
 				$toss=array_shift($Ref_keys);			//remove it and shift the array
 				$Ref_keys[0]="$num ".$Ref_keys[0];		//combine it with the new first key
 				}
-			$Return['debug']['Ref_keys']=$Ref_keys;
 			$BookData=$this->getBookIdFromVagueTitle($Ref_keys[0]);
-			$Return['debug']['BookData']=$BookData;
 			if(isset($BookData['book']))
 				{
 				$Return['bookname']=$BookData['book'];
@@ -1013,9 +1041,7 @@ $Array = getRefByKeyword(string $k) : return Array of various properties referen
 			$toss=array_shift($Ref_keys);				//Remove the book from $Ref_keys
 			$ref_key=implode($Ref_keys);				//combine to make a new refence minus the book
 			$refElements=explode(':',$ref_key);			//separate the chapter from the verse(s)
-			$Return['debug']['refElements']=$refElements;
 			$cid=(int)$refElements[0];
-			$Return['debug']['chapter']=$cid;
 
 			if($cid)
 				{
@@ -1026,7 +1052,6 @@ $Array = getRefByKeyword(string $k) : return Array of various properties referen
 			{
 			$Ref_keys=[];$bid=0;$cid=0;
 			}
-		$_debug['_k2']=$_k2;
 		if(strstr($_k2,' '))							//$k2 is the second reference of something like John 1:1-2:5
 			{
 			$Ref_keys=explode(' ',$_k2);
@@ -1040,9 +1065,7 @@ $Array = getRefByKeyword(string $k) : return Array of various properties referen
 				$toss=array_shift($Ref_keys);
 				$Ref_keys[0]="$num ".$Ref_keys[0];
 				}
-			$Return['debug']['Ref_keys2']=$Ref_keys;
 			$BookData=getBookIdFromVagueTitle($Ref_keys[0]);
-			$Return['debug']['BookData2']=$BookData;
 			if(isset($BookData['book']))
 				{
 				$Return['bookname2']=$BookData['book'];
@@ -1052,7 +1075,6 @@ $Array = getRefByKeyword(string $k) : return Array of various properties referen
 			$toss=array_shift($Ref_keys);
 			$ref_key2=implode($Ref_keys);
 			$refElements2=explode(':',$ref_key2);
-			$Return['debug']['refElements2']=$refElements2;
 			$cid=$refElements2[0];					//technically the chapter number, not id
 			$Return['chapter2']=$cid;
 			}	
@@ -1107,7 +1129,6 @@ $Array = getRefByKeyword(string $k) : return Array of various properties referen
 			}
 		elseif(isset($BookData['book']))		//Remember, we caught requests for specific verses. This is if they want an entire chapter
 			{
-			$_debug['BookData']=$BookData;
 			$finish=$this->getVersesInChapter($BookData['book'],$cid);
 			for($i=1;$i<=$finish;$i++)
 				{
@@ -1118,7 +1139,6 @@ $Array = getRefByKeyword(string $k) : return Array of various properties referen
 			}
 		if(isset($refElements2[1]))			//This is the second reference from something like John 1:1-2:5
 			{	
-			$_debug['refElements2']=$refElements2;
 			$verses2=preg_replace('/[^0-9-,]+/','',$refElements[1]);
 			if(strstr($verses,','))
 				{
@@ -1164,13 +1184,11 @@ $Array = getRefByKeyword(string $k) : return Array of various properties referen
 		if($vid)
 			{
 			$Rid=$this->getVerseIDByRef($bid,$cid,$vid);
-			$Return['debug']['getVerseIDByRef']=$Rid;
 			if(isset($Rid['text'])){$Return['rid']=$Rid['text'];}
 			}
 		if($vid2)
 			{
 			$Rid2=$this->getVerseIDByRef($bid2,$cid2,$vid2);
-			$Return['debug']['getVerseIDByRef2']=$Rid2;
 			if(isset($Rid2['text'])){$Return['rid2']=$Rid2['text'];}
 			}
 		$Return['Verses']=$_V;
@@ -1339,7 +1357,7 @@ $integer = getVerseIDByRef(integer $bid,integer $cn, integer $vn) :
 		$V=[];$table='virtual_bible_kjvs';
 		foreach($Verses as $v=>$verse)
 			{
-			if($v!='ref')
+			if(strval($v) === strval(intval($v)))
 				{
 				$V[$verse]=$this->dbFetch1($table,array('book'=>$bid,'chapter'=>$chapter,'verse'=>$verse));
 				if($virtual_bible_holman_installed)
@@ -1372,7 +1390,7 @@ $integer = getVerseIDByRef(integer $bid,integer $cn, integer $vn) :
 		$V=[];$table='virtual_bible_interlinear';
 		foreach($Verses as $v=>$verse)
 			{
-			if($v!='ref')
+			if(strval($v) === strval(intval($v)))
 				{
 				$V[$verse]=$this->dbFetch1($table,array('book'=>$bid,'chapter'=>$chapter,'verse'=>$verse));
 				}
@@ -1556,18 +1574,18 @@ $Array = parseVerseText(string $text, array $Verse, boolean $format_first_letter
 			$punctuation=rtrim($punctuation,' ');
 			$phrase.=$punctuation;
 			$strongs=$Matches[3][$p];
-			if($phrase==' '){$show_class=' h_only';$phrase='';/*$phrase='[אֵת]';*/}
+			if($phrase==' '){$show_class=' h_only';$phrase='';}
 			if($p==0 and $v==1 and $format_first_letter)	// if it's the first word of the first verse...
 				{
-				$phrase=str_replace('¶','',$phrase);			// remove the paragraph marking
+				$phrase=str_replace('¶','',$phrase);		// remove the paragraph marking
 				if($phrase!='')
 					{
 					$p_num='first-phrase';					// we will mark this word
-					$fl=substr($phrase,0,1);					// First Letter
+					$fl=substr($phrase,0,1);				// First Letter
 					$row=substr($phrase,1);					// Rest Of Word
 					$style='';$additional_class='';
-					if($fl=='A')							// of tjhe first letter is an "A"...
-						{									// Ajust the rest of the verse to wrap around it.
+					if($fl=='A')							// if the first letter is an "A"...
+						{									// Adjust the rest of the verse to wrap around it.
 						$style='style="shape-outside:polygon(50% 0%,0 100%, 100% 100%);margin-right:5px"';
 						$additional_class='A';
 						}									// ↓ style the first letter
@@ -1706,7 +1724,6 @@ $Array = parseVerseText(string $text, array $Verse, boolean $format_first_letter
 		$Return['fl']=$_fl;
 		$Return['text']=$_text;
 		$Return['phrases']=$phrases;
-#		$Return['text']=$_text.'<div style="height:50px"></div>'.$phrases;
 		return $Return;
 		}
 
@@ -1725,7 +1742,8 @@ $Array = parseVerseText(string $text, array $Verse, boolean $format_first_letter
 
 	function referenceResults($keyword)
 		{
-		global $_debug,$page_url,$current_user,$reference,$_vbm;
+		global$page_url,$current_user,$reference,$_vbm;
+		$show_interlinear=false;$interlinear='';
 		$book_list=$this->getBookList();
 		$book_list2=$this->getBookList(6);
 		$book_list_modal=$this->buildBookListModal();
@@ -1763,11 +1781,6 @@ $Array = parseVerseText(string $text, array $Verse, boolean $format_first_letter
 		$reference=$Ref['clean-ref'];
 		$form=$this->buildForm($reference);
 		$xref='';
-		if($Ref['chapter']>$Ref['debug']['BookData']['chapters'])
-			{
-			$reference="?$keyword?";
-			$results.='There was an error in your keyword reference.';
-			}
 		$Verses=$this->getVerses($Ref['bid'],$Ref['chapter'],$Ref['Verses']);
 		$bid=$Ref['bid'];$chapter=$Ref['chapter'];$clean_ref=$Ref['clean-ref'];
 		$hebgreek='';$hebrew='';$greek='';$heb_tag='';$show_hebrew=false;$show_greek=false;$show_languages=false;
@@ -1797,7 +1810,7 @@ $Array = parseVerseText(string $text, array $Verse, boolean $format_first_letter
 							$pos_word=$wordParts[4];
 							$trans_word=$wordParts[5];
 							$hebGreek[]="
-							<div class=\"int-heb-word\"  titlex=\"$trans_word\" data-toggle=\"tooltip\" data-html=\"true\" data-container=\"body\"
+							<div class=\"int-heb-word\"  titlex=\"$trans_word\" data-toggle=\"tooltip\" data-html=\"true\" data-container=\"#study-bible\"
 								data-title=\"
 									<div class='hebrew'>$hebrew_word</div>
 									<div class='trans'>$trans_word</div>
@@ -1843,7 +1856,7 @@ $Array = parseVerseText(string $text, array $Verse, boolean $format_first_letter
 							if($greek_word!=' ')
 								{
 								$hebGreek[]="
-								<div class=\"int-gre-word\"  titlex=\"$trans_word\" data-toggle=\"tooltip\" data-html=\"true\" data-container=\"body\"
+								<div class=\"int-gre-word\"  titlex=\"$trans_word\" data-toggle=\"tooltip\" data-html=\"true\" data-container=\"#study-bible\"
 									data-title=\"
 										<div class='greek'>$greek_word</div>
 										<div class='trans'>$trans_word</div>
@@ -1886,30 +1899,30 @@ $Array = parseVerseText(string $text, array $Verse, boolean $format_first_letter
 		$next_chap="{$nextChapter['booktitle']} {$nextChapter['chapter']}";
 		$gty_intro=$this->buildToolsContent($bid,'intro');
 		$gty_outline=$this->buildToolsContent($bid,'outline');
-		$_debug.="<b>\$previous_chapter</b>".getPrintR($previous_chapter);
 		$results.="
 		<div id=\"ref-results\" class=\"row study-bible $style $holman_xref_class\">
+			<input type=\"checkbox\" id=\"nav-control\" class=\"nav-control\">
+			<label for=\"nav-control\" class=\"toggle-button\">
+				<div id=\"show-tools\" style=\"margin-left:10px;font-size:11.5px;margin-bottom:0\">(Swipe page to view/hide tools)</div>
+			</label>
 			<div id=\"bible\" class=\"row bible\" >
 				<div id=\"results-header\" class=\"col-md-12 row\">
 					<div class=\"col-xs-1 col-sm-1 \" style=\"padding:10px 0;font-size:19px;\">
-						<a href=\"$page_url?keyword=$previous_chapter\" style=\"color:#000;margin-top:-5px\" title=\"$prev_chap\" >
+						<a href=\"$page_url?keyword=$previous_chapter\" style=\"color:#000;margin-top:-5px;text-decoration:none\" title=\"$prev_chap\" >
 							<i class=\"fas fa-circle-left\" style=\"display:block;margin-top:2px\"></i>
-							<!i class=\"fa-solid fa-left-long\"></i>
-							<!i class=\"fa-solid fa-circle-chevron-left\"></i>
 						</a>
 					</div>
 					<div class=\"col-xs-10 col-sm-10\" style=\"font-size:13px;padding:10px 0\">
 						<span id=\"book-name\" style=\"float:left;text-transform:uppercase;font-family:Ova\">
-							<a href=\"#\" style=\"color:#000\">$bookname</a>
+							<a href=\"#\" style=\"color:#000;text-decoration:none\">$bookname</a>
 						</span>
 						<span id=\"chapter-number\" style=\"float:right;text-transform:uppercase;font-family:Ova;cursor:pointer;\" onclick=\"document.getElementById('chapters-modal').style.display='block'\">
 							Chapter $chapter
 						</span>
 					</div>
 					<div class=\"col-xs-1 col-sm-1\" style=\"padding:10px 0;text-align:right;font-size:19px;\">
-						<a href=\"$page_url?keyword=$next_chapter\" style=\"color:#000\" title=\"$next_chap\">
+						<a href=\"$page_url?keyword=$next_chapter\" style=\"color:#000;text-decoration:none\" title=\"$next_chap\">
 							<i class=\"fas fa-circle-right\" style=\"display:block;margin-top:2px\"></i>
-							<!i class=\"fas fa-arrow-right-long\"></i>
 						</a>
 					</div>
 				</div>
@@ -1956,7 +1969,6 @@ $Array = parseVerseText(string $text, array $Verse, boolean $format_first_letter
 						$intro=str_replace(',</word> ',',</word><br />',$intro);
 						}
 					$intro="<intro class=\"intro\" title=\"$intro_width $_intro\">$intro</intro>";
-					$_debug.="<br><hr>$intro<hr><br>";
 					}
 				$height_guess=substr_count($text,' ');		//We are gussing the height of the verse, based on the number of spaces.
 				$max_xref=(ceil($height_guess/10)+1);		//We are limiting the number of xrefs shown, based on our guessed height.
@@ -2008,16 +2020,14 @@ $Array = parseVerseText(string $text, array $Verse, boolean $format_first_letter
 			</div>
 			<div class=\"col-md-12 row\" style=\"padding:0;margin:0;margin-top:20px;border-top:1px solid #ddd;\">
 				<div class=\"col-xs-1 col-md-1\" style=\"padding:10px 0;font-size:19px;\">
-					<a href=\"$page_url?keyword=$previous_chapter\" style=\"color:#000;margin-top:-5px\" title=\"$prev_chap\" >
+					<a href=\"$page_url?keyword=$previous_chapter\" style=\"color:#000;margin-top:-5px;text-decoration:none\" title=\"$prev_chap\" >
 						<i class=\"fas fa-circle-left\" style=\"display:block;margin-top:2px\"></i>
-						<!i class=\"fa-solid fa-left-long\"></i>
-						<!i class=\"fa-solid fa-circle-chevron-left\"></i>
 					</a>
 				</div>
 				<div class=\"col-xs-10 col-md-10\" style=\"font-size:13px;padding:10px 0\">
 				</div>
 				<div class=\"col-xs-1 col-md-1\" style=\"padding:10px 0;text-align:right;font-size:19px;\">
-					<a href=\"$page_url?keyword=$next_chapter\" style=\"color:#000\" title=\"$next_chap\">
+					<a href=\"$page_url?keyword=$next_chapter\" style=\"color:#000;text-decoration:none\" title=\"$next_chap\">
 						<i class=\"fas fa-circle-right\" style=\"display:block;margin-top:2px\"></i>
 						<!i class=\"fas fa-arrow-right-long\"></i>
 					</a>
@@ -2026,7 +2036,7 @@ $Array = parseVerseText(string $text, array $Verse, boolean $format_first_letter
 			<div class=\"row\" style=\"display:flex;align-self:stretch\"></div>
 		</div>";
 		$_tools = '
-				<ul class="nav nav-tabs tool-nav">
+				<ul class="nav nav-tabs tool-nav"><!-- mark -->
 					<li class="active">
 						<a data-toggle="tab" href="#tools-overview" style="text-decoration:none">
 							<h4 style="margin:0;font-family: Poppins, sans-serif">
@@ -2062,7 +2072,7 @@ $Array = parseVerseText(string $text, array $Verse, boolean $format_first_letter
 		$_tools.='
 				</ul>
 				';
-		$results.="<div class=\"tools\" >
+		$results.="<div class=\"tools navigation\" >
 				{$_tools}
 				<div class=\"tab-content tool-content\" > 
 					<div id=\"tools-overview\" class=\"tab-pane fade in active\">	
@@ -2104,146 +2114,168 @@ $Array = parseVerseText(string $text, array $Verse, boolean $format_first_letter
 				</div><!-- tool-content -->
 			</div>
 		</div>";
-		$_debug.='<b>$isRef</b>'.getPrintR($isRef);
-		$_debug.='<b>$Ref</b>'.getPrintR($Ref);
-		$_debug.='<b>$Verses</b>'.getPrintR($Verses);
 		$plugin_url=str_replace('includes/','',plugin_dir_url(__FILE__));
 
 		$nonce_url_strongs = 	wp_nonce_url($plugin_url.'ajax/fillstrongs.php','strongs_popover');
 		$nonce_url_xref = 		wp_nonce_url($plugin_url.'ajax/fillxref.php','xref_popover');
 		$noonce_watcher_url=	wp_nonce_url($plugin_url.'ajax/worker.php','vb_watcher');
 		$user_id=$current_user->ID;
+		/* $_js can run alone, $js however, needs to be held back until jquery is loaded */
 		$_js = <<<EOD
-	
-				var vb_strongs=0;
-				var strongs_num='';
-				var _vb_user_id={$user_id};
-			
-				function reset_lex()
-					{
-					$('word.strongs').css({'color':'#000','font-weight':'normal','cursor':'text'});
-					$(".strongs").popover('hide');
-					$(".strongs").popover('destroy');
-					vb_strongs=0;
-					}
-				function set_lex()
-					{
-					$('word.strongs').css({'color':'#800','font-weight':'bold','cursor':'pointer'});
-					$('phrase.strongs').css({'color':'#800','font-weight':'bold','cursor':'pointer'});
-					$(".strongs").click(function()
+		var vb_strongs=0;
+		var strongs_num='';
+		var _vb_user_id={$user_id};
+		function reset_lex()
+			{
+			$('word.strongs').css({'color':'#000','font-weight':'normal','cursor':'text'});
+			$(".strongs").popover('hide');
+			$(".strongs").popover('destroy');
+			vb_strongs=0;
+			}
+		function set_lex()
+			{
+			$('word.strongs').css({'color':'#800','font-weight':'bold','cursor':'pointer'});
+			$('phrase.strongs').css({'color':'#800','font-weight':'bold','cursor':'pointer'});
+			$(".strongs").click(function()
+				{
+				strongs_num=$(this).attr("strongs");
+				});
+			$(".strongs")
+				.popover
+					(
 						{
-						strongs_num=$(this).attr("strongs");
-						});
-					$(".strongs")
-						.popover
-							(
-								{
-								placement : "bottom", 
-								html: true,
-								"content" : function()
-									{
-									return $.ajax(
-											{
-											type: "GET",
-											url: "{$nonce_url_strongs}",
-											data: {strongs:strongs_num,rnd:Math.random()},
-											dataType: "html",
-											async: false
-											}).responseText;
-									}
-								}
-							)
-						.click
-							(
-							function(e)
-								{
-								$(this).popover('toggle');
-								}
-							);
-					vb_strongs=1;
-					}	
-
-				function saveUserData(key,value)
-					{
-					var watcher_nonce_url = '{$noonce_watcher_url}';
-					$.get
-						(
-						watcher_nonce_url, 
-						{function:'user_data_set',user:_vb_user_id,user_key:key,user_value:value},
-						function(data) 
+						placement : "bottom", 
+						html: true,
+						"content" : function()
 							{
-							if(data=='installed')
-								{
-								$("#settings-submit").prop('disabled',false);
-								}
+							return $.ajax(
+									{
+									type: "GET",
+									url: "{$nonce_url_strongs}",
+									data: {strongs:strongs_num,rnd:Math.random()},
+									dataType: "html",
+									async: false
+									}).responseText;
 							}
-						);
+						}
+					)
+				.click
+					(
+					function(e)
+						{
+						$(this).popover('toggle');
+						}
+					);
+			vb_strongs=1;
+			}	
+		function saveUserData(key,value)
+			{
+			var watcher_nonce_url = '{$noonce_watcher_url}';
+			$.get
+				(
+				watcher_nonce_url, 
+				{function:'user_data_set',user:_vb_user_id,user_key:key,user_value:value},
+				function(data) 
+					{
+					if(data=='installed')
+						{
+						$("#settings-submit").prop('disabled',false);
+						}
 					}
+				);
+			}
+		var start = null;
+		window.addEventListener("touchstart",function(event)
+			{
+			if(event.touches.length === 1)
+				{
+				//just one finger touched
+				start = event.touches.item(0).clientX;
+				}
+			else
+				{
+				//a second finger hit the screen, abort the touch
+				start = null;
+				}
+			});
+		window.addEventListener("touchend",function(event)
+			{
+			var offset = 100;//at least 100px are a swipe
+			if(start)
+				{
+				//the only finger that hit the screen left it
+				var end = event.changedTouches.item(0).clientX;
+				if(end > start + offset)
+					{
+					//a left -> right swipe
+					$('#nav-control').trigger('click');
+					}
+				if(end < start - offset )
+					{
+					//a right -> left swipe
+					$('#nav-control').trigger('click');
+					}
+				}
+			});
 		EOD;
 	
 		$js.=<<<EOD
-				var xref="";
-				var entry_title=$("h1.entry-title").text();
-				$("h1.entry-title").html('<a href="{$page_url}">'+entry_title+'</a>');
-				$(
-				function()
-					{
-					$(".strongs").on
+			var xref="";
+			var entry_title=$("h1.entry-title").text();
+			$("h1.entry-title").html('<a href="{$page_url}">'+entry_title+'</a>');
+			$(
+			function()
+				{
+				$(".strongs").on
+					(
+					"click", 
+					function(e)
+						{
+						$(".strongs").not(this).popover("hide");
+						}
+					);
+				var hash=window.location.hash;
+				var highlight=hash.replace("context","verse");
+				$(highlight).css("background-color","#ffffaa");
+				$(".xref_verse").click
+					(
+					function()
+						{
+						xref=$(this).data("ref");
+						$('div.popover').popover('hide');
+						$('verse').css('background-color','#fff');
+						$(this).closest('verse').css('background-color','#ffffee');
+						}
+					);
+				$(".xref_verse")
+					.popover
 						(
-						"click", 
+							{
+							placement : "top", 
+							html: true,
+							viewport: ".verse",
+							"content" : function()
+								{
+								return $.ajax(
+										{
+										type: "GET",
+										url: "{$nonce_url_xref}",
+										data: {ref:xref,rnd:Math.random()},
+										dataType: "html",
+										async: false
+										}).responseText;
+								}
+							}
+						)
+					.click
+						(
 						function(e)
 							{
-							$(".strongs").not(this).popover("hide");
+							$(this).popover("toggle");
 							}
-						);
-					var hash=window.location.hash;
-					var highlight=hash.replace("context","verse");
-					$(highlight).css("background-color","#ffffaa");
-
-				
-					$(".xref_verse").click
-						(
-						function()
-							{
-							xref=$(this).data("ref");
-							$('div.popover').popover('hide');
-							$('verse').css('background-color','#fff');
-							$(this).closest('verse').css('background-color','#ffffee');
-							}
-						);
-
-					$(".xref_verse")
-						.popover
-							(
-								{
-								placement : "top", 
-								html: true,
-								viewport: ".verse",
-								"content" : function()
-									{
-									return $.ajax(
-											{
-											type: "GET",
-											url: "{$nonce_url_xref}",
-											data: {ref:xref,rnd:Math.random()},
-											dataType: "html",
-											async: false
-											}).responseText;
-									}
-								}
-							)
-						.click
-							(
-							function(e)
-								{
-								$(this).popover("toggle");
-								}
-							);
-
-
-					}
-				);
-				
+						);	
+				}
+			);					
 			EOD;
 	
 	
@@ -2258,7 +2290,10 @@ $Array = parseVerseText(string $text, array $Verse, boolean $format_first_letter
 			font-weight:700;
 			display:block;
 			width:100%;
-			padding-top:100px;line-height:1;">
+			padding-top:100px;
+			line-height:1;
+			min-width:100%;
+			border-radius:20px;">
 			Loading<small><br>{$reference}...</small>
 		</div>
 		<div id="study-bible" class="reference-results">
@@ -2270,9 +2305,6 @@ $Array = parseVerseText(string $text, array $Verse, boolean $format_first_letter
 			</div>
 		</div>
 		<hr>
-		<!-- div class="study-bible-debug" style="display:none">
-			{$_debug}
-		</div -->
 		{$book_list_modal}
 		{$chapter_list_modal}
 		<script>	
@@ -2286,7 +2318,6 @@ $Array = parseVerseText(string $text, array $Verse, boolean $format_first_letter
 				$('div.study-bible-results').fadeIn(900);
 				$('div.study-bible-results').css('filter','blur(0)');
 				$('div.study-bible-cover').fadeOut(300);
-				$('div.study-bible-debug').fadeIn(1000);
 				$(
 					function()
 						{
@@ -2322,7 +2353,7 @@ $string = wordsearchResults(string $keyword, integer $scope)
 
 	function wordsearchResults($keyword,$scope)
 		{
-		global $version,$_vbm,$current_user;
+		global $version,$_vbm,$current_user,$page_url;
 		$plugin_url=str_replace('includes/','',plugin_dir_url(__FILE__));
 		$user_id=$current_user->ID;
 		$noonce_watcher_url=wp_nonce_url($plugin_url.'ajax/worker.php','vb_watcher');
@@ -2338,18 +2369,13 @@ $string = wordsearchResults(string $keyword, integer $scope)
 			}
 		$virtual_bible_eastons_installed=$_vbm->is_module_installed('eastons');
 		$page_name=$this->getMeta('page_name');
-		$page_slug=sanitize_title($page_name);
-		$page_url=site_url().'/'.$page_slug.'/';
 		$isRef=$this->isRef($keyword);
 		$results='<div class="row study-bible"><div class="row col-md-6 words">';$chapter_list_modal='';
 		$book_list=$this->getBookList();
 		$book_list_modal=$this->buildBookListModal();
 		$form=$this->buildForm($original_keyword);
-		$_debug='';
-		$_debug.='<b>$isRef</b>'.getPrintR($isRef);
 		if($search_type=='quotes'){$keyword=$_keyword;}
 		$verse_count=$this->getVerseCountByKeyword($keyword,$scope);
-		$_debug.="<b>Verse Count:</b> ".getPrintR($verse_count);
 		if($verse_count)
 			{
 			$page_count=ceil($verse_count/20);
@@ -2367,7 +2393,7 @@ $string = wordsearchResults(string $keyword, integer $scope)
 					{
 					$pagination.="<li class=\"page-item first\">
 						<a class=\"page-link\" href=\"$page_url?keyword=$keyword&scope=$scope&vbpage=$pp\" style=\"padding-left:11px;width:37px\">
-							<i class=\"fas fa-chevron-circle-left\" style=\"font-size:17px;vertical-align:text-bottom;\"></i>
+							<i class=\"fas fa-chevron-circle-left\" style=\"font-size:15px;vertical-align:middle;\"></i>
 						</a>
 					</li>";
 					}
@@ -2395,7 +2421,7 @@ $string = wordsearchResults(string $keyword, integer $scope)
 					{
 					$pagination.="<li class=\"page-item last\">
 						<a class=\"page-link\" href=\"$page_url?keyword=$keyword&scope=$scope&vbpage=$np\">
-							<i class=\"fas fa-chevron-circle-right\" style=\"font-size:17px;vertical-align:text-bottom\"></i>
+							<i class=\"fas fa-chevron-circle-right\" style=\"font-size:15px;vertical-align:middle\"></i>
 						</a>
 					</li>";
 					}
@@ -2409,11 +2435,9 @@ $string = wordsearchResults(string $keyword, integer $scope)
 			$keyword=$_keyword;
 			$Verses=$this->getVersesByKeyword($keyword,$start,$scope);
 			$Keywords=[];
-			$_debug.="<b>Verses</b> ".getPrintR($Verses);
 
 			foreach($Verses as $v=>$Verse)
 				{
-				$_debug.="<b>\$Verses[$v] as \$Verse</b>".getPrintR($Verse);
 				$bid=$Verse['book'];
 				$text=$Verse['text'];
 				$bookname=$this->getBookTitleFromId($bid);
@@ -2423,7 +2447,6 @@ $string = wordsearchResults(string $keyword, integer $scope)
 				$Text=$this->parseVerseText($text,$Verse,$keyword,FALSE);
 				$text=str_replace('¶','',$Text['text']);
 				$text=$this->capFilter($text);		
-				$_debug.="<b>\$text</b>".getPrintR($text);
 				if(strstr($keyword,'*'))					// wild cards searches
 					{
 					$_keyword=str_replace('*',')(.*?)(',$keyword);
@@ -2522,7 +2545,7 @@ $string = wordsearchResults(string $keyword, integer $scope)
 		$plugin_url=str_replace('includes/','',plugin_dir_url(__FILE__));
 		$results.="
 			</div>
-			<div class=\"col-md-6 tools\">
+			<div class=\"col-md-6 tools navigation\">
 			{$_tools}
 			<div class=\"tab-content tool-content\" > 
 				<div id=\"tools-overview\" class=\"tab-pane fade in active\">	
@@ -2628,7 +2651,6 @@ $string = wordsearchResults(string $keyword, integer $scope)
 		if($virtual_bible_eastons_installed=='installed')
 			{
 			$js.= <<<EOD
-
 			$("#word-tools-eastons").on
 				(
 				"click", function(e)
@@ -2647,13 +2669,11 @@ $string = wordsearchResults(string $keyword, integer $scope)
 						);
 					}
 				);
-
 			EOD;
 			}
 		
 		$nonce_url_strongs = wp_nonce_url($plugin_url.'ajax/fillstrongs.php','strongs_popover');
 		$js.= <<<EOD
-		
 		$("#word-tools-lexicon").on
 			(
 			"click", function(e)
@@ -2673,15 +2693,11 @@ $string = wordsearchResults(string $keyword, integer $scope)
 					);
 				}
 			);
-
 		EOD;
 		$_js = <<<EOD
-		
-		
 		var vb_strongs=0;
 		var strongs_num='';
-		var _vb_user_id={$user_id};
-	
+		var _vb_user_id={$user_id};	
 		function reset_lex()
 			{
 			$('word.strongs').css({'color':'#000','font-weight':'normal','cursor':'text'});
@@ -2725,7 +2741,6 @@ $string = wordsearchResults(string $keyword, integer $scope)
 					);
 			vb_strongs=1;
 			}	
-
 		function set_lex_in_lex()
 			{
 			$('lex.strongs').css({'color':'#800','font-weight':'500','cursor':'pointer'});
@@ -2733,9 +2748,7 @@ $string = wordsearchResults(string $keyword, integer $scope)
 				{
 				strongs_num=$(this).attr("strongs");
 				});
-
 			}	
-
 		function saveUserData(key,value)
 			{
 			var watcher_nonce_url = '{$noonce_watcher_url}';
@@ -2752,9 +2765,42 @@ $string = wordsearchResults(string $keyword, integer $scope)
 					}
 				);
 			}
+		var start = null;
+		window.addEventListener("touchstart",function(event)
+			{
+			if(event.touches.length === 1)
+				{
+				//just one finger touched
+				start = event.touches.item(0).clientX;
+				}
+			else
+				{
+				//a second finger hit the screen, abort the touch
+				start = null;
+				}
+			});
+		window.addEventListener("touchend",function(event)
+			{
+			var offset = 100;	//at least 100px are a swipe
+			if(start)
+				{
+				//the only finger that hit the screen left it
+				var end = event.changedTouches.item(0).clientX;
+				if(end > start + offset)
+					{
+					//a left -> right swipe
+					$('#nav-control').trigger('click');
+					console.log('swipe left to right');
+					}
+				if(end < start - offset )
+					{
+					//a right -> left swipe
+					$('#nav-control').trigger('click');
+					}
+				}
+			});
 		EOD;
 		$virtual_bible_page = <<<EOD
-
 		<div class="row study-bible-cover" style="
 			background-color:#fff;
 			height:100vh;
@@ -2765,7 +2811,10 @@ $string = wordsearchResults(string $keyword, integer $scope)
 			font-weight:700;
 			display:block;
 			width:100%;
-			padding-top:100px;line-height:1;">
+			padding-top:100px;
+			line-height:1;
+			min-width:100%;
+			border-radius:20px;">
 			Loading
 		</div>
 		<div id="study-bible" class="word-search-results">
@@ -2773,14 +2822,22 @@ $string = wordsearchResults(string $keyword, integer $scope)
 				{$form}
 			</div>
 			<div class="row study-bible-results" style="display:none;transition:.9s;filter:blur(15px)">
+			<input type="checkbox" id="nav-control" class="nav-control" 
+				onchange="
+					if($('#nav-control').is(':checked'))
+						{
+						$('.tools.navigation').css('left','0');
+						}
+					else
+						{
+						$('.tools.navigation').css('left','-100%');
+						}">
+			<label for="nav-control" class="toggle-button">
+				<div id="show-tools" style="margin-left:10px;font-size:11.5px">(Swipe page to view/hide tools)</div>
+			</label>
 				{$results}
 			</div>
 		</div>
-
-		<hr>
-		<!-- div class="study-bible-debug" style="display:none">
-			{$_debug}
-		</div -->
 		{$book_list_modal}
 		{$chapter_list_modal}
 		<script>	
@@ -2795,7 +2852,6 @@ $string = wordsearchResults(string $keyword, integer $scope)
 				$('div.study-bible-results').fadeIn(900);
 				$('div.study-bible-results').css('filter','blur(0)');
 				$('div.study-bible-cover').fadeOut(300);
-				$('div.study-bible-debug').fadeIn(1000);
 				$('#scope').prop('selectedIndex',{$scope});
 				$('#version').prop('selectedIndex','{$version}');
 				{$js}
@@ -2812,7 +2868,6 @@ $string = wordsearchResults(string $keyword, integer $scope)
 						}
 					);
 				}
-
 			);
 		</script>
 		EOD;
@@ -2835,8 +2890,10 @@ $string = capFilter(string $text)
 	function capFilter($text)
 		{
 		$text=str_replace('BRANCH', '<span class="smallcaps">Branch</span>', $text);
+		$text=str_replace('LORD\'S', '<span class="smallcaps">Lord\'s</span>', $text);
+		$text=str_replace('LORD’S', '<span class="smallcaps">Lord’s</span>', $text);
+		$text=str_replace('LORD&rsquo;S', '<span class="smallcaps">Lord&rsquo;s</span>', $text);
 		$text=str_replace('LORD', '<span class="smallcaps">Lord</span>', $text);
-		$text=str_replace('<span class="smallcaps">Lord</span>\'S', '<span class="smallcaps">Lord\'s</span>', $text);
 		$text=str_replace('GOD', '<span class="smallcaps">God</span>', $text);
 		$text=str_replace('JEHOVAH', '<span class="smallcaps">Jehovah</span>', $text);
 		$text=str_replace('MENE', '<span class="smallcaps">Mene</span>', $text);
@@ -2871,7 +2928,7 @@ $string = capFilter(string $text)
 
 	function getVerseCountByKeyword($keyword,$scope=0)
 		{
-    	global $wpdb,$_debug,$ScopeKey;
+    	global $wpdb,$ScopeKey;
 		if(!$scope){$scope=0;}
 		$keyword=strtolower($keyword);
 		$keyword=str_replace('&quot;','"',$keyword);
@@ -2925,7 +2982,6 @@ $string = capFilter(string $text)
 		$table_name = $wpdb->prefix . 'virtual_bible_kjvs';
 
 		$querytext = sprintf("SELECT `id` FROM $table_name WHERE $search_key");
-		$_debug['getVerseCountByKeyword querytext']=$querytext;
 
 		$wpdb->get_results($querytext);
 		return $wpdb->num_rows;
@@ -2946,7 +3002,7 @@ $string = capFilter(string $text)
 				
 	function getVersesByKeyword($keyword,$start=0,$scope=0)
 		{
-		global $wpdb,$_debug,$ScopeKey;
+		global $wpdb,$ScopeKey;
 		$keyword=strtolower($keyword);
 		$keyword=str_replace("'","\'",$keyword);
 		$keyword=str_replace('`','"',$keyword);
@@ -3212,6 +3268,48 @@ $integer = wordSearchFilters(string $keyword, integer $scope=0) : returns number
 		$Results['wpdb_get_results'] = $wpdb->get_results($query,ARRAY_A);
 		return $Results['wpdb_get_results'];
 		}
+
+
+
+	function get_page_by_title( $page_title, $output = OBJECT, $post_type = 'page' ) 
+		{
+		$query = new WP_Query
+			(
+			array
+				(
+				'post_type' => $post_type,
+				'title' => $page_title,
+				'post_status' => 'all',
+				'posts_per_page' => 1,
+				'no_found_rows' => true,
+				'ignore_sticky_posts' => true,
+				'update_post_term_cache' => false,
+				'update_post_meta_cache' => false,
+				'orderby' => 'date',
+				'order' => 'ASC',
+				)
+			);
+		
+		if ( ! empty( $query->post ) ) 
+			{
+			$_post = $query->post;		
+			if ( ARRAY_A === $output ) 
+				{
+				return $_post->to_array();
+				} 
+			elseif ( ARRAY_N === $output ) 
+				{
+				return array_values( $_post->to_array() );
+				}
+			return $_post;
+			}		
+		return null;
+		}
+
+
+
+
+
 	}
 
 
@@ -3248,21 +3346,6 @@ function write_cache($data,$file_name)
 	fclose ($fp);
 	}
 
-
-
-
-function getPrintR($array)
-    {
-    //hold on to the output
-    ob_start();
-    print_r($array);
-    //store the output in a string
-    $out =ob_get_contents();
-    //delete the output, because we only wanted it in the string
-    ob_clean();
-
-    return "<pre style=\"margin-top:0px\">$out</pre>";
-    }
 
 
 ?>

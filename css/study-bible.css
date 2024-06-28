@@ -1,6 +1,57 @@
 
 
 
+
+#study-bible 
+	{
+	font-family: "Montserrat", sans-serif;
+	letter-spacing:normal;
+	line-height:1.6;
+	max-width:1100px;
+	background-color:#fff;
+	margin:0;
+	padding:0;
+	color:#555;
+	padding:25px;
+	border-radius:20px;
+	}
+
+#study-bible * 
+	{
+	box-sizing:border-box;
+	}
+
+#study-bible input 
+	{
+	font-family: "Montserrat", sans-serif;
+	}
+
+#study-bible select 
+	{
+	font-family: "Montserrat", sans-serif;
+	}
+
+#study-bible legend 
+	{
+	color:#000;
+	max-width:100%;
+	padding:0;
+	margin:0;
+	width:100%;
+	line-height:1.5;
+	padding-inline-start:0;
+	padding-inline-end:0;
+	border-width:initial;
+	border-style:none;
+	border-color:initial;
+	border-image:initial;
+	}
+
+#study-bible .row.study-bible 
+	{
+	width:100%;
+	}
+
 #study-bible .tools .help-title
 	{
 	margin-left:7px;
@@ -12,9 +63,156 @@
 	clear:both;
 	}
 
-#study-bible .tools .tab-pane
+#study-bible .study-bible-form.container
 	{
-	background-color:#fafafa;
+	padding:0;
+	clear:both;
+	position:relative;
+	z-index:1;
+	}
+
+#study-bible #form-fieldsets fieldset 
+	{
+	max-width:40%;
+	font-size:13px;
+	border:none;
+	float:left;
+	margin-bottom:0;
+	}
+
+#study-bible blockquote 
+	{
+	display:block;
+	margin-block-start: 0px;
+	margin-block-end: 0px;
+	margin-inline-start: 30px;
+	margin-inline-end: 30px;
+	}
+
+
+#study-bible p 
+	{
+	display:block;
+	margin-block-start: 0px;
+	margin-block-end: 0px;
+	margin-inline-start: 0px;
+	margin-inline-end: 0px;
+	}
+
+#study-bible #show-tools 
+	{
+	display:none;
+	}
+
+html 
+	{
+	font-size: 13px;
+	}
+
+#study-bible .btn 
+	{
+	font-size:15px;
+	line-height:1.7;
+	padding:0 10px;
+	border-radius:5px;
+	}
+
+#study-bible .toggle.btn 
+	{
+	min-height:30px;
+	}
+
+#study-bible h1 
+	{
+	text-transform:none;
+	}
+
+#study-bible h4 
+	{
+	text-transform:none;
+	font-size:19px;
+	margin:0;
+	line-height:1.3;
+	}
+
+#study-bible h5 
+	{
+	text-transform:none;
+	font-size:16px;
+	font-family: "Montserrat", sans-serif;
+	color:#444;
+	}
+
+#study-bible a
+	{
+	text-decoration:none;
+	color:#33a;
+	transition:none;
+	}
+
+#study-bible a:hover
+	{
+	color:#833;
+	}
+
+#study-bible #my-guesses-div 
+	{
+	background-color:#fff;
+	padding:0 10px 10px 10px;
+	margin:0 0 10px 0;
+	position:absolute;
+	height:auto;
+	margin-top:-33px;
+	border:1px solid #ddd;
+	border-bottom-left-radius:10px;
+	border-bottom-right-radius:10px;
+	box-shadow:1px 2px 7px rgba(0,0,0,0.1);
+	display:none;
+	z-index:1;
+	width:80%;
+	}
+#study-bible #my-guesses-div #guesses
+	{
+	float:left;
+	font-weight:400;
+	cursor:pointer;
+	padding:0;
+	}
+#study-bible #my-guesses-div #guesses .guess:hover
+	{
+	color:#800;
+	}
+#study-bible #my-guesses-div #guesses-info 
+	{
+	float:right;
+	text-align:right;
+	font-size:11.5px;
+	padding-right:5px;
+	padding-top:10px;
+	}
+#study-bible #my-guesses-div #do-you-mean 
+	{
+	font-weight:300;
+	font-size:11.5px;
+	}
+#study-bible #my-guesses-div .guess
+	{
+	border:1px solid transparent;
+	padding:1px 10px;
+	}
+#study-bible #my-guesses-div .guess:focus 
+	{
+	border:1px solid #dddd00;
+	outline:none;
+	background-color:#ffffcc;
+	box-shadow:1px 1px 5px rgba(0,0,0,0.2);
+	border-radius:5px;
+	color:#833;
+	}
+
+#study-bible #nav-control 
+	{
+	display:none;
 	}
 
 /***************************************
@@ -97,6 +295,7 @@
 	#study-bible .tools ul.nav.nav-tabs 
 		{
 		clear: both;
+		position:relative;
 		}
 
 	#study-bible .tools ul.nav.nav-tabs li 
@@ -122,11 +321,10 @@
 	#study-bible .tools .nav-tabs>li>a 
 		{
 		margin-right: 2px;
-		line-height: 1.42857143;
+		line-height: 1.4;
 		border: 1px solid transparent;
 		border-radius: 4px 4px 0 0;
 		background-color: #eee;
-		height:100%;
 		}
 
 	#study-bible .tools .nav-tabs>li>a>h4 
@@ -273,9 +471,11 @@
 	#study-bible .tools p 
 		{
 		line-height:1.4;
-		text-indent:20px;
+		text-indent:15px;
 		margin:0;
 		font-family: "Montserrat", sans-serif;
+		font-size:12.5px;
+		margin-right:10px;
 		}
 
 	#study-bible .tools blockquote 
@@ -293,11 +493,14 @@
 	#study-bible .tools blockquote p 
 		{
 		margin:0;
+		color:#555;
 		}
 
 	#study-bible .tools small 
 		{
 		font-family: "Montserrat", sans-serif;
+		font-size:80%;
+		font-weight:400;
 		}
 
 	#study-bible .tools .tool-title 
@@ -318,7 +521,7 @@
 		border-radius:20px;
 		margin-bottom: 10px;
 		padding-top:20px;
-		max-width:50%;
+		max-width:46%;
 		display:block;
 		}
 
@@ -335,7 +538,8 @@
 		border-radius:0;
 		margin-bottom: 0px;
 		padding-top:0px;
-		max-width:100%;		
+		max-width:100%;	
+		min-height:700px;	
 		}
 
 	#study-bible .start-help.tools .tab-content
@@ -344,7 +548,67 @@
 		font-family: 'Montserrat';
 		font-size:15px;
 		position:relative;
-		z-index:0
+		z-index:0;
+		margin-top:-2px;
+		}
+
+	#study-bible .start-help.tools .tab-content .card
+		{
+		background-color:#fafafa;
+		}
+
+	#study-bible .start-help.tools .tab-content .card #tools-collapse .card-body p
+		{
+		text-indent:0;
+		margin-bottom:10px;
+		}
+
+	#study-bible .start-help.tools .tab-content .card #tools-collapse .container
+		{
+		margin:10px 20px;
+		max-width:100%;
+		}
+
+	#study-bible .start-help.tools .tab-content .card #tools-collapse h4
+		{
+		letter-spacing:.5px;
+		}
+
+	#study-bible .start-help.tools .tab-content .card #styles-collapse .style-description
+		{
+		line-height:1.3;
+		font-size:13px;
+		margin-bottom:20px;
+		height:100px;
+		}
+
+	#study-bible .start-help.tools .tab-content .card #styles-collapse img 
+		{
+		max-width:100%;
+		height:auto;
+		border-style:none;
+		border-radius:0;
+		vertical-align:middle;
+		}
+
+	#study-bible .start-help.tools .tab-content .card #books-collapse a
+		{
+		color:#a10f2b;
+		text-decoration:none;
+		}
+
+	#study-bible .start-help.tools .tab-content .card #books-collapse a:hover
+		{
+		text-decoration:underline;
+		}
+	
+	#study-bible .start-help.tools .tab-content .card #books-collapse ul
+		{
+		column-count:5;
+		list-style-type:none;
+		width:100%;
+		margin:0;
+		padding:10px 15px;
 		}
 
 	#study-bible .holman-xref .tools
@@ -360,14 +624,15 @@
 		border-radius:20px;
 		margin-bottom: 10px;
 		padding-top:20px;
-		max-width:47%;
+		width:47%;
+		max-width:520px;
 		display:block;
 		}
 
 	#study-bible .tools .tool-nav 
 		{
-		margin-top:-67px;
-		margin-bottom:-10px;
+		margin-top:-63px;
+		margin-bottom:-20px;
 		border-bottom:1px solid #fafafa;
 		}
 
@@ -382,11 +647,15 @@
 		{
 		background-color:#fafafa;
 		border:1px solid #fafafa;
+		z-index:-1;
 		}
 
 	#study-bible .tools .tool-content 
 		{
-		margin-top:45px;
+		padding-top:45px;
+		position:relative;
+		margin-top:20px;
+		z-index:1;
 		}
 
 	#study-bible .tools #introduction-results strong 
@@ -474,6 +743,7 @@
 		margin-bottom:2px;
 		color:#833;
 		font-style:italic;
+		margin-left:15px;
 		}
 
 	#study-bible .tools #outline-results td 
@@ -510,7 +780,7 @@
 	#study-bible .tools #outline-results blockquote 
 		{
 		line-height:1.4;
-		margin-left:20px;
+		margin-left:15px;
 		padding:0;
 		}
 
@@ -934,6 +1204,7 @@
 		{
 		width:400px;
 		line-height:1.3;
+		box-shadow:1px 1px 15px rgba(0,0,0,0.3);
 		}
 
 	#study-bible verse .popover 
@@ -1073,7 +1344,7 @@
 
 
 
-	.study-bible-form .bible-search-form {
+	#study-bible .study-bible-form .bible-search-form {
 		text-align:left!important;
 		position:relative;
 		padding-right:15px;
@@ -1083,33 +1354,34 @@
 		max-width:56.5%;
 		}
 
-	.study-bible-form .study-bible-form-row 
+	#study-bible .study-bible-form .study-bible-form-row 
 		{
 		width:100%;
 		}
 
-	.study-bible-form 
+	#study-bible .study-bible-form 
 		{
 		width:100%;
 		display:block;
 		margin-bottom:10px;
+		max-height:100px;
 		}
 
-	.study-bible-form #form-fieldsets 
+	#study-bible .study-bible-form #form-fieldsets 
 		{
 		max-width:45%;
 		padding-right:0;
 		padding-left:30px;
 		}
 	
-	.study-bible-form .btn-strongs 
+	#study-bible .study-bible-form .btn-strongs 
 		{
 		color:#fff;
 		background-color:#833;
 		border-color:#833;
 		}
 
-	.study-bible-form .btn-none 
+	#study-bible .study-bible-form .btn-none 
 		{
 		color:#000;
 		background-color:#eee;
@@ -1126,15 +1398,89 @@
                                 
 ****************************************/
 
-	#vb-book-list-modal a 
+	#vb-book-list-modal 
+		{
+		display:none;
+		padding-top:50px;
+		z-index:1000;
+		position:fixed;
+		left:0;
+		top:0;
+		width:100%;
+		min-width:100%;
+		height:100%;
+		background-color:rgba(0,0,0,0.4);
+		font-family: 'Montserrat';
+		}
+
+	#vb-book-list-modal .modal-content 
+		{
+		border-radius:10px;
+		border:1px solid #555;
+		width:600px;
+		margin:auto;
+		background-color:#fff;
+		position:relative;
+		padding:20px;
+		outline:0;
+		font-family: 'Montserrat';
+		box-shadow:1px 1px 30px rgba(0,0,0,0.5);
+		}
+
+
+	#chapters-modal .modal-content 
+		{
+		border-radius:10px;
+		border:1px solid #555;
+		width:600px
+		;margin:auto;
+		background-color:#fff;
+		position:relative;
+		padding:20px;outline:0;
+		font-family: 'Montserrat';
+		box-shadow:1px 1px 30px rgba(0,0,0,0.5);
+		}
+
+
+	#vb-book-list-modal, #chapters-modal
+		{
+		font-family: "Montserrat", sans-serif;
+		letter-spacing:normal;
+		line-height:1.6;
+		font-size: 13px;
+		}
+	
+	#vb-book-list-modal *, #chapters-modal *
+		{
+		box-sizing:border-box;
+		}
+
+	#vb-book-list-modal a, #chapters-modal a
 		{
 		color:#a10f2b;
 		text-decoration:none;
 		}
 
-	#vb-book-list-modal a:hover 
+	#vb-book-list-modal a:hover, #chapters-modal a:hover
 		{
 		text-decoration:underline;
+		}
+	
+	#vb-book-list-modal h4, #chapters-modal h4
+		{
+		text-transform:none;
+		font-size:19px;
+		line-height:1.3;
+		letter-spacing:normal;
+		}
+	
+	#vb-book-list-modal ul
+		{
+		column-count:4;
+		list-style-type:none;
+		width:100%;
+		margin:0;
+		padding:10px 15px;
 		}
 
 
@@ -1256,7 +1602,7 @@
 		{
 		display:block;
 		font-family: 'Ovo',serif;
-		font-size:18px;
+		font-size:21px;
 		line-height:1.3;
 		padding:0 20px;
 		color:#000;
@@ -1531,7 +1877,7 @@
 	xref 
 		{
 		display:block;
-		font-size:13px;
+		font-size:11.5px;
 		width:13%;
 		text-align:left;
 		line-height:1;
@@ -1547,7 +1893,7 @@
 		{
 		margin-right:0px;
 		display:inline!important;
-		font-size:12px;
+		font-size:11px;
 		}
 	
 	xref a 
@@ -1562,6 +1908,8 @@
 		color:#000;
 		text-decoration:none;
 		cursor:pointer;
+		display:inline-block;
+		line-break: auto;
 		}
 
 
@@ -1666,6 +2014,7 @@
 	.study-bible.reading .bible 
 		{
 		max-width:95%;
+		width:95%;
 		}		
 
 	.study-bible.reading div#bible.bible verses 
@@ -1739,7 +2088,8 @@
 		border:1px solid #ddd;
 		border-radius:10px 0 0 10px;
 		padding:10px 25px 25px 25px;
-		max-width:50%;
+		width:50%;
+		max-width:450px;
 		}
 
 	.holman-xref .bible 
@@ -1751,7 +2101,9 @@
 		border:1px solid #ddd;
 		border-radius:10px 0 0 10px;
 		padding:10px 25px 25px 25px;
-		max-width:53%;		
+		width:50%;
+		max-width:495px;		
+		min-width:470px;
 		}
 
 	#study-bible div.study-bible
@@ -1788,6 +2140,7 @@
 		margin-left:14%;
 		padding-left:10px !important;
 		color:#000;
+		font-size:18px;
 		}
 	
 
@@ -1814,6 +2167,7 @@
 		border-radius:10px;
 		padding:10px 25px 25px 25px;
 		margin:0;
+		max-width:500px;
 		}
 
 	.word-results
@@ -1865,19 +2219,29 @@
 		margin-bottom:10px;
 		}
 
+		
+
 
 
 /*****************************
 
-Pushing the sidebar to the bottom for  width typically acceptable, but leaving no real room for the study bible
+Pushing the sidebar to the bottom for width typically acceptable, but leaving no real room for the study bible
 
 ******************************/
 		
-@media (max-width: 950px)
+@media (max-width: 1190px)
 	{
+	.has-sidebar aside 
+		{
+		width:100%;
+		}
 	.has-sidebar main 
 		{
 		width:100%;
+		}
+	h4 div.tooltip 
+		{
+		display:none!important;
 		}
 	}
 
@@ -1896,10 +2260,23 @@ Pushing the sidebar to the bottom for  width typically acceptable, but leaving n
 	@media (max-width: 768px) and (min-width:600px)
 		{
 
+		#study-bible 
+			{
+			width:100vw;
+			margin-left:50%!important;
+			transform: translateX(-50%);
+			max-width:97vw;
+			padding:0;
+			}
+
 		#study-bible.row 
 			{
 			margin-left:0;
 			margin-right:0;
+			}
+		h4 div.tooltip 
+			{
+			display:none!important;
 			}
 
 
@@ -1972,6 +2349,16 @@ Pushing the sidebar to the bottom for  width typically acceptable, but leaving n
 			font-size:10px;
 			}
 
+		#study-bible .holman-xref .bible 
+			{
+			min-width:50%;
+			}
+
+		#study-bible .holman-xref .tools 
+			{
+			min-width:50%;
+			}
+
 		#study-bible .holman-xref verses 
 			{
 			margin-left:12%;
@@ -2025,6 +2412,20 @@ Pushing the sidebar to the bottom for  width typically acceptable, but leaving n
 	@media (max-width: 599px)
 		{
 
+		#study-bible 
+			{
+			width:100vw;
+			margin-left:50%!important;
+			transform: translateX(-50%);
+			max-width:97vw;
+			padding:0;
+			}
+
+		h4 div.tooltip 
+			{
+			display:none!important;
+			}
+
 		#study-bible .tools .help-title
 			{
 			display:block;
@@ -2065,6 +2466,14 @@ Pushing the sidebar to the bottom for  width typically acceptable, but leaving n
 			{
 			margin-bottom:0;
 			padding:0 5px;
+			margin-left:2.5%;
+			}
+
+		#study-bible .reading #results-header 
+			{
+			margin-bottom:0;
+			padding:0 5px;
+			margin-left:-2%;
 			}
 
 		.study-bible-form .bible-search-form 
@@ -2080,10 +2489,37 @@ Pushing the sidebar to the bottom for  width typically acceptable, but leaving n
 			padding:0;
 			}
 
+		#study-bible .start-help.tools .tab-content .card #styles-collapse .style-description
+			{
+			margin-bottom:10px;
+			height:auto;
+			}
+
+		#study-bible .start-help.tools .tab-content .card #styles-collapse img 
+			{
+			margin-bottom:20px;
+			}
+
 		.study-bible-form .study-bible-form-row 
 			{
 			display:flex;
 			margin:0;
+			}
+
+		#study-bible .study-bible-form
+			{
+			max-height:100%;
+			}
+
+		#study-bible .study-bible-form .bible-search-form 
+			{
+			max-width:100%;
+			}
+
+		#study-bible .study-bible-form #form-fieldsets 
+			{
+			max-width:100%;
+			padding-left:0;
 			}
 
 		.study-bible-form .bible-search-form .drop-down select#version
@@ -2103,9 +2539,84 @@ Pushing the sidebar to the bottom for  width typically acceptable, but leaving n
 			padding-left:0;
 			}
 
-		#study-bible .holman-xref .tools
+		#study-bible #ref-results
 			{
-			display:none;
+			transform: translate3d(-10px,0,0);
+			-webkit-transform: translate3d(-10px,0,0);
+			}
+
+		#study-bible .start-help.tools
+			{
+			position:relative;
+			left:0;
+			transition: left 0.3s;
+			width:100vw;
+			padding-top:0px;	
+			}
+
+		#study-bible .start-help.tools ul.nav.nav-tabs
+			{
+			margin-left:0;	
+			}
+
+		#study-bible .start-help.tools .tab-content .card #books-collapse ul
+			{
+			column-count:2;
+			}
+
+		#vb-book-list-modal .modal-content, #chapters-modal .modal-content
+			{
+			width:100%;
+			}
+
+		#vb-book-list-modal .modal-content ul
+			{
+			column-count:3;
+			}
+
+		#chapters-modal .modal-content ul 
+			{
+			column-count:3;
+			}
+
+
+
+		#study-bible .tools.navigation
+			{
+			background:#fafafa;
+			position:absolute;
+			top:-30px;
+			bottom:0;
+			left:-100%;
+			transition: left 0.3s;
+			width:100vw;
+			z-index:1;		
+			width:100%;
+			max-width:100%;
+			}
+
+		#study-bible #show-tools 
+			{
+			display:block;
+			}
+
+		#study-bible .tools ul.nav.nav-tabs
+			{
+			margin-left:-10px;		
+			}
+
+		#study-bible .bible 
+			{
+			position:relative;
+			z-index:1;
+			background-color:#fff;
+			box-shadow:none;
+			border:none;
+			border-radius:0;
+			padding:0;
+			max-width:100%;	
+			min-width:100%;	
+			padding:0 0 0 10px;
 			}
 
 		.holman-xref .bible 
@@ -2117,7 +2628,8 @@ Pushing the sidebar to the bottom for  width typically acceptable, but leaving n
 			border:none;
 			border-radius:0;
 			padding:0;
-			max-width:100%;		
+			max-width:100%;	
+			min-width:100%;	
 			}
 
 			
@@ -2125,17 +2637,17 @@ Pushing the sidebar to the bottom for  width typically acceptable, but leaving n
 		xref 
 			{
 			display:block;
-			font-size:10px;
-			width:12%;
+			font-size:11px;
+			width:16%;
 			text-align:left;
 			line-height:.9;
 			text-indent:0;
 			margin-top:6px;
 			position:absolute;
-			left:7px;
+			left:12px;
 			font-family: 'Ovo',serif;
 			background-color:#fff;
-			margin-left:-4.5%;
+			margin-left:-1%;
 			}
 
 		.verse xref b 
@@ -2145,7 +2657,7 @@ Pushing the sidebar to the bottom for  width typically acceptable, but leaving n
 
 		#study-bible .holman-xref verses 
 			{
-			margin-left:12%;
+			margin-left:17%;
 			padding-left:9px !important;
 			}
 
@@ -2156,20 +2668,28 @@ Pushing the sidebar to the bottom for  width typically acceptable, but leaving n
 
 
 
-		.study-bible.traditional verses 
+		#study-bible .holman-xref .study-bible.traditional verses 
 			{
 			font-size:16px;
 			}
 
 
-		.study-bible.paragraph verses 
+		#study-bible .holman-xref .study-bible.paragraph verses 
 			{
 			font-size:16px;
 			}
 
-		.study-bible.reading .bible 
+
+		#study-bible .study-bible.reading div#bible.bible verses 
+			{
+			margin-left:0;
+			padding:0 30px 0 20px;
+			}
+
+		#study-bible .study-bible.reading div.bible.row 
 			{
 			max-width:100%;
+			margin-left:2.5%;
 			}
 
 		.study-bible.reading div#bible.bible verses 
@@ -2187,7 +2707,20 @@ Pushing the sidebar to the bottom for  width typically acceptable, but leaving n
 			margin-right:0;
 			}
 
-		#study-bible .tools 
+		#study-bible .nav-control 
+			{
+			position:absolute;
+			left:-9999px;
+			width:100%;
+			clip:rect(0,0,0,0);
+			}
+		#study-bible .nav-control:checked ~ .tools.navigation
+			{
+			left:0;
+			opacity:1;
+			transition: all 0.3s, opacity 0.3s;
+			}
+		#study-bible .reading label.toggle-button 
 			{
 			display:none;
 			}
@@ -2202,11 +2735,23 @@ Pushing the sidebar to the bottom for  width typically acceptable, but leaving n
 			display:block;
 			}
 
-		#study-bible #toggle-strongs-fieldset 
+		#study-bible #form-fieldsets fieldset#toggle-strongs-fieldset 
 			{
 			float:right;
 			display:block;
 			width:auto;
+			}
+
+		#study-bible #form-fieldsets fieldset#passage-style 
+			{
+			display:block;
+			margin-left:10px;
+			line-height:1.4;
+			}
+
+		#study-bible #form-fieldsets fieldset#passage-style legend
+			{
+			margin-bottom:-5px;
 			}
 
 		#study-bible .words 

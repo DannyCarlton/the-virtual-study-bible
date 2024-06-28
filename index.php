@@ -3,7 +3,7 @@
 * Plugin Name: The Virtual Study Bible
 * Plugin URI: https://VirtualBible.org/
 * Description: A complete study Bible on your Wordpress site!! (Activation must be completed in plugin settings page.)
-* Version: 1.0
+* Version: 1.0.0
 * Author: Danny Carlton Ministries
 * Author URI: http://DannyCarlton.org/
 * Developer: Danny Carlton
@@ -78,7 +78,10 @@ if(!defined('ABSPATH'))
 */
 
 
+
 /* BEGIN: Stuff to do every time */
+
+add_filter('run_wptexturize', '__return_false',9999);
 
 add_action( 'admin_menu', 'wpdocs_register_virtual_bible_menu_page' );
 function wpdocs_register_virtual_bible_menu_page() 
@@ -112,11 +115,11 @@ function wpdocs_register_virtual_bible_submenu_page_admin()
 		'the-virtual-study-bible/help.php'
 		);
 	add_submenu_page(
-		'virtual_bible_menu_slug',										#parent slug
-		'Virtual Bible Contribute',										#page title
-		'<span class="dashicons dashicons-heart" style="color:#ed0000"></span>&nbsp;Contribute',	#menu title
-		'administrator', 												#capability
-		'the-virtual-study-bible/contribute.php'						#callback
+		'virtual_bible_menu_slug',
+		'Virtual Bible Contribute',	
+		'<span class="dashicons dashicons-heart" style="color:#ed0000"></span>&nbsp;Contribute',
+		'administrator', 
+		'the-virtual-study-bible/contribute.php'
 		);
 
 	}
@@ -443,47 +446,3 @@ function virtual_bible_load_db_books()
 
 
 
-/* BEGIN: Stuff to do when plugin is deleted */
-
-register_uninstall_hook(__FILE__, 'virtual_bible_on_uninstall');
-function virtual_bible_on_uninstall()
-	{
-	global $wpdb;
-	$table_name = $wpdb->prefix . 'virtual_bible_kjvs';
-	$table2_name = $wpdb->prefix . 'virtual_bible_books';
-	$Queries=[];
-	array_push($Queries, "DROP TABLE IF EXISTS $table_name;");
-	array_push($Queries, "DROP TABLE IF EXISTS $table2_name;");
-	if ( ! function_exists('dbDelta') )
-		{
-		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-		}
-	foreach($Queries as $sql)
-		{
-		dbDelta ( $sql );
-		}
-	}
-
-/* END: Stuff to do when plugin is deleted */
-
-
-
-/* For debugging purposes. If this is still here in production version, then I screwed up. But don't worry; it's basically harmless. */
-function write_log( $data ) 
-	{
-	if ( true === WP_DEBUG ) 
-		{
-		if ( is_array( $data ) || is_object( $data ) ) 
-			{
-			error_log( print_r( $data, true ) );
-			} 
-		elseif($data==NULL)
-			{
-			error_log('NULL');
-			}
-		else 
-			{
-			error_log( $data );
-			}
-		}
-	}

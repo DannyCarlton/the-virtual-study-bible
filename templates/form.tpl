@@ -11,9 +11,45 @@
 						</small>
 					</legend>
 					<div style="position:relative;display:flex;flex-wrap:wrap;align-items:stretch;width:100%">
-						<input type="text" class="reference" value="{$reference}" placeholder="Keyword or reference" style="border-bottom-left-radius:0;border-top-left-radius:10px;height:calc(1.5rem + 1rem + 2px);padding:0.5rem 1rem;font-size:17px;line-height:1.5;flex:1 1 auto;width:1%;margin-bottom:0;font-weight:bold" name="keyword" id="keyword">
+						<input id="search-input-field" tabindex=0
+							type="text" 
+							class="reference" 
+							value="{$reference}" 
+							placeholder="Keyword or reference" 
+							style="border-bottom-left-radius:0;border-top-left-radius:10px;height:calc(1.5rem + 1rem + 2px);padding:0rem 1rem;font-size:17px;line-height:1.5;flex:1 1 auto;width:1%;margin-bottom:0;font-weight:600;border:1px solid #ced4da" 
+							name="keyword" 
+							id="keyword"
+							onkeyup="if(this.value.length>1)
+								{
+								var kw=this.value.replace(' ','+');							
+								$.ajax
+									(
+										{
+										type: 'GET',
+										url: '{$guess_url}',
+										data: {q:kw},
+										success: function(data)
+											{
+											if(data)
+												{
+												$('#my-guesses-div').css('display','block');
+												$('#guesses').html(data);
+												}
+											else
+												{
+												$('#guesses').html('');
+												$('#my-guesses-div').css('display','none');
+												}
+											}
+										}
+									);
+								}
+							else
+								{
+								$('#my-guesses-div').css('display','none');
+								}">
 						<div class="input-group-append" style="margin-left:-1px;">
-							<button type="submit" value="Search" class="btn btn-primary" style="border-bottom-right-radius:0;border-top-right-radius:10px;padding:0.5rem 1rem;line-height:1.5;align-self:stretch!important;position:relative;cursor:pointer;height:calc(1.5rem + 1rem + 2px)">Search</button>
+							<button type="submit" value="Search" class="btn btn-primary" style="border-bottom-right-radius:0;border-top-right-radius:10px;padding:0rem 1rem;line-height:1.5;align-self:stretch!important;position:relative;cursor:pointer;">Search</button>
 						</div>
 					</div>
 					<div class="drop-down input-group">
@@ -114,14 +150,20 @@
 							</optgroup>
 						</select>
 					</div>
+					<div id="my-guesses-div">
+						<div id="do-you-mean">Do you mean . . . </div>
+						<div id="guesses" class="col-sm-8">
+						</div>
+						<div style="clear:both"></div>
+					</div>
 				</div>
 				<div id="form-fieldsets" class="row col-lg-3 col-sm-12" style="float:left">
-					<fieldset id="passage-style" class="col-lg-6 text-left form-group" style="max-width:47%;font-size:13px;border:none;float:left;margin-bottom:0">
-						<legend style="margin-bottom:-5px;font-weight:bold;display:block;font-family: 'Poppins', sans-serif;font-size:16px;white-space:nowrap">Passage Style</legend>
+					<fieldset id="passage-style" class="col-lg-6 text-left form-group" >
+						<legend style="font-weight:bold;display:block;font-family: 'Poppins', sans-serif;font-size:16px;white-space:nowrap">Passage Style</legend>
 						{$styles}
 					</fieldset>
-					<fieldset id="toggle-strongs-fieldset" class="col-lg-6 text-left form-group" style="max-width:47%;font-size:13px;border:none;margin-bottom:0">
-						<legend style="margin-bottom:-5px;font-weight:bold;display:block;font-family: 'Poppins', sans-serif;font-size:16px">Link Keyed</legend>
+					<fieldset id="toggle-strongs-fieldset" class="col-lg-6 text-left form-group" >
+						<legend style="font-weight:bold;display:block;font-family: 'Poppins', sans-serif;font-size:16px">Link Keyed</legend>
 						<input id="toggle-strongs"
 							type="checkbox" 
 							data-toggle="toggle" 
@@ -132,6 +174,7 @@
 							data-width="110"
 							/>
 					</fieldset>
+					<div style="clear:both"></div>
 				</div>
 			</div>
 		</form>

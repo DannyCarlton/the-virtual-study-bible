@@ -22,7 +22,6 @@ if($verify)
 	if(isset($_GET['keyword']))
 		{
 		$keyword=$_GET['keyword'];
-		$scope=$_GET['scope'];
 		$keyword=preg_replace("/[^A-Za-z ]/",'',$keyword);
 		$Keywords=explode(' ',$keyword);
 		foreach($Keywords as $keyword)

@@ -18,9 +18,22 @@ if(isset($_GET['function']))
 		{
 		if($_GET['function']=='settings_watch')
 			{
-			if($_vbm->is_module_installed('kjvs') and $_vbm->is_module_installed('strongs'))
+			$virtual_bible_page_name=$_vb->getMeta('page_name');
+			$page_exists=false;
+			if($_vb->get_page_by_title($virtual_bible_page_name) != NULL )
 				{
-				echo 'installed';
+				$page_exists=true;
+				}
+			if($_vbm->is_module_installed('kjvs')=='installed' and $_vbm->is_module_installed('strongs')=='installed')
+				{
+				if($page_exists)
+					{
+					echo 'installed';
+					}
+				else
+					{
+					echo 'not submitted';
+					}
 				}
 			else
 				{

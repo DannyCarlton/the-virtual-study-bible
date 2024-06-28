@@ -155,7 +155,7 @@ include_once(plugin_dir_path(__FILE__).'includes/functions.php');
 							&bull; <a data-toggle="collapse" href="#interlinear" aria-expanded="false" aria-controls="interlinear" style="text-decoration:none;font-weight:600;color:#000">The Interlinear Bible</a>							
 						</p>
 						<div class="collapse" id="interlinear">
-							<p style="text-align:justify;font-size:16px">This module contains the Hebrew and Greek text, with the word linked to the keyed Strong's definition as well as the English translation, pronunciation and parts of speech. It will be displayed in the Tools Pane, with the information formatted for easy of access.</p>
+							<p style="text-align:justify;font-size:16px">This module contains the Hebrew and Greek text, with the word linked to the keyed Strong's definition as well as the English translation, pronunciation and parts of speech. It will be displayed in the Tools Pane, with the information formatted for easy of access. The Hebrew text is taken from the Masoretic, and the Greek text from the Textus Receptus. </p>
 						</div>
 						
 						<p style="text-align:justify;font-size:16px">
@@ -199,7 +199,7 @@ include_once(plugin_dir_path(__FILE__).'includes/functions.php');
 						</p>
 						
 						<p style="text-align:justify;font-size:16px">
-							<b>Page Name:</b> To house your Study Bible, your WordPress installation needs a page to display it. This page will prvoide all the data your users will need to access the Study Bible you've provided. The default, already set, is simple &ldquo;Study Bible&rdquo;. However, you can change this if you want. 
+							<b>Page Name:</b> To house your Study Bible, your WordPress installation needs a page to display it. This page will provide all the data your users will need to access the Study Bible you've provided. The default, already set, is simple &ldquo;Study Bible&rdquo;. However, you can change this if you want. 
 						</p>
 						
 						<p style="text-align:justify;font-size:16px">
@@ -233,7 +233,7 @@ include_once(plugin_dir_path(__FILE__).'includes/functions.php');
 						<h5 style="font-weight:600;letter-spacing:.5px;font-size:19px">Publishing</h5>
 						
 						<p style="text-align:justify;font-size:16px">
-							Your Study Bible cannot be accessed until you've installed the required modules, installed which optional modules you want (and set whatever other options are available) then submitted your choices. This will the created the page and your users will be able to access the Study Bible on your site.
+							Your Study Bible cannot be accessed until you've installed the required modules, installed which optional modules you want (and set whatever other options are available) then submitted your choices. This will then create the page and your users will be able to access the Study Bible on your site.
 						</p>
 						
 						<p style="text-align:justify;font-size:16px">
@@ -247,7 +247,7 @@ include_once(plugin_dir_path(__FILE__).'includes/functions.php');
 						<h4 class="poppins-black">As a Site User...</h4>
 
 						<p style="text-align:justify;font-size:16px">
-							The basic instructions for using the Study Bible are made available on the initial page. I have tried to make it's use either easily explained or as intuitive as possible. However, I'll mention some of the features available for you.
+							The basic instructions for using the Study Bible are made available on the initial page. I have tried to make its use either easily explained or as intuitive as possible. However, I'll mention some of the features available for you.
 						</p>
 
 						<h5 style="font-weight:600;letter-spacing:.5px;font-size:19px">The Tools</h5>
@@ -259,13 +259,17 @@ include_once(plugin_dir_path(__FILE__).'includes/functions.php');
 						<h5 style="font-weight:600;letter-spacing:.5px;font-size:19px">The Books</h5>
 						
 						<p style="text-align:justify;font-size:16px">
-							Access to quick links to the Books of the Bible is provided on the Start Page (in the Helps section) as well as (on any page) as a modal activated by the "books" link above the search form.
+							Access to quick links to the Books of the Bible is provided on the Start Page (in the Helps section) as well as (on any page) as a modal activated by the "books" link above the search form. 
+						</p>
+						
+						<p style="text-align:justify;font-size:16px">
+							(It should so be noted that on the <b>Reference Search</b> page, the Chapter number is a link to another modal, displaying links to all the chapters for that book.)
 						</p>
 
 						<h5 style="font-weight:600;letter-spacing:.5px;font-size:19px">The Styles</h5>
 						
 						<p style="text-align:justify;font-size:16px">
-							If the user is logged in, the their personal Style choice is rememberd and applied until they change it. If they are not logged in, then it is rememberd only for the immediate session, and when they return to the page, the default (Traditional) will be set. As other Bible versions are added (in future updates) this choice will als be remembered in the same way.
+							If the user is logged in, the their personal Style choice is rememberd and applied until they change it. If they are not logged in, then it is rememberd only for the immediate session, and when they return to the page, the default (Traditional) will be set. As other Bible versions are added (in future updates) this choice will also be remembered in the same way.
 						</p>
 
 						<h5 style="font-weight:600;letter-spacing:.5px;font-size:19px">Strong&rsquo;s Lexicon</h5>
@@ -289,11 +293,11 @@ include_once(plugin_dir_path(__FILE__).'includes/functions.php');
 						<h5 style="font-weight:600;letter-spacing:.5px;font-size:19px">Reference Search vs Word Search</h5>
 						
 						<p style="text-align:justify;font-size:16px">
-							The plugin offers three types of pages: The Start Page, the Reference Search and the Word Search. The Start Page is mostly self explanitory. The Refernce Search we've been through with the examples above. The Word Search, however, requires a different approach than the Reference Search.
+							The plugin offers three types of pages: The Start Page, the Reference Search and the Word Search. The Start Page is mostly self explanitory. The Reference Search we've been through with the examples above. The Word Search, however, requires a different approach than the Reference Search.
 						</p>
 						
 						<p style="text-align:justify;font-size:16px">
-							<b>The Word Search</b> returns a list of verses containing the word requested. The requested word is noted (in <b>bold</b>) within each verse listed. The Strong&rsquo;s toggel still works, but the tools panes display different tools.
+							<b>The Word Search</b> returns a list of verses containing the word requested. The requested word is noted (in <b>bold</b>) within each verse listed. The Strong&rsquo;s toggle still works, but the tools pane displays different tools.
 						</p>
 						
 						<p style="text-align:justify;font-size:16px">
@@ -301,7 +305,7 @@ include_once(plugin_dir_path(__FILE__).'includes/functions.php');
 						</p>
 						
 						<p style="text-align:justify;font-size:16px">
-							Also in the <b>Word Search Tools</b>, is the <b>Easton&rsquo;s Bible Dictionary</b>. If the keyword has a matching entry in the Easton&rsquo;s Dictioary, it will be displayed in thea Tool Pane.
+							Also in the <b>Word Search Tools</b>, is the <b>Easton&rsquo;s Bible Dictionary</b> (assuming you have it enbled). If the keyword has a matching entry in the Easton&rsquo;s Dictioary, it will be displayed in the Tool Pane.
 						</p>
 						
 						<p style="text-align:justify;font-size:16px">

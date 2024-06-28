@@ -6,23 +6,23 @@ if(!defined('ABSPATH'))
 	}
 
 
-	wp_register_style('vb-bootstrap-css', plugins_url().'/the-virtual-study-bible/css/bootstrap.css');
-	wp_enqueue_style('vb-bootstrap-css');
-	wp_register_style('vb-logofont-css', plugins_url().'/the-virtual-study-bible/css/logofont.css');
-	wp_enqueue_style('vb-logofont-css');
-	wp_register_style('vb-fade-css', plugins_url().'/the-virtual-study-bible/css/fade.css');
-	wp_enqueue_style('vb-fade-css');
-	wp_register_style('vb-styles-css', plugins_url().'/the-virtual-study-bible/css/vb-styles.css');
-	wp_enqueue_style('vb-styles-css');
-	
-	wp_register_script('vb-jquery-js', plugins_url().'/the-virtual-study-bible/js/jquery-2.2.4.js');
-	wp_enqueue_script('vb-jquery-js');
-	wp_register_script('vb-bootstrap-js', plugins_url().'/the-virtual-study-bible/js/bootstrap.js');
-	wp_enqueue_script('vb-bootstrap-js');
-	
-	
-	include_once(plugin_dir_path(__FILE__).'includes/modules.php');
-	include_once(plugin_dir_path(__FILE__).'includes/functions.php');
+wp_register_style('vb-bootstrap-css', plugins_url().'/the-virtual-study-bible/css/bootstrap.css');
+wp_enqueue_style('vb-bootstrap-css');
+wp_register_style('vb-logofont-css', plugins_url().'/the-virtual-study-bible/css/logofont.css');
+wp_enqueue_style('vb-logofont-css');
+wp_register_style('vb-fade-css', plugins_url().'/the-virtual-study-bible/css/fade.css');
+wp_enqueue_style('vb-fade-css');
+wp_register_style('vb-styles-css', plugins_url().'/the-virtual-study-bible/css/vb-styles.css');
+wp_enqueue_style('vb-styles-css');
+
+wp_register_script('vb-jquery-js', plugins_url().'/the-virtual-study-bible/js/jquery-2.2.4.js');
+wp_enqueue_script('vb-jquery-js');
+wp_register_script('vb-bootstrap-js', plugins_url().'/the-virtual-study-bible/js/bootstrap.js');
+wp_enqueue_script('vb-bootstrap-js');
+
+
+include_once(plugin_dir_path(__FILE__).'includes/modules.php');
+include_once(plugin_dir_path(__FILE__).'includes/functions.php');
 
 ?>
 <link href="https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap" rel="stylesheet" />
@@ -168,7 +168,7 @@ if(!defined('ABSPATH'))
 						</p>
 
 						<p style="text-align:right;font-size:21px;margin-bottom:30px;">
-							&mdash;&mdash;&mdash;<span style="font-family: 'Rock Salt', cursive;font">Danny Carlton</span>
+							&mdash;&mdash;&mdash;<span style="font-family: 'Rock Salt', cursive;font">Danny Carlton, <small>June 2024</small></span>
 						</p>
 
 						<p style="text-align:justify;font-size:16px">
@@ -219,7 +219,7 @@ if(!defined('ABSPATH'))
 
 						<div class="col-sm-3 col-md-4 panel panel-default">
 							<div class="panel-heading" style="font-weight:600;font-size:15px;padding:5px 15px">
-								<a href="https://NavesTopicalBible.org" targt="_blank">NavesTopicalBible.org</a>
+								<a href="https://NavesTopicalBible.org" target="_blank">NavesTopicalBible.org</a>
 								<span style="font-weight:300;font-size:12px;float:right">
 									Reference
 								</span>
@@ -233,7 +233,7 @@ if(!defined('ABSPATH'))
 
 						<div class="col-sm-3 col-md-4 panel panel-default">
 							<div class="panel-heading" style="font-weight:600;font-size:15px;padding:5px 15px">
-								<a href="https://StrongsConcordance.org" targt="_blank">StrongsConcordance.org</a>
+								<a href="https://StrongsConcordance.org" target="_blank">StrongsConcordance.org</a>
 								<span style="font-weight:300;font-size:10px;float:right">
 									Reference
 								</span>
@@ -245,7 +245,7 @@ if(!defined('ABSPATH'))
 
 						<div class="col-sm-3 col-md-4 panel panel-default">
 							<div class="panel-heading" style="font-weight:600;font-size:15px;padding:5px 15px">
-								<a href="https://SystematicTheology.us" targt="_blank">SystematicTheology.us</a>
+								<a href="https://SystematicTheology.us" target="_blank">SystematicTheology.us</a>
 								<span style="font-weight:300;font-size:12px;float:right">
 									Reference
 								</span>
@@ -257,7 +257,7 @@ if(!defined('ABSPATH'))
 
 						<div class="col-sm-3 col-md-4 panel panel-default">
 							<div class="panel-heading" style="font-weight:600;font-size:14px;padding:5px 15px">
-								<a href="https://SpurgeonsMorningandEvening.org" targt="_blank">SpurgeonsMorningandEvening.org</a>
+								<a href="https://SpurgeonsMorningandEvening.org" target="_blank">SpurgeonsMorningandEvening.org</a>
 								<span style="font-weight:300;font-size:12px;float:right">
 									
 								</span>
@@ -269,7 +269,7 @@ if(!defined('ABSPATH'))
 
 						<div class="col-sm-3 col-md-4 panel panel-default">
 							<div class="panel-heading" style="font-weight:600;font-size:15px;padding:5px 15px">
-								<a href="https://CountryHymns.com" targt="_blank">CountryHymns.com</a>
+								<a href="https://CountryHymns.com" target="_blank">CountryHymns.com</a>
 								<span style="font-weight:300;font-size:12px;float:right">
 									
 								</span>
@@ -281,7 +281,7 @@ if(!defined('ABSPATH'))
 
 						<div class="col-sm-3 col-md-4 panel panel-default">
 							<div class="panel-heading" style="font-weight:600;font-size:15px;padding:5px 15px">
-								<a href="https://MatthewHenry.uk" targt="_blank">MatthewHenry.uk</a>
+								<a href="https://MatthewHenry.uk" target="_blank">MatthewHenry.uk</a>
 								<span style="font-weight:300;font-size:12px;float:right">
 									Reference
 								</span>
@@ -293,7 +293,7 @@ if(!defined('ABSPATH'))
 
 						<div class="col-sm-3 col-md-4 panel panel-default">
 							<div class="panel-heading" style="font-weight:600;font-size:15px;padding:5px 15px">
-								<a href="https://myBibleMemes.com" targt="_blank">myBibleMemes.com</a>
+								<a href="https://myBibleMemes.com" target="_blank">myBibleMemes.com</a>
 								<span style="font-weight:300;font-size:12px;float:right">
 									Utility
 								</span>
@@ -305,7 +305,7 @@ if(!defined('ABSPATH'))
 
 						<div class="col-sm-3 col-md-4 panel panel-default">
 							<div class="panel-heading" style="font-weight:600;font-size:15px;padding:5px 15px">
-								<a href="https://Vocabularium.org" targt="_blank">Vocabularium.org</a>
+								<a href="https://Vocabularium.org" target="_blank">Vocabularium.org</a>
 								<span style="font-weight:300;font-size:12px;float:right">
 									Study &bull; Reference
 								</span>
@@ -319,19 +319,19 @@ if(!defined('ABSPATH'))
 
 						<div class="col-sm-3 col-md-4 panel panel-default">
 							<div class="panel-heading" style="font-weight:600;font-size:15px;padding:5px 15px">
-								<a href="https://xmlBible.org" targt="_blank">xmlBible.org</a>
+								<a href="https://xmlBible.org" target="_blank">xmlBible.org</a>
 								<span style="font-weight:300;font-size:12px;float:right">
 									Bible &bull; In Progress
 								</span>
 							</div>
 							<div class="panel-body">
-								Began in 2022. The goal is to provide a comprehensive XML of the Bible. It currently provides XML for a simple KJV and KJV keyed to Strong's number. (The domain link redirects to the GitHub repository)
+								Began in 2022. The goal is to provide a comprehensive XML of the Bible. It currently provides XML for a simple KJV and KJV keyed to Strong's number. (The domain links redirects to the GitHub repository)
 							</div>
 						</div>
 
 						<div class="col-sm-3 col-md-4 panel panel-default">
 							<div class="panel-heading" style="font-weight:600;font-size:15px;padding:5px 15px">
-								<a href="https://osBible.org" targt="_blank">osBible.org</a>
+								<a href="https://osBible.org" target="_blank">osBible.org</a>
 								<span style="font-weight:300;font-size:12px;float:right">
 									Bible &bull; In Progress
 								</span>
@@ -343,7 +343,7 @@ if(!defined('ABSPATH'))
 
 						<div class="col-sm-3 col-md-4 panel panel-default">
 							<div class="panel-heading" style="font-weight:600;font-size:15px;padding:5px 15px">
-								<a href="https://jsonBible.com" targt="_blank">jsonBible.com</a>
+								<a href="https://jsonBible.com" target="_blank">jsonBible.com</a>
 								<span style="font-weight:300;font-size:12px;float:right">
 									Bible &bull; In Progress
 								</span>

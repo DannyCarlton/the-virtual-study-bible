@@ -94,12 +94,7 @@ if(isset($_GET['name']))
 				$create_table=str_replace('{$table_name}','%1s',$create_table);
 				$create_table=str_replace('{$charset_collate}','%1s',$create_table);
 				$create_table=$wpdb->prepare($create_table,array($table_name,$charset_collate));
-
-#				$wpdb->show_errors = true;
-#				$wpdb->suppress_errors = false;
 				$query=$wpdb->query($create_table);
-#				echo getPrintR($wpdb->last_query);
-#				echo $wpdb->last_error;
 				$data_source=(string)$__Section->data_source;
 				$data_source=str_replace('{$data_path}',$data_path,$data_source);
 
@@ -175,7 +170,6 @@ if(isset($_GET['name']))
 	
 
 			$module_status=$_vb->getMeta("module_$module_name");
-#			write_log($module_status);
 			$table_name = $wpdb->prefix . 'virtual_bible_meta';
 			if($module_status=='disabled')
 				{

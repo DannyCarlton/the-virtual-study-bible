@@ -28,6 +28,7 @@ include_once(plugin_dir_path(__FILE__).'includes/modules.php');
 include_once(plugin_dir_path(__FILE__).'includes/functions.php');
 
 $virtual_bible_page_name=$_vb->getMeta('page_name');
+$virtual_bible_pageInfo=$_vb->get_page_by_title($virtual_bible_page_name,'ARRAY');
 if(!$virtual_bible_page_name){$virtual_bible_page_name='Study Bible';}
 $virtual_bible_page_name_slug=sanitize_title($virtual_bible_page_name);
 
@@ -39,36 +40,37 @@ while ($file = readdir($_handle))
 	if (strstr($file, '.xml'))
 		{
 		$_name=str_replace('.xml','',$file);
-		$Modules[$_name]=[];
-		$Modules[$_name]['file']=$file;
-		$Modules[$_name]['installed']=$_vbm->is_module_installed($_name);
 		$__moduleData=simplexml_load_file($module_path.$file, 'SimpleXMLElement', LIBXML_NOCDATA);
-		$Modules[$_name]['type']=(string)$__moduleData->type;
-		$Modules[$_name]['description']=(string)$__moduleData->description;
-		$Modules[$_name]['color']=(string)$__moduleData->color;
-		$Modules[$_name]['icon']=(string)$__moduleData->icon;
-		$Modules[$_name]['title']=(string)$__moduleData->title;
-		$Modules[$_name]['optional']=(string)$__moduleData->optional;
+		$Modules[$_name]				= [];
+		$Modules[$_name]['file']		= $file;
+		$Modules[$_name]['installed']	= $_vbm->is_module_installed($_name);
+		$Modules[$_name]['type']		= (string)$__moduleData->type;
+		$Modules[$_name]['description']	= (string)$__moduleData->description;
+		$Modules[$_name]['color']		= (string)$__moduleData->color;
+		$Modules[$_name]['icon']		= (string)$__moduleData->icon;
+		$Modules[$_name]['title']		= (string)$__moduleData->title;
+		$Modules[$_name]['optional']	= (string)$__moduleData->optional;
 		}
 	}
 closedir($_handle);
 
-$virtual_bible_traditional_select=$_vb->getMeta('style_traditional');
-$virtual_bible_paragraph_select=$_vb->getMeta('style_paragraph');
-$virtual_bible_reader_select=$_vb->getMeta('style_reader');
+$virtual_bible_traditional_select		= $_vb->getMeta('style_traditional');
+$virtual_bible_paragraph_select			= $_vb->getMeta('style_paragraph');
+$virtual_bible_reader_select			= $_vb->getMeta('style_reader');
 
-$virtual_bible_settings_nonce=wp_create_nonce('virtual bible settings');
+$virtual_bible_settings_nonce			= wp_create_nonce('virtual bible settings');
 
 /* This is run when settings are saved  */
+
 if(isset($_POST['virtual-bible-post-submitted']))
 	{
-	$virtual_bible_verify = wp_verify_nonce($_POST['_wpnonce'], 'virtual bible settings');
+	$virtual_bible_verify 				= wp_verify_nonce($_POST['_wpnonce'], 'virtual bible settings');
 	if($virtual_bible_verify)
 		{
-		$virtual_bible_pagename=sanitize_text_field($_POST['virtual-bible-pagename']);
-		$virtual_bible_oldpagename=sanitize_text_field($_POST['virtual-bible-old-pagename']);
+		$virtual_bible_pagename			= sanitize_text_field($_POST['virtual-bible-pagename']);
+		$virtual_bible_oldpagename		= sanitize_text_field($_POST['virtual-bible-old-pagename']);
 		
-		if(($virtual_bible_pagename != $virtual_bible_oldpagename) and get_page_by_title($virtual_bible_oldpagename, 'OBJECT', 'page'))
+		if(($virtual_bible_pagename != $virtual_bible_oldpagename) and $_vb->get_page_by_title($virtual_bible_oldpagename, 'OBJECT', 'page'))
 			{
 			/* delete old page */
 			$wpdb->delete
@@ -130,6 +132,12 @@ if(isset($_POST['virtual-bible-post-submitted']))
 			<span>Contribute</span>
 		</a>
 	</li>
+	<li id="vsb-page-tab" class="vb-nav-tab" style="float:right;margin-right:10px;display:none">
+		<a href="<?php echo $page_url; ?>" style="color:#800;">			
+			<i class="fa-solid fa-book-bible"></i> &nbsp;
+			<span><?php echo $virtual_bible_page_name; ?></span>
+		</a>
+	</li>
 </ul>
 <div class="tab-content" style="box-shadow:rgba(0, 0, 0, 0.15) 2px 2px 6px;margin-top:-1px;">
 	<div id="settings" class="tab-pane fade in active" 
@@ -146,11 +154,6 @@ if(isset($_POST['virtual-bible-post-submitted']))
                     		<p style="margin-top:-10px;font-size:12px;text-shadow:1px 1px 2px rgba(255,255,255,1),1px 1px 10px rgba(0,0,0,0.5)">Color guide: 
 								<span class="text-danger" title="Bible text in versions, translation and foreign."><strong>Bible Text</strong></span>, 
 								<span class="text-info" title="Dictionaries, Lexicons, Margin Notes, etc."><strong>Reference</strong></span>
-								<!-- 
-								<span class="text-success" title="Packaged intros, notes and commentaries"><strong>Study Template</strong></span>, 
-								<span class="text-warning" title="Matthew Henry, Scofield, etc. These can also be part of a Study Template"><strong>Commentary</strong></span>, 
-								<span class="text-primary" title="Illustrations, Maps, etc."><strong>Images</strong></span> 
-								-->
 							</p>
                     		<div class="f1-steps">
                     			<div class="f1-progress">
@@ -184,7 +187,7 @@ if(isset($_POST['virtual-bible-post-submitted']))
 									<div class="block icon-block bg-secondary-faded w-border-2x border-secondary inner-space rounded-2x text-center module">
 										<i class="fa-solid fa-university md-icon dp24 box-icon bg-secondary-faded border-secondary pill"></i>
 										<h6 class="box-title poppins-black" style="color:#000">Books of the Bible<br />Book Introductions and Outlines</h6>
-										<p class="box-description montserrat">These modules were loaded when you installed the plugin. It includes data about the Books of the Bible as well as book introductions and outlines by John MacArthur <small>(used by permission)</small>.</p>
+										<p class="box-description montserrat">These modules were loaded when you installed the plugin. It includes data about the Books of the Bible as well as book introductions and outlines by John MacArthur* <small>(*used by permission)</small>.</p>
 										<div id="module-books-installed" class="module-installed light">Module Installed!</div>
 									</div>
 								</div>
@@ -195,14 +198,7 @@ if(isset($_POST['virtual-bible-post-submitted']))
 										{
 										if($Module['optional']=='FALSE')
 											{	
-											if($Module['installed']!='')
-												{
-												echo $_vbm->module_installed_html($_name,$Module['color'],$Module['icon'],$Module['title'],$Module['description'],plugin_dir_url(__FILE__),$Module['installed']);
-												}
-											else
-												{
-												echo $_vbm->module_uninstalled_html($_name,$Module['color'],$Module['icon'],$Module['title'],$Module['description'],plugin_dir_url(__FILE__));
-												}								 											
+											echo $_vbm->module_html($_name,$Module['color'],$Module['icon'],$Module['title'],$Module['description'],plugin_dir_url(__FILE__),$Module['installed']);								
 											}
 										}
 								?>
@@ -229,14 +225,7 @@ if(isset($_POST['virtual-bible-post-submitted']))
 										{
 										if($Module['optional']=='TRUE')
 											{
-											if($Module['installed']!='')
-												{
-												echo $_vbm->module_installed_html($_name,$Module['color'],$Module['icon'],$Module['title'],$Module['description'],plugin_dir_url(__FILE__),$Module['installed']);
-												}
-											else
-												{
-												echo $_vbm->module_uninstalled_html($_name,$Module['color'],$Module['icon'],$Module['title'],$Module['description'],plugin_dir_url(__FILE__));
-												}	
+											echo $_vbm->module_html($_name,$Module['color'],$Module['icon'],$Module['title'],$Module['description'],plugin_dir_url(__FILE__),$Module['installed']);
 											}
 										}
 
@@ -416,22 +405,19 @@ if(isset($_POST['virtual-bible-post-submitted']))
 								<?php
 								foreach($Modules as $_name=>$Module)
 									{
-									if($Module['installed']=='installed')
+									if($Module['installed'])
 										{
-										echo "
-										<button type=\"button\" class=\"btn btn-{$Module['color']}-faded pill border-{$Module['color']} btn-module dark button-{$_name}\" style=\"text-shadow:1px 1px 5px rgba(0, 0, 0, 0.56)\">
-											<i class=\"fa-solid fa-{$Module['icon']}\"></i> &nbsp;
-											{$Module['title']}
-										</button>";
+										$installed='_'.$Module['installed'];
 										}
 									else
 										{
-										echo "
-										<button type=\"button\" class=\"btn btn-{$Module['color']}-faded pill border-{$Module['color']} btn-module dark button-{$_name}\" style=\"text-shadow:1px 1px 5px rgba(0, 0, 0, 0.56);display:none\">
-											<i class=\"fa-solid fa-{$Module['icon']}\"></i> &nbsp;
-											{$Module['title']}
-										</button>";										
+										$installed='_not_installed';
 										}
+									echo "
+									<button id=\"pill-{$_name}\" type=\"button\" class=\"btn btn-{$Module['color']}-faded pill border-{$Module['color']} btn-module dark button-{$_name} $installed\" style=\"text-shadow:1px 1px 5px rgba(0, 0, 0, 0.56)\">
+										<i class=\"fa-solid fa-{$Module['icon']}\"></i> &nbsp;
+										{$Module['title']}
+									</button>";
 									}
 								?>
 	
@@ -445,6 +431,7 @@ if(isset($_POST['virtual-bible-post-submitted']))
 									{
 								?>
 								<button type="button" id="traditional-selected" class="btn btn-secondary-faded pill btn-module">
+									<i class="fa-solid fa-swatchbook"></i>
 									Traditional
 								</button>
 								<?php
@@ -453,6 +440,7 @@ if(isset($_POST['virtual-bible-post-submitted']))
 									{
 								?>
 								<button type="button" id="traditional-selected" class="btn btn-secondary-faded pill btn-module" style="display:none">
+								<i class="fa-solid fa-swatchbook"></i>
 									Traditional
 								</button>
 								<?php
@@ -463,6 +451,7 @@ if(isset($_POST['virtual-bible-post-submitted']))
 									{
 								?>
 								<button type="button" id="paragraph-selected" class="btn btn-secondary-faded pill btn-module">
+								<i class="fa-solid fa-swatchbook"></i>
 									Paragraph
 								</button>
 								<?php
@@ -471,6 +460,7 @@ if(isset($_POST['virtual-bible-post-submitted']))
 									{
 								?>
 								<button type="button" id="paragraph-selected" class="btn btn-secondary-faded pill btn-module" style="display:none">
+								<i class="fa-solid fa-swatchbook"></i>
 									Paragraph
 								</button>
 								<?php
@@ -481,6 +471,7 @@ if(isset($_POST['virtual-bible-post-submitted']))
 									{
 								?>
 								<button type="button" id="reader-selected" class="btn btn-secondary-faded pill btn-module">
+								<i class="fa-solid fa-swatchbook"></i>
 									The Reader's Bible
 								</button>
 								<?php
@@ -489,6 +480,7 @@ if(isset($_POST['virtual-bible-post-submitted']))
 										{
 								?>
 									<button type="button" id="reader-selected" class="btn btn-secondary-faded pill btn-module" style="display:none">
+									<i class="fa-solid fa-swatchbook"></i>
 										The Reader's Bible
 									</button>
 								<?php
@@ -497,6 +489,7 @@ if(isset($_POST['virtual-bible-post-submitted']))
                                 <div class="f1-buttons">
                                     <button type="button" class="btn btn-previous"><i class="fa-solid fa-left-long"></i>&nbsp; Previous</button>
                                     <button id="settings-submit" type="submit" class="btn btn-submit" disabled>Submit & Publish&nbsp; <i class="fa-solid fa-square-check"></i></button>
+									<div id="submit-note">Your settings have all been submitted and published.</div>
                                 </div>
 							</fieldset>
                     	
@@ -538,9 +531,7 @@ window.addEventListener('load',function()
 		var nonce_url = "<?php echo wp_nonce_url(plugin_dir_url(__FILE__).'ajax/select-unselect-style.php','select-unselect-style'); ?>";
 		e.preventDefault();
 		var virtual_bible_style_selected=$(this).attr('id');
-//		console.log(virtual_bible_style_selected);
 		var target=virtual_bible_style_selected.replace('virtual-bible-style-','');
-//		console.log('target='+target);
 		$.ajax(
 			{
 			type: 'POST',
@@ -582,9 +573,21 @@ window.addEventListener('load',function()
 				{function:'settings_watch'},
 				function(data) 
 					{
-					if(data=='installed')
+					if(data=='not installed')							// required modules not installed, 
 						{
-						$("#settings-submit").prop('disabled',false);
+						$("#settings-submit").prop('disabled',true);	// disable submit button
+						}
+
+					if(data=='not submitted')							// required modules installed, page not published
+						{
+						$("#settings-submit").prop('disabled',false);	// enable submit button
+						}
+
+					if(data=='installed')								// page published
+						{
+						$("#settings-submit").css('display','none');	// hide submit button
+						$("#vsb-page-tab").css('display','block');		// display page link button
+						$("#submit-note").css('display','block');		// display note exlaining page has been published.
 						}
 					}
 				);
@@ -648,12 +651,3 @@ window.addEventListener('load',function()
 
 </script>
 <!-- The Virtual Study Bible Plugin: Settings End -->
-
-<?php
-
-
-
-
-
-
-?>

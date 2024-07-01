@@ -86,7 +86,7 @@ if(isset($_POST['virtual-bible-post-submitted']))
 			}
 		/* Create new page */
 		/* But first, check if the page already exists */
-		$check_page_exist = get_posts(array('post_type'=>'page','title'=>$virtual_bible_pagename,'post_author'=>1));
+		$check_page_exist = get_posts(array('post_type'=>'page','title'=>$virtual_bible_pagename,'post_author'=>1,'post_status'=>'publish'));
 		if(empty($check_page_exist)) 
 			{
 			$page_id = wp_insert_post
@@ -103,6 +103,14 @@ if(isset($_POST['virtual-bible-post-submitted']))
 					'post_type'      => 'page'
 					)
 				);
+			}
+		$_vb->putMeta('page_name',$virtual_bible_pagename);
+		$page_name=$_vb->getMeta('page_name');
+		$virtual_bible_pageInfo=$_vb->get_page_by_title($page_name);
+		$page_url='';
+		if(isset($virtual_bible_pageInfo->guid))
+			{
+			$page_url=$virtual_bible_pageInfo->guid;
 			}
 		}
 	}

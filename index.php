@@ -363,7 +363,7 @@ function virtual_bible_create_db_table()
 
 function virtual_bible_load_db_books()
 	{
-	global $wpdb;
+	global $wpdb,$_vb;
 	$charset_collate = $wpdb->get_charset_collate();
 	$table_name = $wpdb->prefix . 'virtual_bible_books';
 
@@ -408,7 +408,7 @@ function virtual_bible_load_db_books()
 	$table_name = $wpdb->prefix . 'virtual_bible_gty_intro_outline';
 
 	$Rows=[];$r=1;
-	$file = fopen('https://cdn.virtualbible.org/virtual_bible_intro_gty.csv', 'r');
+	$file = _fopen('https://cdn.virtualbible.org/virtual_bible_intro_gty.csv');
 	while (($Rows = fgetcsv($file, 10000, ",")) !== FALSE) 
 		{
 		if($Rows[0]!='id')
@@ -435,6 +435,7 @@ function virtual_bible_load_db_books()
 			$r++;
 			}
 		}
+	fclose($file);
 
 
 		
@@ -445,4 +446,23 @@ function virtual_bible_load_db_books()
 /* END: Stuff to do only when plugin is activated */
 
 
+/* For debugging purposes. Don't worry; it's basically harmless. */
 
+function write_log( $data ) 
+	{
+	if ( true === WP_DEBUG ) 
+		{
+		if ( is_array( $data ) || is_object( $data ) ) 
+			{
+			error_log( print_r( $data, true ) );
+			} 
+		elseif($data==NULL)
+			{
+			error_log('NULL');
+			}
+		else 
+			{
+			error_log( $data );
+			}
+		}
+	}

@@ -100,7 +100,7 @@ if(isset($_GET['name']))
 
 				if($__Section->use_fopen)
 					{				
-					if(($file = fopen($data_source, "r")) !== false)
+					if(($file = _fopen($data_source, "r")) !== false)
 						{
 						$vb_counter=0;
 						$oldincrement=''; $colName=[];$Rows=[];

@@ -19,10 +19,15 @@ if(isset($_GET['function']))
 		if($_GET['function']=='settings_watch')
 			{
 			$virtual_bible_page_name=$_vb->getMeta('page_name');
+#			write_log($virtual_bible_page_name);
+			$__Page=$_vb->get_page_by_title($virtual_bible_page_name);
+#			write_log($__Page);
 			$page_exists=false;
-			if($_vb->get_page_by_title($virtual_bible_page_name) != NULL )
+			if($__Page != NULL  and $__Page->post_title == $virtual_bible_page_name)
 				{
 				$page_exists=true;
+#				write_log($virtual_bible_page_name);
+#				write_log($__Page);
 				}
 			if($_vbm->is_module_installed('kjvs')=='installed' and $_vbm->is_module_installed('strongs')=='installed')
 				{

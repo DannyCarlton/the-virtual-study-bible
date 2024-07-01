@@ -23,7 +23,12 @@ $ScopeKey[10]='&& `book` > "58" && `book` < "66" ';
 
 $page_name=$_vb->getMeta('page_name');
 $virtual_bible_pageInfo=$_vb->get_page_by_title($page_name);
-$page_url=$virtual_bible_pageInfo->guid;
+$page_url='';
+if(isset($virtual_bible_pageInfo->guid))
+	{
+	$page_url=$virtual_bible_pageInfo->guid;
+	}
+
 $page_slug=sanitize_title($page_name);
 $reference='';
 $plugin_url=str_replace('includes/','',plugin_dir_url(__FILE__));
@@ -3279,7 +3284,7 @@ $integer = wordSearchFilters(string $keyword, integer $scope=0) : returns number
 				(
 				'post_type' => $post_type,
 				'title' => $page_title,
-				'post_status' => 'all',
+				'post_status' => 'publish',
 				'posts_per_page' => 1,
 				'no_found_rows' => true,
 				'ignore_sticky_posts' => true,
@@ -3305,9 +3310,6 @@ $integer = wordSearchFilters(string $keyword, integer $scope=0) : returns number
 			}		
 		return null;
 		}
-
-
-
 
 
 	}
@@ -3347,5 +3349,19 @@ function write_cache($data,$file_name)
 	}
 
 
+
+
+	function _fopen($url)	# This is a replacement for fopen since it is often disabled
+		{
+		$f = fopen('php://temp', 'w+');
+		$ch = curl_init();
+		$timeout = 10;
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_FILE, $f);
+		$data = curl_exec($ch);
+		curl_close($ch);
+		rewind($f);
+		return $f;
+		}
 
 ?>

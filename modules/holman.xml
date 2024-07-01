@@ -12,7 +12,7 @@
 	<load_books>TRUE</load_books>
 	<section>
 		<section_name>Holman Cross-Reference</section_name>
-		<data_source>{$data_path}/virtual_bible_xref_holman.csv</data_source>
+		<data_source>https://cdn.virtualbible.org/virtual_bible_xref_holman.csv</data_source>
 		<use_fopen>TRUE</use_fopen>
 		<table_name>virtual_bible_xref_holman</table_name>
 		<create_table>

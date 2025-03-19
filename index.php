@@ -72,7 +72,7 @@ if(!defined('ABSPATH'))
 				}
 			);
 
-	Yes, not an effcient use of vertical space, but, to me, much easier to read when I'm scanning through thousands of lines of code.
+	Yes, not an efficient use of vertical space, but, to me, much easier to read when I'm scanning through thousands of lines of code.
 
 	---Danny Carlton
 */
